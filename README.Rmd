@@ -1,0 +1,36 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ffexpectedpoints
+
+*Models and Data for Expected Fantasy Points*
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Dev status](https://img.shields.io/github/r-package/v/dynastyprocess/ffexpectedpoints/main?label=dev&style=flat-square&logo=github)](https://ffexpectedpoints.dynastyprocess.com/)
+[![CRAN status](https://www.r-pkg.org/badges/version/ffexpectedpoints)](https://CRAN.R-project.org/package=ffexpectedpoints)
+<!-- badges: end -->
+
+Downloads Expected Points data from DynastyProcess repositories if available, and otherwise builds up expected points data by applying models to nflfastR play-by-play data.
+
+## Installation
+
+Install the development version from GitHub with:
+
+```{r eval = FALSE}
+# install.packages("remotes")
+remotes::install_github("dynastyprocess/ffexpectedpoints")
+```
+
