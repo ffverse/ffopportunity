@@ -10,53 +10,32 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Dev
-status](https://img.shields.io/github/r-package/v/dynastyprocess/ffexpectedpoints/dev?label=dev&style=flat-square&logo=github)](https://ffexpectedpoints.dynastyprocess.com/dev/)
+status](https://img.shields.io/github/r-package/v/dynastyprocess/ffexpectedpoints/main?label=dev&style=flat-square&logo=github)](https://ffexpectedpoints.dynastyprocess.com/)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/ffexpectedpoints)](https://CRAN.R-project.org/package=ffexpectedpoints)
 <!-- badges: end -->
 
-The goal of ffexpectedpoints is to …
+Downloads Expected Points data from DynastyProcess repositories if
+available, and otherwise builds up expected points data by applying
+models to nflfastR play-by-play data.
 
 ## Installation
 
-You can install the development version of ffexpectedpoints from GitHub:
+Install the development version from GitHub with:
 
 ``` r
-install.packages("ffexpectedpoints")
+# install.packages("remotes")
+remotes::install_github("dynastyprocess/ffexpectedpoints")
 ```
 
-## Example
+## Outline/Goals
 
-This is a basic example which shows you how to solve a common problem:
+    Main Functions: 
+    ep_load(season = ?, week = NULL) # Tries to load specified data from GitHub repository.
+    ep_build(season = NULL, week = NULL, rebuild = FALSE) # if rebuild is FALSE and season/week = NULL (i.e. the default), checks nflfastR's game repo for completed games, then checks DP GH to see what games are fully processed, then builds EP for the missing games. Otherwise, checks for the given season/week + if rebuild = TRUE then downloads that week's data and builds EP from that, or else just downloads EP from GH repo for that season/week.
 
-``` r
-library(ffexpectedpoints)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+    Subfunctions:
+    .ep_check_missing_games(season, week) # Figures out what completed games don't have EP data in the repo
+    .ep_download_nflfastr_data() # downloads required nflfastr data
+    .ep_preprocess() # figures out running averages required for players.
+    .ep_predict() # applies model to preprocessed data

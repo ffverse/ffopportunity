@@ -34,3 +34,16 @@ Install the development version from GitHub with:
 remotes::install_github("dynastyprocess/ffexpectedpoints")
 ```
 
+## Outline/Goals
+
+```
+Main Functions: 
+ep_load(season = ?, week = NULL) # Tries to load specified data from GitHub repository.
+ep_build(season = NULL, week = NULL, rebuild = FALSE) # if rebuild is FALSE and season/week = NULL (i.e. the default), checks nflfastR's game repo for completed games, then checks DP GH to see what games are fully processed, then builds EP for the missing games. Otherwise, checks for the given season/week + if rebuild = TRUE then downloads that week's data and builds EP from that, or else just downloads EP from GH repo for that season/week.
+
+Subfunctions:
+.ep_check_missing_games(season, week) # Figures out what completed games don't have EP data in the repo
+.ep_download_nflfastr_data() # downloads required nflfastr data
+.ep_preprocess() # figures out running averages required for players.
+.ep_predict() # applies model to preprocessed data
+```
