@@ -10,12 +10,12 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Dev
-status](https://img.shields.io/github/r-package/v/dynastyprocess/ffexpectedpoints/main?label=dev&style=flat-square&logo=github)](https://ffexpectedpoints.dynastyprocess.com/)
+status](https://img.shields.io/github/r-package/v/ffverse/ffexpectedpoints/main?label=dev&style=flat-square&logo=github)](https://ffexpectedpoints.ffverse.com/)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/ffexpectedpoints)](https://CRAN.R-project.org/package=ffexpectedpoints)
 <!-- badges: end -->
 
-Downloads Expected Points data from DynastyProcess repositories if
+Downloads Expected Points data from ffverse repositories if
 available, and otherwise builds up expected points data by applying
 models to nflfastR play-by-play data.
 
@@ -25,7 +25,7 @@ Install the development version from GitHub with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("dynastyprocess/ffexpectedpoints")
+remotes::install_github("ffverse/ffexpectedpoints")
 ```
 
 ## Outline/Goals

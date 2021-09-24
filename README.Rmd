@@ -19,11 +19,12 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Dev status](https://img.shields.io/github/r-package/v/dynastyprocess/ffexpectedpoints/main?label=dev&style=flat-square&logo=github)](https://ffexpectedpoints.dynastyprocess.com/)
+[![Dev status](https://img.shields.io/github/r-package/v/ffverse/ffexpectedpoints/main?label=dev&style=flat-square&logo=github)](https://ffexpectedpoints.ffverse.com/)
 [![CRAN status](https://www.r-pkg.org/badges/version/ffexpectedpoints)](https://CRAN.R-project.org/package=ffexpectedpoints)
+[![R-CMD-check](https://github.com/dynastyprocess/ffexpectedpoints/workflows/R-CMD-check/badge.svg)](https://github.com/dynastyprocess/ffexpectedpoints/actions)
 <!-- badges: end -->
 
-Downloads Expected Points data from DynastyProcess repositories if available, and otherwise builds up expected points data by applying models to nflfastR play-by-play data.
+Downloads Expected Points data from ffverse repositories if available, and otherwise builds up expected points data by applying models to nflfastR play-by-play data.
 
 ## Installation
 
@@ -31,10 +32,10 @@ Install the development version from GitHub with:
 
 ```{r eval = FALSE}
 # install.packages("remotes")
-remotes::install_github("dynastyprocess/ffexpectedpoints")
+remotes::install_github("ffverse/ffexpectedpoints")
 ```
 
-## Outline/Goals
+## Roadmap
 
 ```
 Main Functions: 
@@ -47,3 +48,7 @@ Subfunctions:
 .ep_preprocess() # figures out running averages required for players.
 .ep_predict() # applies model to preprocessed data
 ```
+## Code of Conduct
+  
+Please note that the ffexpectedpoints project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+  
