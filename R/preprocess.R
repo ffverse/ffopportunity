@@ -7,7 +7,7 @@
 #' \donttest{
 #' pbp <- nflreadr::load_pbp(2021)
 #' .preprocess_common_fields(pbp) %>% dplyr::glimpse()
-#' temp <- ep_preprocess(pbp) %>% tibble::view()
+#' temp <- ep_preprocess(pbp) %>% dplyr::glimpse()
 #' }
 #'
 #' @return a list of two dataframes (one for passes and one for rushes)
@@ -17,12 +17,74 @@
 #'
 #' @export
 #'
-#'
+
 ep_preprocess <- function(pbp){
 
   rosters <- .get_rosters(2021)
 
   prep_pbp <- .preprocess_common_fields(pbp)
+
+  list_df <- list(rush_df = .preprocess_rush_df(prep_pbp, rosters),
+                  pass_df = .preprocess_pass_df(prep_pbp,rosters))
+
+  return(list_df)
+}
+
+#' @keywords internal
+.preprocess_common_fields <- function(pbp){
+
+  pbp <- pbp %>%
+    dplyr::mutate(
+      #Create New Fields
+      game_month = lubridate::month(game_date),
+      game_month = dplyr::if_else(game_month < 3, 12, game_month),
+      game_week = lubridate::week(game_date),
+      game_week = dplyr::if_else(game_week <= 30, 53, game_week),
+      game_wday = as.character(lubridate::wday(game_date, label = TRUE)),
+      game_wday = dplyr::case_when(
+        game_wday %in% c("Tue","Wed","Fri","Sat") ~ "Other",
+        TRUE ~ game_wday),
+      game_time = lubridate::hour(lubridate::hms(start_time)),
+      implied_total = dplyr::case_when(
+        posteam_type == "away" & spread_line<=0 ~ (total_line+spread_line)/2 - spread_line,
+        posteam_type == "away" & spread_line>0 ~ (total_line-spread_line)/2,
+        posteam_type == "home" & spread_line>0 ~ (total_line+spread_line)/2 - spread_line,
+        posteam_type == "home" & spread_line<=0 ~ (total_line-spread_line)/2),
+
+      #Data Cleaning
+      two_point_converted = dplyr::case_when(two_point_conv_result == "success" ~ 1,
+                                             is.na(two_point_conv_result) &
+                                               grepl( "ATTEMPT SUCCEEDS", desc) ~ 1,
+                                             TRUE ~ 0),
+      down = dplyr::if_else(two_point_attempt == 1, 4, down),
+      surface = dplyr::if_else(surface == "grass", "grass", "turf"),
+      temp = dplyr::case_when(roof %in% c("closed", "dome") ~ 68L,
+                              is.na(temp) ~ 60L,
+                              TRUE ~ temp),
+      wind = dplyr::case_when(roof %in% c("closed", "dome") ~ 0L,
+                              is.na(wind) ~ 8L,
+                              TRUE ~ wind),
+
+      #Set ordered factor variables
+      week = factor(week, levels = as.character(c(1:21)), ordered = TRUE),
+      game_month = factor(game_month, levels = as.character(c(9:12)), ordered = TRUE),
+      game_week = factor(game_week, levels = as.character(c(36:53)), ordered = TRUE),
+      game_time = factor(game_time, levels = as.character(c(9:23)), ordered = TRUE),
+      qtr = factor(qtr, levels = as.character(c(1:6)), ordered = TRUE),
+      down = factor(down, levels = as.character(c(1:4)), ordered = TRUE),
+      goal_to_go = factor(goal_to_go, levels = as.character(c(0,1))),
+      shotgun = factor(shotgun, levels = as.character(c(0,1))),
+      no_huddle = factor(no_huddle, levels = as.character(c(0,1))),
+      two_point_attempt = factor(two_point_attempt, levels = as.character(c(0,1))),
+      qb_dropback = factor(qb_dropback, levels = as.character(c(0,1))),
+      qb_scramble = factor(qb_scramble, levels = as.character(c(0,1))),
+      first_down = factor(first_down, levels = as.character(c(0,1)))
+    )
+  return(pbp)
+}
+
+#' @keywords internal
+.preprocess_rush_df <- function(prep_pbp, rosters){
 
   rush_df <- prep_pbp %>%
     dplyr::filter(play_type == "run", !grepl("kneel|Aborted", desc)) %>%
@@ -57,12 +119,17 @@ ep_preprocess <- function(pbp){
 
       #Set ordered factor variables
       season = factor(season, levels = as.character(c(2001:2020)), ordered = TRUE),
-      qb_dropback = factor(qb_dropback, levels = as.character(c(0,1))),
-      qb_scramble = factor(qb_scramble, levels = as.character(c(0,1))),
-      score = factor(score, levels = as.character(c(0,1))))
-    # dplyr::filter(run_gap_dir %in% c("left_end", "left_tackle", "left_guard", "middle_guard",
-    #                                  "right_guard", "right_tackle", "right_end"))
 
+      score = factor(score, levels = as.character(c(0,1))))
+  # dplyr::filter(run_gap_dir %in% c("left_end", "left_tackle", "left_guard", "middle_guard",
+  #                                  "right_guard", "right_tackle", "right_end"))
+
+  return(rush_df)
+
+}
+
+#' @keywords internal
+.preprocess_pass_df <- function(prep_pbp, rosters){
 
   pass_df <- prep_pbp %>%
     dplyr::filter(play_type == "pass", !grepl("Aborted", desc)) %>%
@@ -109,62 +176,7 @@ ep_preprocess <- function(pbp){
       pass_complete = factor(pass_complete, levels = c("complete", "incomplete"), ordered = TRUE),
       interception = factor(interception, levels = as.character(c(0,1))),
       qb_hit = factor(qb_hit, levels = as.character(c(0,1))))
-    # dplyr::filter(!is.na(air_yards))
+  # dplyr::filter(!is.na(air_yards))
 
-  output_list <- list(rush_df, pass_df)
-
-  return(output_list)
+  return(pass_df)
 }
-
-#' @keywords internal
-.preprocess_common_fields <- function(pbp){
-
-
-  pbp <- pbp %>%
-    dplyr::mutate(
-      #Create New Fields
-      game_month = lubridate::month(game_date),
-      game_month = dplyr::if_else(game_month < 3, 12, game_month),
-      game_week = lubridate::week(game_date),
-      game_week = dplyr::if_else(game_week <= 30, 53, game_week),
-      game_wday = as.character(lubridate::wday(game_date, label = TRUE)),
-      game_wday = dplyr::case_when(
-        game_wday %in% c("Tue","Wed","Fri","Sat") ~ "Other",
-        TRUE ~ game_wday),
-      game_time = lubridate::hour(lubridate::hms(start_time)),
-      implied_total = dplyr::case_when(
-        posteam_type == "away" & spread_line<=0 ~ (total_line+spread_line)/2 - spread_line,
-        posteam_type == "away" & spread_line>0 ~ (total_line-spread_line)/2,
-        posteam_type == "home" & spread_line>0 ~ (total_line+spread_line)/2 - spread_line,
-        posteam_type == "home" & spread_line<=0 ~ (total_line-spread_line)/2),
-
-      #Data Cleaning
-      two_point_converted = dplyr::case_when(two_point_conv_result == "success" ~ 1,
-                                             is.na(two_point_conv_result) &
-                                               grepl( "ATTEMPT SUCCEEDS", desc) ~ 1,
-                                             TRUE ~ 0),
-      down = dplyr::if_else(two_point_attempt == 1, 4, down),
-      surface = dplyr::if_else(surface == "grass", "grass", "turf"),
-      temp = dplyr::case_when(roof %in% c("closed", "dome") ~ 68L,
-                              is.na(temp) ~ 60L,
-                              TRUE ~ temp),
-      wind = dplyr::case_when(roof %in% c("closed", "dome") ~ 0L,
-                              is.na(wind) ~ 8L,
-                              TRUE ~ wind),
-
-      #Set ordered factor variables
-      week = factor(week, levels = as.character(c(1:21)), ordered = TRUE),
-      game_month = factor(game_month, levels = as.character(c(9:12)), ordered = TRUE),
-      game_week = factor(game_week, levels = as.character(c(36:53)), ordered = TRUE),
-      game_time = factor(game_time, levels = as.character(c(9:23)), ordered = TRUE),
-      qtr = factor(qtr, levels = as.character(c(1:6)), ordered = TRUE),
-      down = factor(down, levels = as.character(c(1:4)), ordered = TRUE),
-      goal_to_go = factor(goal_to_go, levels = as.character(c(0,1))),
-      shotgun = factor(shotgun, levels = as.character(c(0,1))),
-      no_huddle = factor(no_huddle, levels = as.character(c(0,1))),
-      two_point_attempt = factor(two_point_attempt, levels = as.character(c(0,1))),
-      first_down = factor(first_down, levels = as.character(c(0,1)))
-    )
-  return(pbp)
-}
-
