@@ -37,7 +37,6 @@ ep_predict <- function(preprocessed_pbp){
                   touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, rushing_td_exp),
                   two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, rushing_td_exp, 0))
 
-
   pass_df <-
     preprocessed_pbp$pass_df %>%
     dplyr::bind_cols(stats::predict(models$fit_pass_completion, new_data = ., type = "prob")) %>%
@@ -48,7 +47,7 @@ ep_predict <- function(preprocessed_pbp){
     dplyr::bind_cols(stats::predict(models$fit_pass_td, new_data = ., type = "prob")) %>%
     dplyr::rename(rec_td_exp = .pred_1) %>%
     # Cap TD probability at catch probability in the end zone
-    dplyr::mutate(rec_td_exp = if_else(air_yards == yardline_100, pass_completion_exp, rec_td_exp)) %>%
+    dplyr::mutate(rec_td_exp = dplyr::if_else(air_yards == yardline_100, pass_completion_exp, rec_td_exp)) %>%
     dplyr::select(-.pred_0) %>%
     dplyr::bind_cols(stats::predict(models$fit_pass_fd, new_data = ., type = "prob")) %>%
     dplyr::rename(rec_fd_exp = .pred_1) %>%
@@ -67,13 +66,25 @@ ep_predict <- function(preprocessed_pbp){
 
 }
 
-
 .load_models <- function(){
 
-  filenames <- list.files("./models", pattern="fit", full.names=TRUE)
-  obj_names <- stringr::str_remove_all(filenames,"./models/|.RDS")
-  models <- purrr::map(filenames, readRDS) %>% rlang::set_names(obj_names)
-
-  return(models)
+  list(fit_rush_yards = ffexpectedpoints::fit_rush_yards,
+       fit_rush_tds = ffexpectedpoints::fit_rush_tds,
+       fit_rush_fds = ffexpectedpoints::fit_rush_fds,
+       fit_pass_yards = ffexpectedpoints::fit_pass_yards,
+       fit_pass_td = ffexpectedpoints::fit_pass_td,
+       fit_pass_fd = ffexpectedpoints::fit_pass_fd,
+       fit_pass_completion = ffexpectedpoints::fit_pass_completion,
+       fit_pass_int = ffexpectedpoints::fit_pass_int)
 
 }
+
+# .load_models <- function(){
+#
+#   filenames <- list.files("./models", pattern="fit", full.names=TRUE)
+#   obj_names <- stringr::str_remove_all(filenames,"./models/|.RDS")
+#   models <- purrr::map(filenames, readRDS) %>% rlang::set_names(obj_names)
+#
+#   return(models)
+#
+# }
