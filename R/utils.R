@@ -25,6 +25,7 @@
   nflreadr::load_rosters(seasons) %>%
     dplyr::transmute(season,
                      gsis_id,
+                     full_name,
                      position = dplyr::if_else(position %in% c("HB","FB"), "RB", position),
                      birth_date)
 }

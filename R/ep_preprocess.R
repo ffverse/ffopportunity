@@ -90,6 +90,7 @@ ep_preprocess <- function(pbp){
     dplyr::filter(play_type == "run", !grepl("kneel|Aborted", desc)) %>%
     dplyr::left_join(rosters, by = c("fantasy_player_id" = "gsis_id", "season"),
                      na_matches = "never") %>%
+    # dplyr::rename(rusher_full_name = full_name) %>%
     # dplyr::filter(position %in% c("QB","RB","WR","TE")) %>%
     dplyr::mutate(
 
@@ -136,10 +137,10 @@ ep_preprocess <- function(pbp){
     dplyr::filter(play_type == "pass", !grepl("Aborted", desc)) %>%
     dplyr::left_join(rosters, by = c("passer_player_id" = "gsis_id", "season"),
                      na_matches = "never") %>%
-    dplyr::rename(passer_position = position, passer_birth_date = birth_date) %>%
+    dplyr::rename(passer_position = position, passer_birth_date = birth_date, passer_full_name = full_name) %>%
     dplyr::left_join(rosters, by = c("receiver_player_id" = "gsis_id", "season"),
                      na_matches = "never") %>%
-    dplyr::rename(receiver_position = position, receiver_birth_date = birth_date) %>%
+    dplyr::rename(receiver_position = position, receiver_birth_date = birth_date, receiver_full_name = full_name) %>%
 
     # dplyr::filter(passer_position %in% c("QB","RB","WR","TE")) %>%
     # dplyr::filter(receiver_position %in% c("QB","RB","WR","TE")) %>%
@@ -178,8 +179,8 @@ ep_preprocess <- function(pbp){
       score = factor(score, levels = as.character(c(0,1))),
       pass_complete = factor(pass_complete, levels = c("complete", "incomplete"), ordered = TRUE),
       interception = factor(interception, levels = as.character(c(0,1))),
-      qb_hit = factor(qb_hit, levels = as.character(c(0,1))))
-  # dplyr::filter(!is.na(air_yards))
+      qb_hit = factor(qb_hit, levels = as.character(c(0,1)))) %>%
+    dplyr::filter(!is.na(air_yards))
 
   return(pass_df)
 }

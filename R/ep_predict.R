@@ -19,8 +19,6 @@
 
 ep_predict <- function(preprocessed_pbp){
 
-  library(workflows)
-
   models <- .load_models()
 
   rush_df <-
@@ -59,8 +57,8 @@ ep_predict <- function(preprocessed_pbp){
                   touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, rec_td_exp),
                   two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, rec_td_exp, 0))
 
-  list_df <- list(rush_df,
-                  pass_df)
+  list_df <- list(rush_df = rush_df,
+                  pass_df = pass_df)
 
   return(list_df)
 
