@@ -66,6 +66,8 @@ ep_preprocess <- function(pbp){
                               TRUE ~ wind),
 
       #Set ordered factor variables
+      qb_dropback = factor(qb_dropback, levels = as.character(c(0,1))),
+      qb_scramble = factor(qb_scramble, levels = as.character(c(0,1))),
       week = factor(week, levels = as.character(c(1:21)), ordered = TRUE),
       game_month = factor(game_month, levels = as.character(c(9:12)), ordered = TRUE),
       game_week = factor(game_week, levels = as.character(c(36:53)), ordered = TRUE),
@@ -76,8 +78,6 @@ ep_preprocess <- function(pbp){
       shotgun = factor(shotgun, levels = as.character(c(0,1))),
       no_huddle = factor(no_huddle, levels = as.character(c(0,1))),
       two_point_attempt = factor(two_point_attempt, levels = as.character(c(0,1))),
-      qb_dropback = factor(qb_dropback, levels = as.character(c(0,1))),
-      qb_scramble = factor(qb_scramble, levels = as.character(c(0,1))),
       first_down = factor(first_down, levels = as.character(c(0,1)))
     )
   return(pbp)
@@ -94,6 +94,8 @@ ep_preprocess <- function(pbp){
     dplyr::mutate(
 
       #Data Cleaning
+      season = factor(season, levels = as.character(c(2001:2020)), ordered = TRUE),
+
       score = dplyr::if_else(rush_touchdown == 1 | two_point_converted == 1, 1, 0),
       rushing_yards = dplyr::case_when(
         is.na(rushing_yards) & two_point_attempt == 1 & two_point_converted == 1 ~ yardline_100,
@@ -118,7 +120,6 @@ ep_preprocess <- function(pbp){
       rushing_fantasy_points = 6*rush_touchdown + 2*two_point_converted + 0.1*rushing_yards - 2*fumble_lost,
 
       #Set ordered factor variables
-      season = factor(season, levels = as.character(c(2001:2020)), ordered = TRUE),
 
       score = factor(score, levels = as.character(c(0,1))))
   # dplyr::filter(run_gap_dir %in% c("left_end", "left_tackle", "left_guard", "middle_guard",
@@ -145,6 +146,8 @@ ep_preprocess <- function(pbp){
     dplyr::mutate(
 
       #Data Cleaning
+      season = factor(season, levels = as.character(c(2001:2020)), ordered = TRUE),
+
       score = dplyr::if_else(pass_touchdown == 1 | two_point_converted == 1, 1, 0),
       receiving_yards = dplyr::case_when(
         is.na(receiving_yards) & two_point_attempt == 1 & two_point_converted == 1 ~ yardline_100,
@@ -156,6 +159,7 @@ ep_preprocess <- function(pbp){
       pass_complete = dplyr::if_else(complete_pass == 1, "complete", "incomplete"),
       xpass = dplyr::if_else(two_point_attempt == 1, 0.75, xpass),
       distance_to_sticks = air_yards - ydstogo,
+      distance_to_endzone = air_yards - yardline_100,
       pass_location = dplyr::case_when(
         !is.na(pass_location) ~ pass_location,
         grepl(" left", desc) ~ "left",
@@ -171,7 +175,6 @@ ep_preprocess <- function(pbp){
       passing_fantasy_points =  4*pass_touchdown + 2*two_point_converted  + 0.04*receiving_yards - 2*fumble_lost - 2*interception,
 
       #Set ordered factor variables
-      season = factor(season, levels = as.character(c(2001:2020)), ordered = TRUE),
       score = factor(score, levels = as.character(c(0,1))),
       pass_complete = factor(pass_complete, levels = c("complete", "incomplete"), ordered = TRUE),
       interception = factor(interception, levels = as.character(c(0,1))),
