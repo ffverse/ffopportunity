@@ -31,31 +31,31 @@ ep_predict <- function(preprocessed_pbp){
     dplyr::bind_cols(stats::predict(models$fit_rush_fds, new_data = ., type = "prob")) %>%
     dplyr::select(-.pred_0) %>%
     dplyr::rename(rushing_fd_exp = .pred_1) %>%
-    dplyr::mutate(season = substr(game_id, 1, 4),
-                  touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, rushing_td_exp),
+    dplyr::mutate(rush_touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, rushing_td_exp),
                   two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, rushing_td_exp, 0))
 
   pass_df <-
     preprocessed_pbp$pass_df %>%
     dplyr::bind_cols(stats::predict(models$fit_pass_completion, new_data = ., type = "prob")) %>%
-    dplyr::rename(pass_completion_exp = .pred_complete) %>%
-    dplyr::select(-.pred_incomplete) %>%
-    dplyr::bind_cols(stats::predict(models$fit_pass_yards, new_data = .)) %>%
-    dplyr::rename(receiving_yards_exp = .pred) %>%
+    dplyr::rename(pass_completion_exp = .pred_1) %>%
+    dplyr::select(-.pred_0) %>%
+    dplyr::bind_cols(stats::predict(models$fit_pass_yac, new_data = .)) %>%
+    dplyr::rename(yards_after_catch_exp = .pred) %>%
+    dplyr::mutate(yardline_exp = yardline_100 - air_yards - yards_after_catch_exp) %>%
+
     dplyr::bind_cols(stats::predict(models$fit_pass_td, new_data = ., type = "prob")) %>%
-    dplyr::rename(rec_td_exp = .pred_1) %>%
+    dplyr::rename(pass_touchdown_exp = .pred_1) %>%
     # Cap TD probability at catch probability in the end zone
-    dplyr::mutate(rec_td_exp = dplyr::if_else(air_yards == yardline_100, pass_completion_exp, rec_td_exp)) %>%
+    dplyr::mutate(pass_touchdown_exp = dplyr::if_else(air_yards == yardline_100, pass_completion_exp, pass_touchdown_exp)) %>%
     dplyr::select(-.pred_0) %>%
     dplyr::bind_cols(stats::predict(models$fit_pass_fd, new_data = ., type = "prob")) %>%
-    dplyr::rename(rec_fd_exp = .pred_1) %>%
+    dplyr::rename(pass_first_down_exp = .pred_1) %>%
     dplyr::select(-.pred_0) %>%
     dplyr::bind_cols(stats::predict(models$fit_pass_int, new_data = ., type = "prob")) %>%
     dplyr::rename(passing_int_exp = .pred_1) %>%
     dplyr::select(-.pred_0) %>%
-    dplyr::mutate(season = substr(game_id, 1, 4),
-                  touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, rec_td_exp),
-                  two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, rec_td_exp, 0))
+    dplyr::mutate(pass_touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, pass_touchdown_exp),
+                  two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, pass_touchdown_exp, 0))
 
   list_df <- list(rush_df = rush_df,
                   pass_df = pass_df)
@@ -69,7 +69,7 @@ ep_predict <- function(preprocessed_pbp){
   list(fit_rush_yards = ffexpectedpoints::fit_rush_yards,
        fit_rush_tds = ffexpectedpoints::fit_rush_tds,
        fit_rush_fds = ffexpectedpoints::fit_rush_fds,
-       fit_pass_yards = ffexpectedpoints::fit_pass_yards,
+       fit_pass_yac = ffexpectedpoints::fit_pass_yac,
        fit_pass_td = ffexpectedpoints::fit_pass_td,
        fit_pass_fd = ffexpectedpoints::fit_pass_fd,
        fit_pass_completion = ffexpectedpoints::fit_pass_completion,
