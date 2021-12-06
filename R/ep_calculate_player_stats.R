@@ -6,7 +6,7 @@
 #' \donttest{
 #' pbp <- nflreadr::load_pbp(2021)
 #' temp <- ep_preprocess(pbp)
-#' pred_obj <- ep_predict(temp)
+#' predicted_pbp <- ep_predict(temp)
 #' cleaned <- ep_calculate_player_stats(pred_obj)
 #' }
 #'
@@ -46,7 +46,6 @@ ep_calculate_player_stats <- function(predicted_pbp){
                                                                                  6*rush_touchdown_exp),
                      fumble_lost)
 
-
   pass_df <-
     predicted_pbp$pass_df %>%
     dplyr::transmute(season = substr(game_id, 1, 4),
@@ -70,7 +69,7 @@ ep_calculate_player_stats <- function(predicted_pbp){
                      complete_pass = dplyr::if_else(complete_pass == "1", 1L, 0L),
                      complete_pass_exp = pass_completion_exp,
 
-                     yards_gained = receiving_yards,
+                     yards_gained = dplyr::if_else(is.na(receiving_yards), 0, receiving_yards),
                      yards_gained_exp = pass_completion_exp * (yards_after_catch_exp + air_yards),
 
                      touchdown = dplyr::if_else(pass_touchdown == "1", 1L, 0L),
@@ -102,7 +101,7 @@ ep_calculate_player_stats <- function(predicted_pbp){
                        names_from = player_type,
                        names_glue = "{player_type}_{.value}",
                        values_fn = sum,
-                       values_from = where(is.numeric)
+                       values_from = c(where(is.numeric), -week)
     ) %>%
     janitor::remove_empty(which = "cols") %>%
     dplyr::mutate(dplyr::across(.cols = where(is.numeric),

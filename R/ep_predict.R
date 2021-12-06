@@ -14,8 +14,7 @@
 #'
 #' @seealso `vignette("basic")` for example usage
 #'
-#' @export
-#'
+#' @'import predict.xgb.Booster predict.xgb.Booster.handle
 
 ep_predict <- function(preprocessed_pbp){
 
