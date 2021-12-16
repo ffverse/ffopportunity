@@ -7,7 +7,10 @@
 #' pbp <- nflreadr::load_pbp(2021)
 #' temp <- ep_preprocess(pbp)
 #' predicted_pbp <- ep_predict(temp)
-#' cleaned <- ep_calculate_player_stats(pred_obj)
+#' cleaned <- ep_calculate_player_stats(predicted_pbp, stat_type = "all")
+#'
+#' predicted_pbp$pass_df %>% filter(week == 5, posteam == "BAL", first_down == 1) %>% view()
+#' predicted_pbp$rush_df %>% filter(week == 5, two_point_attempt == 1) %>% view()
 #' }
 #'
 #' @return a dataframe with the expected fields added
@@ -17,7 +20,7 @@
 #' @export
 #'
 
-ep_calculate_player_stats <- function(predicted_pbp){
+ep_calculate_player_stats <- function(predicted_pbp, stat_type = c("expected_points", "team_shares", "foresight")){
 
   rush_df <-
     predicted_pbp$rush_df %>%
@@ -31,18 +34,18 @@ ep_calculate_player_stats <- function(predicted_pbp){
                      position,
                      posteam,
                      player_type = "rush",
-                     attempt = 1,
-                     yards_gained = rushing_yards,
-                     yards_gained_exp = rushing_yards_exp,
+                     attempt = dplyr::if_else(two_point_attempt == 1, 0, rush_attempt),
+                     yards_gained = rushing_yards, #already 0 for 2pt attempts
+                     yards_gained_exp = dplyr::if_else(two_point_attempt == 1, 0, rushing_yards_exp),
                      touchdown = dplyr::if_else(rush_touchdown == "1", 1L, 0L),
                      touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, rush_touchdown_exp),
                      two_point_conv = two_point_converted,
-                     two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, rush_touchdown_exp, 0),
+                     two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, two_point_conv_exp, 0),
                      first_down = dplyr::if_else(first_down == "1", 1L, 0L),
-                     first_down_exp = rushing_fd_exp,
+                     first_down_exp = dplyr::if_else(two_point_attempt == 1, 0, rushing_fd_exp),
                      fantasy_points = 6*touchdown + 2*two_point_converted + 0.1*rushing_yards - 2*fumble_lost,
                      fantasy_points_exp = 0.1*rushing_yards_exp + dplyr::if_else(two_point_attempt == 1,
-                                                                                 2*rush_touchdown_exp,
+                                                                                 2*two_point_conv_exp,
                                                                                  6*rush_touchdown_exp),
                      fumble_lost)
 
@@ -64,22 +67,22 @@ ep_calculate_player_stats <- function(predicted_pbp){
                      rec.position = receiver_position,
 
                      posteam,
-                     attempt = 1,
-                     air_yards,
+                     attempt = dplyr::if_else(two_point_attempt == 1, 0, pass_attempt),
+                     air_yards = dplyr::if_else(two_point_attempt == 1, 0, air_yards),
                      complete_pass = dplyr::if_else(complete_pass == "1", 1L, 0L),
-                     complete_pass_exp = pass_completion_exp,
+                     complete_pass_exp = dplyr::if_else(two_point_attempt == 1, 0, pass_completion_exp),
 
-                     yards_gained = dplyr::if_else(is.na(receiving_yards), 0, receiving_yards),
-                     yards_gained_exp = pass_completion_exp * (yards_after_catch_exp + air_yards),
+                     yards_gained = dplyr::if_else(is.na(receiving_yards), 0, receiving_yards), #already 0 for 2pt attempts
+                     yards_gained_exp = complete_pass_exp * (yards_after_catch_exp + air_yards),
 
                      touchdown = dplyr::if_else(pass_touchdown == "1", 1L, 0L),
                      touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, pass_touchdown_exp),
                      two_point_conv = two_point_converted,
-                     two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, pass_touchdown_exp, 0),
+                     two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, two_point_conv_exp, 0),
                      first_down = dplyr::if_else(first_down == "1", 1L, 0L),
-                     first_down_exp = pass_first_down_exp,
+                     first_down_exp = dplyr::if_else(two_point_attempt == 1, 0, pass_first_down_exp),
                      interception = dplyr::if_else(interception == "1", 1L, 0L),
-                     interception_exp = passing_int_exp,
+                     interception_exp = dplyr::if_else(two_point_attempt == 1, 0, passing_int_exp),
                      fumble_lost) %>%
     tidyr::pivot_longer(cols = c(pass.player_id, pass.full_name, pass.position,
                                  rec.player_id, rec.full_name, rec.position),
@@ -128,5 +131,16 @@ ep_calculate_player_stats <- function(predicted_pbp){
     combined_df[paste0(f,"_diff")] <- combined_df[f]-combined_df[paste0(f,"_exp")]
   }
 
-  return(combined_df)
+  if(stat_type == "expected_points") return(combined_df)
+
+  team_df <-
+    combined_df %>%
+    dplyr::group_by(season, posteam, week, game_id) %>%
+    dplyr::summarise(
+      dplyr::across(
+        .cols = where(is.numeric),
+        .fns = sum)
+      ) %>%
+    dplyr::ungroup()
+
 }

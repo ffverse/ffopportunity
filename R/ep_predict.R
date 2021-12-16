@@ -53,8 +53,8 @@ ep_predict <- function(preprocessed_pbp){
     dplyr::bind_cols(stats::predict(models$fit_pass_int, new_data = ., type = "prob")) %>%
     dplyr::rename(passing_int_exp = .pred_1) %>%
     dplyr::select(-.pred_0) %>%
-    dplyr::mutate(pass_touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, pass_touchdown_exp),
-                  two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, pass_touchdown_exp, 0))
+    dplyr::mutate(two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, pass_touchdown_exp, 0),
+                  pass_touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, pass_touchdown_exp))
 
   list_df <- list(rush_df = rush_df,
                   pass_df = pass_df)
