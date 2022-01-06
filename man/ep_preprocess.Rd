@@ -4,7 +4,7 @@
 \alias{ep_preprocess}
 \title{Preprocess Data}
 \usage{
-ep_preprocess(pbp)
+ep_preprocess(pbp, seasons = 2021)
 }
 \value{
 a list of two dataframes (one for passes and one for rushes)

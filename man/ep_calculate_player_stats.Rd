@@ -4,7 +4,10 @@
 \alias{ep_calculate_player_stats}
 \title{Summarize EP}
 \usage{
-ep_calculate_player_stats(predicted_pbp)
+ep_calculate_player_stats(
+  predicted_pbp,
+  stat_type = c("expected_points", "team_stats")
+)
 }
 \value{
 a dataframe with the expected fields added
@@ -16,8 +19,11 @@ This function summarizes the EP data up to the game level
 \donttest{
 pbp <- nflreadr::load_pbp(2021)
 temp <- ep_preprocess(pbp)
-pred_obj <- ep_predict(temp)
-cleaned <- ep_calculate_player_stats(pred_obj)
+predicted_pbp <- ep_predict(temp)
+cleaned <- ep_calculate_player_stats(predicted_pbp)
+
+predicted_pbp$pass_df \%>\% filter(game_id == "2021_01_ARI_TEN", posteam == "ARI", first_down == 1, penalty == 1) \%>\% tibble::view()
+predicted_pbp$rush_df \%>\% filter(week == 5, two_point_attempt == 1) \%>\% view()
 }
 
 }
