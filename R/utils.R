@@ -44,27 +44,24 @@ NULL
 #' @return The result of calling `rhs(lhs)`.
 NULL
 
-#' @keywords internal
 vcli_start <- function(...){
   v <- getOption("ffexpectedpoints.verbose", default = TRUE)
 
   if(!v) return(NULL)
 
-  cli::cli_process_start(...)
+  cli::cli_process_start(...,.envir = parent.frame(2))
 }
-#' @keywords internal
 vcli_end <- function(...){
   v <- getOption("ffexpectedpoints.verbose", default = TRUE)
 
   if(!v) return(NULL)
 
-  cli::cli_process_done(...)
+  cli::cli_process_done(..., .envir = parent.frame(2))
 }
-#' @keywords internal
 vcli_rule <- function(...){
   v <- getOption("ffexpectedpoints.verbose", default = TRUE)
 
   if(!v) return(NULL)
 
-  cli::cli_rule(...)
+  cli::cli_rule(..., .envir = parent.frame())
 }
