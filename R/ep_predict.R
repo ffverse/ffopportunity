@@ -41,7 +41,7 @@ ep_predict <- function(preprocessed_pbp) {
     dplyr::mutate(yardline_exp =
                     .data$yardline_100 -
                     .data$air_yards -
-                    data$yards_after_catch_exp) %>%
+                    .data$yards_after_catch_exp) %>%
     .forge_and_predict("pass_touchdown") %>%
     dplyr::mutate(pass_touchdown_exp = dplyr::if_else(
       .data$air_yards == .data$yardline_100,
