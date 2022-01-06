@@ -5,8 +5,8 @@
 #' @examples
 #' \donttest{
 #' pbp <- nflreadr::load_pbp(2021)
-#' temp <- ep_preprocess(pbp)
-#' pred_obj <- ep_predict(temp)
+#' preprocessed_pbp <- ep_preprocess(pbp)
+#' pred_obj <- ep_predict(preprocessed_pbp)
 #'
 #' }
 #'
@@ -18,41 +18,42 @@
 
 ep_predict <- function(preprocessed_pbp){
 
-  models <- .load_models()
+  models <- .load_model_obj("models")
+  blueprints <- .load_model_obj("blueprints")
 
   rush_df <-
     preprocessed_pbp$rush_df %>%
-    dplyr::bind_cols(stats::predict(models$fit_rush_yards, new_data = .)) %>%
-    dplyr::rename(rushing_yards_exp = .pred) %>%
-    dplyr::bind_cols(stats::predict(models$fit_rush_tds, new_data = ., type = "prob")) %>%
-    dplyr::rename(rushing_td_exp = .pred_1) %>%
-    dplyr::select(-.pred_0) %>%
-    dplyr::bind_cols(stats::predict(models$fit_rush_fds, new_data = ., type = "prob")) %>%
-    dplyr::select(-.pred_0) %>%
-    dplyr::rename(rushing_fd_exp = .pred_1) %>%
+    dplyr::mutate(rushing_yards_exp = stats::predict(models$rush_yard,
+                                                     newdata = hardhat::forge(new_data = .,
+                                                                              blueprints$rush_yard)$predictors %>% as.matrix())) %>%
+    dplyr::mutate(rushing_td_exp = stats::predict(models$rush_td,
+                                                  newdata = hardhat::forge(new_data = .,
+                                                                           blueprints$rush_td)$predictors %>% as.matrix())) %>%
+    dplyr::mutate(rushing_fd_exp = stats::predict(models$rush_fd,
+                                                  newdata = hardhat::forge(new_data = .,
+                                                                           blueprints$rush_fd)$predictors %>% as.matrix())) %>%
     dplyr::mutate(rush_touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, rushing_td_exp),
                   two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, rushing_td_exp, 0))
 
   pass_df <-
     preprocessed_pbp$pass_df %>%
-    dplyr::bind_cols(stats::predict(models$fit_pass_completion, new_data = ., type = "prob")) %>%
-    dplyr::rename(pass_completion_exp = .pred_1) %>%
-    dplyr::select(-.pred_0) %>%
-    dplyr::bind_cols(stats::predict(models$fit_pass_yac, new_data = .)) %>%
-    dplyr::rename(yards_after_catch_exp = .pred) %>%
-    dplyr::mutate(yardline_exp = yardline_100 - air_yards - yards_after_catch_exp) %>%
-
-    dplyr::bind_cols(stats::predict(models$fit_pass_td, new_data = ., type = "prob")) %>%
-    dplyr::rename(pass_touchdown_exp = .pred_1) %>%
-    # Cap TD probability at catch probability in the end zone
-    dplyr::mutate(pass_touchdown_exp = dplyr::if_else(air_yards == yardline_100, pass_completion_exp, pass_touchdown_exp)) %>%
-    dplyr::select(-.pred_0) %>%
-    dplyr::bind_cols(stats::predict(models$fit_pass_fd, new_data = ., type = "prob")) %>%
-    dplyr::rename(pass_first_down_exp = .pred_1) %>%
-    dplyr::select(-.pred_0) %>%
-    dplyr::bind_cols(stats::predict(models$fit_pass_int, new_data = ., type = "prob")) %>%
-    dplyr::rename(passing_int_exp = .pred_1) %>%
-    dplyr::select(-.pred_0) %>%
+    dplyr::mutate(pass_completion_exp = stats::predict(models$pass_completion,
+                                                       newdata = hardhat::forge(new_data = .,
+                                                                                blueprints$pass_completion)$predictors %>% as.matrix())) %>%
+    dplyr::mutate(yards_after_catch_exp = stats::predict(models$pass_yac,
+                                                         newdata = hardhat::forge(new_data = .,
+                                                                                  blueprints$pass_yac)$predictors %>% as.matrix()),
+                  yardline_exp = yardline_100 - air_yards - yards_after_catch_exp) %>%
+    dplyr::mutate(pass_touchdown_exp = stats::predict(models$pass_td,
+                                                         newdata = hardhat::forge(new_data = .,
+                                                                                  blueprints$pass_td)$predictors %>% as.matrix()),
+                  pass_touchdown_exp = dplyr::if_else(air_yards == yardline_100, pass_completion_exp, pass_touchdown_exp)) %>%
+    dplyr::mutate(pass_first_down_exp = stats::predict(models$pass_fd,
+                                                       newdata = hardhat::forge(new_data = .,
+                                                                                blueprints$pass_fd)$predictors %>% as.matrix())) %>%
+    dplyr::mutate(passing_int_exp = stats::predict(models$pass_int,
+                                                       newdata = hardhat::forge(new_data = .,
+                                                                                blueprints$pass_int)$predictors %>% as.matrix())) %>%
     dplyr::mutate(two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, pass_touchdown_exp, 0),
                   pass_touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, pass_touchdown_exp))
 
@@ -60,28 +61,36 @@ ep_predict <- function(preprocessed_pbp){
                   pass_df = pass_df)
 
   return(list_df)
-
 }
 
-.load_models <- function(){
+.load_model_obj <- function(type = c("models", "blueprints")){
 
-  list(fit_rush_yards = ffexpectedpoints::fit_rush_yards,
-       fit_rush_tds = ffexpectedpoints::fit_rush_tds,
-       fit_rush_fds = ffexpectedpoints::fit_rush_fds,
-       fit_pass_yac = ffexpectedpoints::fit_pass_yac,
-       fit_pass_td = ffexpectedpoints::fit_pass_td,
-       fit_pass_fd = ffexpectedpoints::fit_pass_fd,
-       fit_pass_completion = ffexpectedpoints::fit_pass_completion,
-       fit_pass_int = ffexpectedpoints::fit_pass_int)
+  if (type == "models") {
+    load_fn <-  xgboost::xgb.load
+    load_pattern <- "xgb" }
+  else {
+    load_fn <-  readRDS
+    load_pattern <- "rds"
+  }
+
+  folder_path <- system.file("extdata", package = "ffexpectedpoints")
+  file_names <- list.files(folder_path, pattern = load_pattern, full.names = TRUE)
+  obj_names <- stringr::str_remove_all(file_names, paste0(folder_path,"/|.xgb|.rds"))
+  models <- purrr::map(file_names, load_fn) %>% rlang::set_names(obj_names)
+
+  return(models)
 
 }
 
 # .load_models <- function(){
 #
-#   filenames <- list.files("./models", pattern="fit", full.names=TRUE)
-#   obj_names <- stringr::str_remove_all(filenames,"./models/|.RDS")
-#   models <- purrr::map(filenames, readRDS) %>% rlang::set_names(obj_names)
-#
-#   return(models)
+#   list(fit_rush_yards = ffexpectedpoints::fit_rush_yards,
+#        fit_rush_tds = ffexpectedpoints::fit_rush_tds,
+#        fit_rush_fds = ffexpectedpoints::fit_rush_fds,
+#        fit_pass_yac = ffexpectedpoints::fit_pass_yac,
+#        fit_pass_td = ffexpectedpoints::fit_pass_td,
+#        fit_pass_fd = ffexpectedpoints::fit_pass_fd,
+#        fit_pass_completion = ffexpectedpoints::fit_pass_completion,
+#        fit_pass_int = ffexpectedpoints::fit_pass_int)
 #
 # }

@@ -18,9 +18,9 @@
 #' @export
 #'
 
-ep_preprocess <- function(pbp){
+ep_preprocess <- function(pbp, seasons = 2021){
 
-  rosters <- .get_rosters(2021)
+  rosters <- .get_rosters(seasons)
 
   prep_pbp <- .preprocess_common_fields(pbp)
 
