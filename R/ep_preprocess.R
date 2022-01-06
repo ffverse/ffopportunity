@@ -5,7 +5,7 @@
 #'
 #' @examples
 #' \donttest{
-#' pbp <- nflreadr::load_pbp(2021)
+#' pbp <- nflreadr::load_pbp(c(2019:2021))
 #' .preprocess_common_fields(pbp) %>% dplyr::glimpse()
 #' temp <- ep_preprocess(pbp) %>% dplyr::glimpse()
 #' }
@@ -18,9 +18,9 @@
 #' @export
 #'
 
-ep_preprocess <- function(pbp, seasons = 2021){
+ep_preprocess <- function(pbp){
 
-  rosters <- .get_rosters(seasons)
+  rosters <- .get_rosters(unique(pbp$season))
 
   prep_pbp <- .preprocess_common_fields(pbp)
 
