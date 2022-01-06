@@ -24,22 +24,37 @@ ep_predict <- function(preprocessed_pbp) {
     .forge_and_predict("rushing_td") %>%
     .forge_and_predict("rushing_fd") %>%
     dplyr::mutate(
-      rush_touchdown_exp = dplyr::if_else(.data$two_point_attempt == 1, 0, .data$rushing_td_exp),
-      two_point_conv_exp = dplyr::if_else(.data$two_point_attempt == 1, .data$rushing_td_exp, 0)
+      rushing_td_exp = dplyr::if_else(
+        .data$two_point_attempt == 1, 0, .data$rushing_td_exp),
+      two_point_conv_exp = dplyr::if_else(
+        .data$two_point_attempt == 1, .data$rushing_td_exp, 0)) %>%
+    dplyr::rename(
+      rush_yards_exp = .data$rushing_yards_exp,
+      rush_touchdown_exp = .data$rushing_td_exp,
+      rush_first_down_exp = .data$rushing_fd_exp
     )
 
   pass_df <-
     preprocessed_pbp$pass_df %>%
     .forge_and_predict("pass_completion") %>%
     .forge_and_predict("yards_after_catch") %>%
-    dplyr::mutate(yardline_exp = .data$yardline_100 - .data$air_yards - .data$yards_after_catch_exp) %>%
+    dplyr::mutate(yardline_exp =
+                    .data$yardline_100 -
+                    .data$air_yards -
+                    data$yards_after_catch_exp) %>%
     .forge_and_predict("pass_touchdown") %>%
-    dplyr::mutate(pass_touchdown_exp = dplyr::if_else(.data$air_yards == .data$yardline_100, .data$pass_completion_exp, .data$pass_touchdown_exp)) %>%
+    dplyr::mutate(pass_touchdown_exp = dplyr::if_else(
+      .data$air_yards == .data$yardline_100,
+      .data$pass_completion_exp,
+      .data$pass_touchdown_exp)) %>%
     .forge_and_predict("pass_first_down") %>%
     .forge_and_predict("passing_int") %>%
+    dplyr::rename(pass_interception_exp = .data$passing_int_exp) %>%
     dplyr::mutate(
-      two_point_conv_exp = dplyr::if_else(.data$two_point_attempt == 1, .data$pass_touchdown_exp, 0),
-      pass_touchdown_exp = dplyr::if_else(.data$two_point_attempt == 1, 0, .data$pass_touchdown_exp)
+      two_point_conv_exp = dplyr::if_else(
+        .data$two_point_attempt == 1, .data$pass_touchdown_exp, 0),
+      pass_touchdown_exp = dplyr::if_else(
+        .data$two_point_attempt == 1, 0, .data$pass_touchdown_exp)
     )
 
   list_df <- list(
@@ -59,13 +74,16 @@ ep_predict <- function(preprocessed_pbp) {
   df[[paste0(variable, "_exp")]] <-
     stats::predict(
       object = model_obj$model,
-      newdata = hardhat::forge(new_data = df, blueprint = model_obj$blueprint)$predictors %>% as.matrix()
+      newdata = hardhat::forge(new_data = df,
+                               blueprint = model_obj$blueprint)$predictors %>%
+        as.matrix()
     )
 
   return(df)
 }
 
-# future: reroute system.file() to user's cache folder and automatically/prompt-for download if file not found?
+# future: reroute system.file() to user's cache folder and
+# automatically/prompt-for download if file not found?
 # future: add some kind of version selector (as package option?)
 #' @keywords internal
 .load_model_objs <- function(variable) {
