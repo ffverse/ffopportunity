@@ -20,10 +20,11 @@
 #'
 #' @export
 
-
 ep_summarize <- function(
   predicted_pbp,
-  stat_type = c("expected_points", "team_stats")){
+  stat_type = c("all", "expected_points", "team_stats")){
+
+  stat_type <- rlang::arg_match(stat_type)
 
   rush_df <-
     predicted_pbp$rush_df %>%
@@ -135,7 +136,8 @@ ep_summarize <- function(
                                    4*.data$touchdown +
                                      2*.data$two_point_conv  +
                                      0.04*.data$yards_gained -
-                                     2*.data$fumble_lost -
+                                     # Haven't included sack fumbles yet
+                                     # 2*.data$fumble_lost -
                                      2*.data$interception))
 
   combined_df <-
@@ -174,7 +176,17 @@ ep_summarize <- function(
       total_fantasy_points =
         sum(dplyr::across(ends_with("fantasy_points"), sum)),
       total_fantasy_points_exp =
-      sum(dplyr::across(ends_with("fantasy_points_exp"), sum)))
+      sum(dplyr::across(ends_with("fantasy_points_exp"), sum))) %>%
+    dplyr::ungroup() %>%
+    dplyr::rename(
+      pass_complete = .data$pass_complete_pass,
+      pass_complete_exp = .data$pass_complete_pass_exp,
+      receptions = .data$rec_complete_pass,
+      receptions_exp = .data$rec_complete_pass_exp
+    ) %>%
+    # Haven't included sack fumbles yet
+    dplyr::select(-.data$pass_fumble_lost)
+
 
   exp_fields <-
     combined_df %>%
@@ -202,8 +214,10 @@ ep_summarize <- function(
     combined_df %>%
     dplyr::left_join(team_df, by = c("season", "posteam", "week", "game_id"))
 
-  if(any("expected_points" == stat_type) & any("team_stats" == stat_type))
-    return(player_team_df)
-  else if(stat_type == "team_stats") return(team_df)
-  else return(combined_df)
+  switch(
+    stat_type,
+    "all" = return(player_team_df),
+    "expected_points" = return(combined_df),
+    "team_stats" = return(team_df)
+  )
 }

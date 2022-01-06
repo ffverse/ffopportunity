@@ -15,8 +15,6 @@
 #'
 #' @import xgboost
 ep_predict <- function(preprocessed_pbp) {
-  # models <- .load_model_obj("models")
-  # blueprints <- .load_model_obj("blueprints")
 
   rush_df <-
     preprocessed_pbp$rush_df %>%
@@ -24,10 +22,10 @@ ep_predict <- function(preprocessed_pbp) {
     .forge_and_predict("rushing_td") %>%
     .forge_and_predict("rushing_fd") %>%
     dplyr::mutate(
-      rushing_td_exp = dplyr::if_else(
-        .data$two_point_attempt == 1, 0, .data$rushing_td_exp),
       two_point_conv_exp = dplyr::if_else(
-        .data$two_point_attempt == 1, .data$rushing_td_exp, 0)) %>%
+        .data$two_point_attempt == 1, .data$rushing_td_exp, 0),
+      rushing_td_exp = dplyr::if_else(
+        .data$two_point_attempt == 1, 0, .data$rushing_td_exp)) %>%
     dplyr::rename(
       rush_yards_exp = .data$rushing_yards_exp,
       rush_touchdown_exp = .data$rushing_td_exp,
@@ -98,19 +96,4 @@ ep_predict <- function(preprocessed_pbp) {
   blueprint <- readRDS(blueprint_path)
 
   return(list(model = model, blueprint = blueprint))
-
-#   if (type == "models") {
-#     load_fn <- xgboost::xgb.load
-#     load_pattern <- "xgb$"
-#   }
-#   else {
-#     load_fn <- readRDS
-#     load_pattern <- "rds$"
-#   }
-#
-#   folder_path <- system.file("extdata", package = "ffexpectedpoints")
-#   file_names <- list.files(folder_path, pattern = load_pattern, full.names = TRUE)
-#   obj_names <- stringr::str_remove_all(file_names, paste0(folder_path, "/|.xgb$|.rds$"))
-#   models <- purrr::map(file_names, load_fn) %>% rlang::set_names(obj_names)
-#  return(models)
 }
