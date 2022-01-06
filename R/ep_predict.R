@@ -14,12 +14,12 @@
 #'
 #' @seealso `vignette("basic")` for example usage
 #'
-#' @'import predict.xgb.Booster predict.xgb.Booster.handle
 
 ep_predict <- function(preprocessed_pbp){
 
   models <- .load_model_obj("models")
   blueprints <- .load_model_obj("blueprints")
+#' @import xgboost
 
   rush_df <-
     preprocessed_pbp$rush_df %>%
