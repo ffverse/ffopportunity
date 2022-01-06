@@ -43,3 +43,28 @@ NULL
 #' @param rhs A function call using the magrittr semantics.
 #' @return The result of calling `rhs(lhs)`.
 NULL
+
+#' @keywords internal
+vcli_start <- function(...){
+  v <- getOption("ffexpectedpoints.verbose", default = TRUE)
+
+  if(!v) return(NULL)
+
+  cli::cli_process_start(...)
+}
+#' @keywords internal
+vcli_end <- function(...){
+  v <- getOption("ffexpectedpoints.verbose", default = TRUE)
+
+  if(!v) return(NULL)
+
+  cli::cli_process_done(...)
+}
+#' @keywords internal
+vcli_rule <- function(...){
+  v <- getOption("ffexpectedpoints.verbose", default = TRUE)
+
+  if(!v) return(NULL)
+
+  cli::cli_rule(...)
+}

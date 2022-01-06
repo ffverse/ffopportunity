@@ -9,8 +9,9 @@
 #' predicted_pbp <- ep_predict(temp)
 #' cleaned <- ep_calculate_player_stats(predicted_pbp)
 #'
-#' predicted_pbp$pass_df %>% filter(game_id == "2021_01_ARI_TEN", posteam == "ARI", first_down == 1, penalty == 1) %>% tibble::view()
-#' predicted_pbp$rush_df %>% filter(week == 5, two_point_attempt == 1) %>% view()
+#' predicted_pbp$pass_df %>%
+#'   dplyr::filter(game_id == "2021_01_ARI_TEN", posteam == "ARI", first_down == 1, penalty == 1)
+#' predicted_pbp$rush_df %>% dplyr::filter(week == 5, two_point_attempt == 1)
 #' }
 #'
 #' @return a dataframe with the expected fields added
@@ -18,9 +19,8 @@
 #' @seealso `vignette("basic")` for example usage
 #'
 #' @export
-#'
 
-ep_calculate_player_stats <- function(predicted_pbp, stat_type = c("expected_points", "team_stats")){
+ep_summarize <- function(predicted_pbp, stat_type = c("expected_points", "team_stats")){
 
   rush_df <-
     predicted_pbp$rush_df %>%
