@@ -7,90 +7,92 @@
 #' pbp <- nflreadr::load_pbp(2021)
 #' preprocessed_pbp <- ep_preprocess(pbp)
 #' pred_obj <- ep_predict(preprocessed_pbp)
-#'
 #' }
 #'
 #' @return a dataframe with the expected fields added
 #'
 #' @seealso `vignette("basic")` for example usage
 #'
-
-ep_predict <- function(preprocessed_pbp){
-
-  models <- .load_model_obj("models")
-  blueprints <- .load_model_obj("blueprints")
 #' @import xgboost
+ep_predict <- function(preprocessed_pbp) {
+  # models <- .load_model_obj("models")
+  # blueprints <- .load_model_obj("blueprints")
 
   rush_df <-
     preprocessed_pbp$rush_df %>%
-    dplyr::mutate(rushing_yards_exp = stats::predict(models$rush_yard,
-                                                     newdata = hardhat::forge(new_data = .,
-                                                                              blueprints$rush_yard)$predictors %>% as.matrix())) %>%
-    dplyr::mutate(rushing_td_exp = stats::predict(models$rush_td,
-                                                  newdata = hardhat::forge(new_data = .,
-                                                                           blueprints$rush_td)$predictors %>% as.matrix())) %>%
-    dplyr::mutate(rushing_fd_exp = stats::predict(models$rush_fd,
-                                                  newdata = hardhat::forge(new_data = .,
-                                                                           blueprints$rush_fd)$predictors %>% as.matrix())) %>%
-    dplyr::mutate(rush_touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, rushing_td_exp),
-                  two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, rushing_td_exp, 0))
+    .forge_and_predict("rushing_yards") %>%
+    .forge_and_predict("rushing_td") %>%
+    .forge_and_predict("rushing_fd") %>%
+    dplyr::mutate(
+      rush_touchdown_exp = dplyr::if_else(.data$two_point_attempt == 1, 0, .data$rushing_td_exp),
+      two_point_conv_exp = dplyr::if_else(.data$two_point_attempt == 1, .data$rushing_td_exp, 0)
+    )
 
   pass_df <-
     preprocessed_pbp$pass_df %>%
-    dplyr::mutate(pass_completion_exp = stats::predict(models$pass_completion,
-                                                       newdata = hardhat::forge(new_data = .,
-                                                                                blueprints$pass_completion)$predictors %>% as.matrix())) %>%
-    dplyr::mutate(yards_after_catch_exp = stats::predict(models$pass_yac,
-                                                         newdata = hardhat::forge(new_data = .,
-                                                                                  blueprints$pass_yac)$predictors %>% as.matrix()),
-                  yardline_exp = yardline_100 - air_yards - yards_after_catch_exp) %>%
-    dplyr::mutate(pass_touchdown_exp = stats::predict(models$pass_td,
-                                                         newdata = hardhat::forge(new_data = .,
-                                                                                  blueprints$pass_td)$predictors %>% as.matrix()),
-                  pass_touchdown_exp = dplyr::if_else(air_yards == yardline_100, pass_completion_exp, pass_touchdown_exp)) %>%
-    dplyr::mutate(pass_first_down_exp = stats::predict(models$pass_fd,
-                                                       newdata = hardhat::forge(new_data = .,
-                                                                                blueprints$pass_fd)$predictors %>% as.matrix())) %>%
-    dplyr::mutate(passing_int_exp = stats::predict(models$pass_int,
-                                                       newdata = hardhat::forge(new_data = .,
-                                                                                blueprints$pass_int)$predictors %>% as.matrix())) %>%
-    dplyr::mutate(two_point_conv_exp = dplyr::if_else(two_point_attempt == 1, pass_touchdown_exp, 0),
-                  pass_touchdown_exp = dplyr::if_else(two_point_attempt == 1, 0, pass_touchdown_exp))
+    .forge_and_predict("pass_completion") %>%
+    .forge_and_predict("yards_after_catch") %>%
+    dplyr::mutate(yardline_exp = .data$yardline_100 - .data$air_yards - .data$yards_after_catch_exp) %>%
+    .forge_and_predict("pass_touchdown") %>%
+    dplyr::mutate(pass_touchdown_exp = dplyr::if_else(.data$air_yards == .data$yardline_100, .data$pass_completion_exp, .data$pass_touchdown_exp)) %>%
+    .forge_and_predict("pass_first_down") %>%
+    .forge_and_predict("passing_int") %>%
+    dplyr::mutate(
+      two_point_conv_exp = dplyr::if_else(.data$two_point_attempt == 1, .data$pass_touchdown_exp, 0),
+      pass_touchdown_exp = dplyr::if_else(.data$two_point_attempt == 1, 0, .data$pass_touchdown_exp)
+    )
 
-  list_df <- list(rush_df = rush_df,
-                  pass_df = pass_df)
+  list_df <- list(
+    rush_df = rush_df,
+    pass_df = pass_df
+  )
 
   return(list_df)
 }
+#' @keywords internal
+.forge_and_predict <- function(df, variable) {
 
-.load_model_obj <- function(type = c("models", "blueprints")){
+  # could probably call .load_model_obj here based on the variable name?
 
-  if (type == "models") {
-    load_fn <-  xgboost::xgb.load
-    load_pattern <- "xgb" }
-  else {
-    load_fn <-  readRDS
-    load_pattern <- "rds"
-  }
+  model_obj <- .load_model_objs(variable)
 
-  folder_path <- system.file("extdata", package = "ffexpectedpoints")
-  file_names <- list.files(folder_path, pattern = load_pattern, full.names = TRUE)
-  obj_names <- stringr::str_remove_all(file_names, paste0(folder_path,"/|.xgb|.rds"))
-  models <- purrr::map(file_names, load_fn) %>% rlang::set_names(obj_names)
+  df[[paste0(variable, "_exp")]] <-
+    stats::predict(
+      object = model_obj$model,
+      newdata = hardhat::forge(new_data = df, blueprint = model_obj$blueprint)$predictors %>% as.matrix()
+    )
 
-  return(models)
-
+  return(df)
 }
 
-# .load_models <- function(){
+# future: reroute system.file() to user's cache folder and automatically/prompt-for download if file not found?
+# future: add some kind of version selector (as package option?)
+#' @keywords internal
+.load_model_objs <- function(variable) {
+
+  folder_path <- system.file("extdata", package = "ffexpectedpoints")
+  model_path <- file.path(folder_path, paste0(variable,".xgb"))
+  blueprint_path <- file.path(folder_path, paste0(variable,".rds"))
+
+  stopifnot(file.exists(model_path), file.exists(blueprint_path))
+
+  model <- xgboost::xgb.load(model_path)
+  blueprint <- readRDS(blueprint_path)
+
+  return(list(model = model, blueprint = blueprint))
+
+#   if (type == "models") {
+#     load_fn <- xgboost::xgb.load
+#     load_pattern <- "xgb$"
+#   }
+#   else {
+#     load_fn <- readRDS
+#     load_pattern <- "rds$"
+#   }
 #
-#   list(fit_rush_yards = ffexpectedpoints::fit_rush_yards,
-#        fit_rush_tds = ffexpectedpoints::fit_rush_tds,
-#        fit_rush_fds = ffexpectedpoints::fit_rush_fds,
-#        fit_pass_yac = ffexpectedpoints::fit_pass_yac,
-#        fit_pass_td = ffexpectedpoints::fit_pass_td,
-#        fit_pass_fd = ffexpectedpoints::fit_pass_fd,
-#        fit_pass_completion = ffexpectedpoints::fit_pass_completion,
-#        fit_pass_int = ffexpectedpoints::fit_pass_int)
-#
-# }
+#   folder_path <- system.file("extdata", package = "ffexpectedpoints")
+#   file_names <- list.files(folder_path, pattern = load_pattern, full.names = TRUE)
+#   obj_names <- stringr::str_remove_all(file_names, paste0(folder_path, "/|.xgb$|.rds$"))
+#   models <- purrr::map(file_names, load_fn) %>% rlang::set_names(obj_names)
+#  return(models)
+}
