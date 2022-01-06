@@ -17,7 +17,7 @@ This function summarizes the EP data up to the game level
 pbp <- nflreadr::load_pbp(2021)
 temp <- ep_preprocess(pbp)
 predicted_pbp <- ep_predict(temp)
-cleaned <- ep_calculate_player_stats(predicted_pbp)
+cleaned <- ep_summarize(predicted_pbp)
 
 predicted_pbp$pass_df \%>\%
   dplyr::filter(game_id == "2021_01_ARI_TEN", posteam == "ARI", first_down == 1, penalty == 1)

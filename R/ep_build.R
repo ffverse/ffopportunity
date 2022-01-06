@@ -25,7 +25,7 @@ ep_build <- function(season = nflreadr:::most_recent_season()){
     min(season) >= 2006
   )
 
-  vcli_rule("Starting ep build for {season} season(s)! {Sys.time()}")
+  vcli_rule("Starting ep build for {paste(unique(range(season)),collapse = '-')} season(s)! {Sys.time()}")
 
   vcli_start(msg = "Loading pbp...")
   pbp <- nflreadr::load_pbp(season)
@@ -43,7 +43,7 @@ ep_build <- function(season = nflreadr:::most_recent_season()){
   weekly_ep <- ep_summarize(pbp_preds)
   vcli_end(msg_done = "Summarizing data...done! {Sys.time()}")
 
-  vcli_rule("Finished building ep for {season} season(s)! {Sys.time()}")
+  vcli_rule("Finished building ep for {paste(unique(range(season)),collapse = '-')} season(s)! {Sys.time()}")
 
   out <- structure(
     list(
