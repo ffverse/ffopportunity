@@ -15,9 +15,8 @@ This function calls the prediction objects on the pre-processed data
 \examples{
 \donttest{
 pbp <- nflreadr::load_pbp(2021)
-temp <- ep_preprocess(pbp)
-pred_obj <- ep_predict(temp)
-
+preprocessed_pbp <- ep_preprocess(pbp)
+pred_obj <- ep_predict(preprocessed_pbp)
 }
 
 }
