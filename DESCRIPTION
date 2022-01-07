@@ -1,21 +1,15 @@
 Package: ffexpectedpoints
 Title: Models for Fantasy Football Expected Points
-Version: 0.0.1.01
-Authors@R: 
-    c(person(given = "Joe",
-             family = "Sydlowski",
-             role = c("aut", "cre"),
-             email = "syd235@gmail.com"),
-      person(given = "Tan",
-             family = "Ho",
-             role = c("aut"),
-             email = "tan@tanho.ca",
-             comment = c(ORCID = "0000-0001-8388-5155"))
-             )
-Description: Downloads expected fantasy points data from ffverse repositories if
-    available, and otherwise builds up expected points data by applying models to 
-    nflverse play-by-play data.
-License: Apache License (>= 2)
+Version: 0.1.0.01
+Authors@R: c(
+    person("Joe", "Sydlowski", , "syd235@gmail.com", role = c("aut", "cre")),
+    person("Tan", "Ho", , "tan@tanho.ca", role = "aut",
+           comment = c(ORCID = "0000-0001-8388-5155"))
+  )
+Description: Downloads expected fantasy points data from 'ffverse'
+    repositories if available, and otherwise builds up expected points
+    data by applying models to 'nflverse' play-by-play data.
+License: GPL (>= 3)
 URL: https://ffexpectedpoints.ffverse.com,
     https://github.com/ffverse/ffexpectedpoints
 BugReports: https://github.com/ffverse/ffexpectedpoints/issues
@@ -23,23 +17,24 @@ Depends:
     R (>= 3.6.0)
 Imports: 
     cli (>= 3.0.0),
-    magrittr (>= 1.0.0),
     dplyr (>= 1.0.0),
-    nflreadr (>= 1.1.2),
     hardhat (>= 0.1.0),
     janitor (>= 1.0.0),
+    magrittr (>= 1.0.0),
+    nflreadr (>= 1.1.2),
+    purrr (>= 0.3.0),
+    rlang (>= 0.1.0),
+    stats,
     stringr (>= 1.4.0),
     tidyr (>= 1.0.0),
     tidyselect (>= 1.0.0),
-    stats,
-    xgboost (>= 1.1),
-    purrr (>= 0.3.0),
-    rlang (>= 0.1.0)
+    utils,
+    xgboost (>= 1.1)
 Suggests: 
     roxygen2 (>= 7.1.0),
     testthat (>= 3.0.0)
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Config/testthat/edition: 3
