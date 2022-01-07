@@ -5,13 +5,19 @@
 #' @param preprocessed_pbp list with dataframes created by `ep_preprocess`
 #'
 #' @examples
+#' \dontshow{
+#' old <- options(ffexpectedpoints.verbose = FALSE)
+#' }
 #' \donttest{
 #' try({
-#' nflreadr::load_pbp(2021) %>%
-#' head(100) %>%
-#' ep_preprocess() %>%
-#' ep_predict()
+#'   nflreadr::load_pbp(2021) %>%
+#'   head(100) %>%
+#'   ep_preprocess() %>%
+#'   ep_predict()
 #' })
+#' }
+#' \dontshow{
+#' options(ffexpectedpoints.verbose = old)
 #' }
 #'
 #' @return a dataframe with the expected fields added
