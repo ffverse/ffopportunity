@@ -45,7 +45,7 @@ ep_build <- function(season = nflreadr:::most_recent_season()){
       ep_pbp_pass = pbp_preds$pass_df,
       ep_pbp_rush = pbp_preds$rush_df,
       ep_weekly = weekly_ep,
-      ep_version = "0.1",
+      ep_version = "1.0.0",
       timestamp = Sys.time()
     ),
     class = "ffep_output"

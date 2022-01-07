@@ -5,13 +5,19 @@
 #' @param preprocessed_pbp list with dataframes created by `ep_preprocess`
 #'
 #' @examples
+#' \dontshow{
+#' old <- options(ffexpectedpoints.verbose = FALSE)
+#' }
 #' \donttest{
 #' try({
-#' nflreadr::load_pbp(2021) %>%
-#' head(100) %>%
-#' ep_preprocess() %>%
-#' ep_predict()
+#'   nflreadr::load_pbp(2021) %>%
+#'   head(100) %>%
+#'   ep_preprocess() %>%
+#'   ep_predict()
 #' })
+#' }
+#' \dontshow{
+#' options(ffexpectedpoints.verbose = old)
 #' }
 #'
 #' @return a dataframe with the expected fields added
@@ -70,17 +76,21 @@ ep_predict <- function(preprocessed_pbp) {
 #' @keywords internal
 .forge_and_predict <- function(df, variable) {
 
+  silencer <- if(getOption("ffexpectedpoints.verbose", default = TRUE)) force else suppressWarnings
+
   # could probably call .load_model_obj here based on the variable name?
 
   model_obj <- .load_model_objs(variable)
 
-  df[[paste0(variable, "_exp")]] <-
-    stats::predict(
-      object = model_obj$model,
-      newdata = hardhat::forge(new_data = df,
-                               blueprint = model_obj$blueprint)$predictors %>%
-        as.matrix()
-    )
+  silencer({
+    df[[paste0(variable, "_exp")]] <-
+      stats::predict(
+        object = model_obj$model,
+        newdata = hardhat::forge(new_data = df,
+                                 blueprint = model_obj$blueprint)$predictors %>%
+          as.matrix()
+      )
+  })
 
   return(df)
 }
