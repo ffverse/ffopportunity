@@ -3,11 +3,11 @@
 #' This function performs the necesssary pre-processing steps to make
 #' expected points predictions on `nflreadr` data
 #'
+#' @param pbp pbp dataframe from `nflreadr::load_pbp()`
+#'
 #' @examples
 #' \donttest{
 #' pbp <- nflreadr::load_pbp(c(2019:2021))
-#' .preprocess_common_fields(pbp) %>% dplyr::glimpse()
-#' temp <- ep_preprocess(pbp) %>% dplyr::glimpse()
 #' }
 #'
 #' @return a list of two dataframes (one for passes and one for rushes)

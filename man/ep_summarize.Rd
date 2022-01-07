@@ -4,7 +4,15 @@
 \alias{ep_summarize}
 \title{Summarize EP}
 \usage{
-ep_summarize(predicted_pbp, stat_type = c("expected_points", "team_stats"))
+ep_summarize(
+  predicted_pbp,
+  stat_type = c("all", "expected_points", "team_stats")
+)
+}
+\arguments{
+\item{predicted_pbp}{list with dataframes created by \code{ep_predict}}
+
+\item{stat_type}{option to limit the columns returned by \code{ep_summarize}}
 }
 \value{
 a dataframe with the expected fields added
@@ -14,14 +22,16 @@ This function summarizes the EP data up to the game level
 }
 \examples{
 \donttest{
+try({
 pbp <- nflreadr::load_pbp(2021)
 temp <- ep_preprocess(pbp)
 predicted_pbp <- ep_predict(temp)
 cleaned <- ep_summarize(predicted_pbp)
 
 predicted_pbp$pass_df \%>\%
-  dplyr::filter(game_id == "2021_01_ARI_TEN", posteam == "ARI", first_down == 1, penalty == 1)
-predicted_pbp$rush_df \%>\% dplyr::filter(week == 5, two_point_attempt == 1)
+  dplyr::filter(game_id == "2021_01_ARI_TEN", posteam == "ARI",
+  first_down == 1, penalty == 1)
+})
 }
 
 }

@@ -4,7 +4,10 @@
 \alias{ep_preprocess}
 \title{Preprocess Data}
 \usage{
-ep_preprocess(pbp, seasons = 2021)
+ep_preprocess(pbp)
+}
+\arguments{
+\item{pbp}{pbp dataframe from \code{nflreadr::load_pbp()}}
 }
 \value{
 a list of two dataframes (one for passes and one for rushes)
@@ -16,9 +19,7 @@ expected points predictions on \code{nflreadr} data
 }
 \examples{
 \donttest{
-pbp <- nflreadr::load_pbp(2021)
-.preprocess_common_fields(pbp) \%>\% dplyr::glimpse()
-temp <- ep_preprocess(pbp) \%>\% dplyr::glimpse()
+pbp <- nflreadr::load_pbp(c(2019:2021))
 }
 
 }

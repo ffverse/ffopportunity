@@ -6,6 +6,9 @@
 \usage{
 ep_predict(preprocessed_pbp)
 }
+\arguments{
+\item{preprocessed_pbp}{list with dataframes created by \code{ep_preprocess}}
+}
 \value{
 a dataframe with the expected fields added
 }
@@ -16,7 +19,6 @@ This function calls the prediction objects on the pre-processed data
 \donttest{
 pbp <- nflreadr::load_pbp(2021)
 preprocessed_pbp <- ep_preprocess(pbp)
-pred_obj <- ep_predict(preprocessed_pbp)
 }
 
 }

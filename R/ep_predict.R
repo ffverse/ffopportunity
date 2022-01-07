@@ -2,11 +2,12 @@
 #'
 #' This function calls the prediction objects on the pre-processed data
 #'
+#' @param preprocessed_pbp list with dataframes created by `ep_preprocess`
+#'
 #' @examples
 #' \donttest{
 #' pbp <- nflreadr::load_pbp(2021)
 #' preprocessed_pbp <- ep_preprocess(pbp)
-#' pred_obj <- ep_predict(preprocessed_pbp)
 #' }
 #'
 #' @return a dataframe with the expected fields added

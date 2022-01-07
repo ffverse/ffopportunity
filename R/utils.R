@@ -65,3 +65,5 @@ vcli_rule <- function(...){
 
   cli::cli_rule(..., .envir = parent.frame())
 }
+
+utils::globalVariables("where")

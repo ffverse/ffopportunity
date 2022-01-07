@@ -2,16 +2,21 @@
 #'
 #' This function summarizes the EP data up to the game level
 #'
+#' @param predicted_pbp list with dataframes created by `ep_predict`
+#' @param stat_type option to limit the columns returned by `ep_summarize`
+#'
 #' @examples
 #' \donttest{
+#' try({
 #' pbp <- nflreadr::load_pbp(2021)
 #' temp <- ep_preprocess(pbp)
 #' predicted_pbp <- ep_predict(temp)
 #' cleaned <- ep_summarize(predicted_pbp)
 #'
 #' predicted_pbp$pass_df %>%
-#'   dplyr::filter(game_id == "2021_01_ARI_TEN", posteam == "ARI", first_down == 1, penalty == 1)
-#' predicted_pbp$rush_df %>% dplyr::filter(week == 5, two_point_attempt == 1)
+#'   dplyr::filter(game_id == "2021_01_ARI_TEN", posteam == "ARI",
+#'   first_down == 1, penalty == 1)
+#' })
 #' }
 #'
 #' @return a dataframe with the expected fields added
@@ -39,14 +44,14 @@ ep_summarize <- function(
       .data$position,
       .data$posteam,
       player_type = "rush",
-      attempt = dplyr::if_else(.data$two_point_attempt == 1, 0, rush_attempt),
+      attempt = dplyr::if_else(.data$two_point_attempt == 1, 0, .data$rush_attempt),
       #already 0 for 2pt attempts
       yards_gained = .data$rushing_yards,
       yards_gained_exp = dplyr::if_else(
-        .data$two_point_attempt == 1, 0, rush_yards_exp),
+        .data$two_point_attempt == 1, 0, .data$rush_yards_exp),
       touchdown = dplyr::if_else(.data$rush_touchdown == "1", 1L, 0L),
       touchdown_exp = dplyr::if_else(
-        .data$two_point_attempt == 1, 0, rush_touchdown_exp),
+        .data$two_point_attempt == 1, 0, .data$rush_touchdown_exp),
       two_point_conv = .data$two_point_converted,
       two_point_conv_exp = dplyr::if_else(
         .data$two_point_attempt == 1, .data$two_point_conv_exp, 0),
@@ -150,10 +155,11 @@ ep_summarize <- function(
                                    .data$player_id,
                                    .data$full_name,
                                    .data$position),
-                       names_from = player_type,
+                       names_from = .data$player_type,
                        names_glue = "{player_type}_{.value}",
                        values_fn = sum,
-                       values_from = c(where(is.numeric), -.data$week)) %>%
+                       values_from = c(where(is.numeric),
+                                       -.data$week)) %>%
     janitor::remove_empty(which = "cols") %>%
     dplyr::mutate(dplyr::across(.cols = where(is.numeric),
                                 .fns =  ~tidyr::replace_na(.x, 0)),
@@ -162,25 +168,25 @@ ep_summarize <- function(
     dplyr::rowwise() %>%
     dplyr::mutate(
       total_yards_gained =
-        sum(dplyr::across(ends_with("yards_gained"), sum)),
+        sum(dplyr::across(tidyselect::ends_with("yards_gained"), sum)),
       total_yards_gained_exp =
-        sum(dplyr::across(ends_with("yards_gained_exp"), sum)),
+        sum(dplyr::across(tidyselect::ends_with("yards_gained_exp"), sum)),
       total_touchdown =
-        sum(dplyr::across(ends_with("touchdown"), sum)),
+        sum(dplyr::across(tidyselect::ends_with("touchdown"), sum)),
       total_touchdown_exp =
-        sum(dplyr::across(ends_with("touchdown_exp"), sum)),
+        sum(dplyr::across(tidyselect::ends_with("touchdown_exp"), sum)),
       total_first_down =
-        sum(dplyr::across(ends_with("first_down"), sum)),
+        sum(dplyr::across(tidyselect::ends_with("first_down"), sum)),
       total_first_down_exp =
-        sum(dplyr::across(ends_with("first_down_exp"), sum)),
+        sum(dplyr::across(tidyselect::ends_with("first_down_exp"), sum)),
       total_fantasy_points =
-        sum(dplyr::across(ends_with("fantasy_points"), sum)),
+        sum(dplyr::across(tidyselect::ends_with("fantasy_points"), sum)),
       total_fantasy_points_exp =
-      sum(dplyr::across(ends_with("fantasy_points_exp"), sum))) %>%
+      sum(dplyr::across(tidyselect::ends_with("fantasy_points_exp"), sum))) %>%
     dplyr::ungroup() %>%
     dplyr::rename(
-      pass_complete = .data$pass_complete_pass,
-      pass_complete_exp = .data$pass_complete_pass_exp,
+      pass_completions = .data$pass_complete_pass,
+      pass_completions_exp = .data$pass_complete_pass_exp,
       receptions = .data$rec_complete_pass,
       receptions_exp = .data$rec_complete_pass_exp
     ) %>%
@@ -190,7 +196,7 @@ ep_summarize <- function(
 
   exp_fields <-
     combined_df %>%
-    dplyr::select(contains("exp")) %>%
+    dplyr::select(tidyselect::ends_with("exp")) %>%
     colnames() %>%
     stringr::str_remove_all("_exp")
 
