@@ -1,1 +1,64 @@
+destination: docs
 url: https://ffexpectedpoints.ffverse.com
+
+authors:
+  Joe Sydlowski:
+    href: https://twitter.com/JoeSydlowskiFF
+  Tan Ho:
+    href: https://twitter.com/_TanHo
+
+home:
+  title: Expected Points Models for Fantasy Football
+  description: >
+    Downloads expected fantasy points data from 'ffverse'
+    repositories if available, and otherwise builds up expected points
+    data by applying models to 'nflverse' play-by-play data.
+
+navbar:
+  bg: dark
+  structure:
+    left:  [home, reference, news, articles]
+    right: [discord,  github, more]
+  components:
+    discord:
+      icon: "fab fa-discord fa-lg"
+      href: https://discord.com/invite/5Er2FBnnQa
+    more:
+      text: "More"
+      menu:
+        - text: ffverse
+          href: https://www.ffverse.com
+        - text: ffscrapr package
+          href: https://ffscrapr.ffverse.com
+        - text: ffsimulator package
+          href: https://ffsimulator.ffverse.com
+        - text: ffpros package
+          href: https://ffpros.ffverse.com
+        - text: ffverse GitHub
+          href: https://www.github.com/ffverse
+        - text: -------
+        - text: "nflverse"
+        - text: nflfastR package
+          href: https://www.nflfastr.com
+        - text: nflverse GitHub
+          href: https://github.com/nflverse
+        - text: -------
+        - text: "DynastyProcess.com"
+          href: https://dynastyprocess.com
+
+template:
+  bootstrap: 5
+  params:
+    bootswatch: zephyr
+   # docsearch:
+     # api_key: 7abddd2aa591d955b365235f35d75a38
+     # index_name: dynastyprocess
+  opengraph:
+    image:
+      src: "https://ffsimulator.ffverse.com/reference/figures/logo.png"
+      alt: "ffexpectedpoints - Expected Points Models for Fantasy Football"
+    twitter:
+      creator: "@_TanHo"
+      site: "@DynastyProcess"
+      card: summary
+
