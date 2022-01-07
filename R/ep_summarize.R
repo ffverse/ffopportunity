@@ -31,6 +31,8 @@ ep_summarize <- function(
 
   stat_type <- rlang::arg_match(stat_type)
 
+  where <- NULL
+
   rush_df <-
     predicted_pbp$rush_df %>%
     dplyr::transmute(

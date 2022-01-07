@@ -44,20 +44,15 @@ NULL
 #' @return The result of calling `rhs(lhs)`.
 NULL
 
-vcli_start <- function(...){
+vcli_alert <- function(...){
   v <- getOption("ffexpectedpoints.verbose", default = TRUE)
 
   if(!v) return(NULL)
 
-  cli::cli_process_start(...,.envir = parent.frame(2))
+  cli::cli_alert(...,.envir = parent.frame())
 }
-vcli_end <- function(...){
-  v <- getOption("ffexpectedpoints.verbose", default = TRUE)
 
-  if(!v) return(NULL)
 
-  cli::cli_process_done(..., .envir = parent.frame(2))
-}
 vcli_rule <- function(...){
   v <- getOption("ffexpectedpoints.verbose", default = TRUE)
 

@@ -15,7 +15,6 @@
 #' @return a list containing two dataframes: pbp for play-level ep predictions and weekly for game-level summaries.
 #'
 #' @export
-
 ep_build <- function(season = nflreadr:::most_recent_season()){
 
   stopifnot(
@@ -27,29 +26,26 @@ ep_build <- function(season = nflreadr:::most_recent_season()){
 
   vcli_rule("Starting ep build for {paste(unique(range(season)),collapse = '-')} season(s)! {Sys.time()}")
 
-  vcli_start(msg = "Loading pbp...")
+  vcli_alert("Loading pbp {Sys.time()}")
   pbp <- nflreadr::load_pbp(season)
-  vcli_end(msg_done = "Loading pbp...done! {Sys.time()}")
 
-  vcli_start(msg = "Preprocessing pbp...")
+  vcli_alert("Preprocessing pbp {Sys.time()}")
   pbp_preprocessed <- ep_preprocess(pbp)
-  vcli_end(msg_done = "Preprocessing pbp...done! {Sys.time()}")
 
-  vcli_start(msg = "Generating predictions...")
   pbp_preds <- ep_predict(pbp_preprocessed)
-  vcli_end(msg_done = "Generating predictions...done! {Sys.time()}")
+  vcli_alert("Generating predictions {Sys.time()}")
 
-  vcli_start(msg = "Summarizing data...")
   weekly_ep <- ep_summarize(pbp_preds)
-  vcli_end(msg_done = "Summarizing data...done! {Sys.time()}")
+  vcli_alert("Summarizing data {Sys.time()}")
 
   vcli_rule("Finished building ep for {paste(unique(range(season)),collapse = '-')} season(s)! {Sys.time()}")
 
   out <- structure(
     list(
-      pbp = pbp_preds,
-      weekly = weekly_ep,
-      model_version = "0.1",
+      ep_pbp_pass = pbp_preds$pass_df,
+      ep_pbp_rush = pbp_preds$rush_df,
+      ep_weekly = weekly_ep,
+      ep_version = "0.1",
       timestamp = Sys.time()
     ),
     class = "ffep_output"
@@ -60,7 +56,7 @@ ep_build <- function(season = nflreadr:::most_recent_season()){
 #' @noRd
 print.ffep_output <- function(x, ...) {
   cli::cli_alert("<ffexpectedpoints predictions>")
-  cli::cli_alert("Generated {x$timestamp} with version {x$model_version}")
-  utils::str(x, max.level = 1, give.attr = FALSE)
+  cli::cli_alert("Generated {x$timestamp} with model version {x$ep_version}")
+  utils::str(x, max.level = 2, give.attr = FALSE)
   invisible(x)
 }
