@@ -20,8 +20,6 @@
 #' @seealso `vignette("basic")` for example usage
 #'
 #' @export
-#'
-
 ep_preprocess <- function(pbp){
 
   rosters <- .get_rosters(unique(pbp$season))

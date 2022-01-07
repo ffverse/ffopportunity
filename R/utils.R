@@ -62,4 +62,32 @@ vcli_rule <- function(...){
   cli::cli_rule(..., .envir = parent.frame())
 }
 
+#' Load .rds file from a remote connection
+#'
+#' @param url a character url
+#'
+#' @return a dataframe as created by [`readRDS()`]
+#'
+#' @examples
+#' \donttest{
+#' try({ rds_from_url("https://github.com/nflverse/nfldata/raw/master/data/games.rds") })
+#' }
+#' @keywords internal
+rds_from_url <- function(url) {
+  con <- url(url)
+  on.exit(close(con))
+  load <- try(readRDS(con), silent = TRUE)
+
+  if (inherits(load, "try-error")) {
+    warning(paste0("Failed to readRDS from <", url, ">"), call. = FALSE)
+    return(data.table::data.table())
+  }
+
+  data.table::setDT(load)
+  load
+}
+
+#' @keywords internal
+is_installed <- function(pkg) requireNamespace(pkg, quietly = TRUE)
+
 utils::globalVariables("where")
