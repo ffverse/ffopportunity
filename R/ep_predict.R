@@ -6,8 +6,12 @@
 #'
 #' @examples
 #' \donttest{
-#' pbp <- nflreadr::load_pbp(2021)
-#' preprocessed_pbp <- ep_preprocess(pbp)
+#' try({
+#' nflreadr::load_pbp(2021) %>%
+#' head(100) %>%
+#' ep_preprocess() %>%
+#' ep_predict()
+#' })
 #' }
 #'
 #' @return a dataframe with the expected fields added

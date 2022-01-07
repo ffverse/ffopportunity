@@ -17,8 +17,12 @@ This function calls the prediction objects on the pre-processed data
 }
 \examples{
 \donttest{
-pbp <- nflreadr::load_pbp(2021)
-preprocessed_pbp <- ep_preprocess(pbp)
+try({
+nflreadr::load_pbp(2021) \%>\%
+head(100) \%>\%
+ep_preprocess() \%>\%
+ep_predict()
+})
 }
 
 }

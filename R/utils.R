@@ -3,7 +3,7 @@
 #' Pull `nflreadr` rosters
 #' @param seasons choose season or range of seasons
 #' @export
-
+#' @keywords internal
 .get_rosters <- function(seasons){
   nflreadr::load_rosters(seasons) %>%
     dplyr::transmute(.data$season,
@@ -44,6 +44,7 @@ NULL
 #' @return The result of calling `rhs(lhs)`.
 NULL
 
+#' @keywords internal
 vcli_alert <- function(...){
   v <- getOption("ffexpectedpoints.verbose", default = TRUE)
 
@@ -52,7 +53,7 @@ vcli_alert <- function(...){
   cli::cli_alert(...,.envir = parent.frame())
 }
 
-
+#' @keywords internal
 vcli_rule <- function(...){
   v <- getOption("ffexpectedpoints.verbose", default = TRUE)
 

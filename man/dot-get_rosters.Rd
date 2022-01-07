@@ -12,3 +12,4 @@
 \description{
 Pull \code{nflreadr} rosters
 }
+\keyword{internal}

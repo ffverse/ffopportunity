@@ -19,7 +19,11 @@ expected points predictions on \code{nflreadr} data
 }
 \examples{
 \donttest{
-pbp <- nflreadr::load_pbp(c(2019:2021))
+try({ # catch failures for CRAN purposes
+  nflreadr::load_pbp(2021) \%>\%
+  head(100) \%>\%
+  ep_preprocess()
+  })
 }
 
 }
