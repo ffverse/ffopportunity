@@ -76,7 +76,7 @@ ep_predict <- function(preprocessed_pbp) {
 #' @keywords internal
 .forge_and_predict <- function(df, variable) {
 
-  silencer <- if(getOption("ffexpectedpoints.verbose", default = TRUE)) force else suppressWarnings
+  silencer <- if(getOption("ffexpectedpoints.verbose", default = FALSE)) force else suppressWarnings
 
   # could probably call .load_model_obj here based on the variable name?
 
@@ -99,9 +99,9 @@ ep_predict <- function(preprocessed_pbp) {
 # automatically/prompt-for download if file not found?
 # future: add some kind of version selector (as package option?)
 #' @keywords internal
-.load_model_objs <- function(variable) {
+.load_model_objs <- function(variable, version = "v1.0.0") {
 
-  folder_path <- system.file("extdata", package = "ffexpectedpoints")
+  folder_path <- system.file(version, package = "ffexpectedpoints")
   model_path <- file.path(folder_path, paste0(variable,".xgb"))
   blueprint_path <- file.path(folder_path, paste0(variable,".rds"))
 
