@@ -80,11 +80,10 @@ rds_from_url <- function(url) {
 
   if (inherits(load, "try-error")) {
     warning(paste0("Failed to readRDS from <", url, ">"), call. = FALSE)
-    return(data.table::data.table())
+    return(tibble::tibble())
   }
 
-  data.table::setDT(load)
-  load
+  return(tibble::tibble(load))
 }
 
 #' @keywords internal

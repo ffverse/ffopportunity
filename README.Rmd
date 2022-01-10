@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
 [![Dev status](https://img.shields.io/github/r-package/v/ffverse/ffexpectedpoints/main?label=dev&style=flat-square&logo=github)](https://ffexpectedpoints.ffverse.com/)
 [![CRAN status](https://www.r-pkg.org/badges/version/ffexpectedpoints)](https://CRAN.R-project.org/package=ffexpectedpoints)
 [![R-CMD-check](https://github.com/dynastyprocess/ffexpectedpoints/workflows/R-CMD-check/badge.svg)](https://github.com/dynastyprocess/ffexpectedpoints/actions)
+[![R-CMD-check](https://github.com/ffverse/ffexpectedpoints/workflows/R-CMD-check/badge.svg)](https://github.com/ffverse/ffexpectedpoints/actions)
 <!-- badges: end -->
 
 Downloads Expected Points data from ffverse repositories if available, and otherwise builds up expected points data by applying models to nflfastR play-by-play data.
