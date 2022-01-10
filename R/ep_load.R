@@ -58,7 +58,7 @@ load_ep_pbp_pass <- function(season = nflreadr:::most_recent_season(),
 #' }
 #'
 #' @export
-load_ep_pbp_pass <- function(season = nflreadr:::most_recent_season(),
+load_ep_pbp_rush <- function(season = nflreadr:::most_recent_season(),
                              file_type = "rds") {
 
   file_type <- rlang::arg_match0(file_type, c("rds"))
