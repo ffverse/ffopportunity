@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' \donttest{
-#'   try({ep_load(2019:2020)})
+#'   try({ep_load_pbp_pass(2019:2020)})
 #' }
 #'
 #' @export
