@@ -1,0 +1,9 @@
+pandoc: 2.7.3
+pkgdown: 2.0.1
+pkgdown_sha: ~
+articles: {}
+last_built: 2022-01-10T18:55Z
+urls:
+  reference: https://ffexpectedpoints.ffverse.com/reference
+  article: https://ffexpectedpoints.ffverse.com/articles
+
