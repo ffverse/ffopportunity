@@ -1,8 +1,15 @@
-@import 'https://fonts.googleapis.com/css?family=Fira+Mono:400,700|family=IBM+Plex+Sans:400,700';
+@import 'https://fonts.googleapis.com/css?family=Bai+Jamjuree:400,700|family=IBM+Plex+Mono:400,700|family=IBM+Plex+Sans:400,700';
+
 
 body{
   font-family: 'IBM Plex Sans', sans-serif;
 }
+
+h1 {
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-weight: 700;
+}
+
 .page-header{
   min-height: unset;
 }
@@ -11,30 +18,34 @@ body{
   min-height: unset;
 }
 
-h1 {
-  font-family: 'Fira Mono', sans-serif;
-  font-weight: 700;
-}
-
 h2,h3 {
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 700;
 }
 
 pre, code {
-  font-family: 'Fira Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
 }
 
 .navbar-brand {
   font-weight: 700;
-  font-size: 1.5rem;
-  font-family: 'Fira Mono', sans-serif;
+  font-size: 1.75rem;
+  font-family: 'Bai Jamjuree', sans-serif;
 }
 
 .navbar {
-  font-size: 1rem;
+  font-size: 1.0rem;
 }
 
 h4.author,h4.date {
   padding-top:0px;
   margin-top:0px;}
+
+.display{
+  font-size: 0.85rem;
+}
+
+.dropdown-header{
+  font-weight: 700;
+  color: #333;
+}
