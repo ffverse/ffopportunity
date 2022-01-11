@@ -8,7 +8,7 @@
 #' @examples
 #' \donttest{
 #'   try({
-#'   preprocessed <- readRDS(system.file("ep_preprocessed.rds",package = "ffexpectedpoints"))
+#'   preprocessed <- readRDS(system.file("ep_preprocessed.rds",package = "ffopportunity"))
 #'   # this file is equivalent to nflreadr::load_pbp(2021) %>% head(100) %>% ep_preprocess()
 #'   ep_predict(preprocessed)
 #'   })
@@ -73,7 +73,7 @@ ep_predict <- function(preprocessed_pbp, version = c("latest", "v1.0.0")) {
 #' @keywords internal
 .forge_and_predict <- function(df, variable, version) {
 
-  silencer <- if(getOption("ffexpectedpoints.verbose", default = FALSE)) force else suppressWarnings
+  silencer <- if(getOption("ffopportunity.verbose", default = FALSE)) force else suppressWarnings
   # could probably call .load_model_obj here based on the variable name?
   model_obj <- .load_model_objs(variable, version)
 
@@ -96,7 +96,7 @@ ep_predict <- function(preprocessed_pbp, version = c("latest", "v1.0.0")) {
 #' @keywords internal
 .load_model_objs <- function(variable, version) {
 
-  cache_dir <- rappdirs::user_cache_dir("ffexpectedpoints", "ffverse")
+  cache_dir <- rappdirs::user_cache_dir("ffopportunity", "ffverse")
 
   folder_path <- file.path(cache_dir,version)
 

@@ -1,4 +1,4 @@
-Package: ffexpectedpoints
+Package: ffopportunity
 Title: Models for Fantasy Football Expected Points
 Version: 0.1.0.04
 Authors@R: c(
@@ -10,9 +10,9 @@ Description: Downloads expected fantasy points data from 'ffverse'
     repositories if available, and otherwise builds up expected points
     data by applying models to 'nflverse' play-by-play data.
 License: GPL (>= 3)
-URL: https://ffexpectedpoints.ffverse.com,
-    https://github.com/ffverse/ffexpectedpoints
-BugReports: https://github.com/ffverse/ffexpectedpoints/issues
+URL: https://ffopportunity.ffverse.com,
+    https://github.com/ffverse/ffopportunity
+BugReports: https://github.com/ffverse/ffopportunity/issues
 Depends:
     R (>= 3.6.0)
 Imports: 

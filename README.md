@@ -1,23 +1,23 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ffexpectedpoints
+# ffopportunity
 
 *Models and Data for Expected Fantasy Points*
 
 <!-- badges: start -->
 
 [![CRAN
-status](https://img.shields.io/cran/v/ffexpectedpoints?style=flat-square&logo=R&label=CRAN)](https://CRAN.R-project.org/package=ffexpectedpoints)
+status](https://img.shields.io/cran/v/ffopportunity?style=flat-square&logo=R&label=CRAN)](https://CRAN.R-project.org/package=ffopportunity)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Dev
-status](https://img.shields.io/github/r-package/v/ffverse/ffexpectedpoints/main?label=dev&style=flat-square&logo=github)](https://ffexpectedpoints.ffverse.com/)
+status](https://img.shields.io/github/r-package/v/ffverse/ffopportunity/main?label=dev&style=flat-square&logo=github)](https://ffopportunity.ffverse.com/)
 [![nflverse
 discord](https://img.shields.io/discord/789805604076126219?color=7289da&label=nflverse%20discord&logo=discord&logoColor=fff&style=flat-square)](https://discord.com/invite/5Er2FBnnQa)
 <!-- badges: end -->
 
-ffexpectedpoints builds Expected Fantasy Points data by applying an
+ffopportunity builds Expected Fantasy Points data by applying an
 xgboost model to nflverse play-by-play data, as well as providing
 utilities to download precomputed data.
 
@@ -26,32 +26,32 @@ utilities to download precomputed data.
 <!--Install the stable version from CRAN with:
 
 ```r
-install.packages("ffexpectedpoints")
+install.packages("ffopportunity")
 ```
 -->
 
 Install the development version from GitHub with:
 
 ``` r
-install.packages("ffexpectedpoints", repos = "https://ffverse.r-universe.dev")
+install.packages("ffopportunity", repos = "https://ffverse.r-universe.dev")
 
 # or use remotes/devtools
 # install.packages("remotes")
-remotes::install_github("ffverse/ffexpectedpoints")
+remotes::install_github("ffverse/ffopportunity")
 ```
 
 ## Usage
 
-The two main functions of {ffexpectedpoints} are `ep_load()` and
+The two main functions of {ffopportunity} are `ep_load()` and
 `ep_build()`.
 
 You can download the latest version of the EP data with `ep_load()` as
 follows:
 
 ``` r
-library(ffexpectedpoints)
+library(ffopportunity)
 ep_load(season = 2020:2021, type = "weekly")
-#> > <ffexpectedpoints predictions>
+#> > <ffopportunity predictions>
 #> > Generated 2022-01-10 09:39:41 with ep model version "latest"
 #> # A tibble: 11,529 x 159
 #>    season posteam  week game_id     player_id full_name    position pass_attempt
@@ -90,7 +90,7 @@ ep_build(season = 2021, version = "latest")
     #> > Generating predictions 2022-01-11 07:58:54
     #> > Summarizing data 2022-01-11 07:59:33
     #> -- Finished building ep for 2021 season(s)! 2022-01-11 07:59:33 ----------------
-    #> > <ffexpectedpoints predictions>
+    #> > <ffopportunity predictions>
     #> > Generated 2022-01-11 07:59:33 with model version latest
     #> List of 5
     #>  $ ep_weekly  : tibble [5,756 x 159] (S3: tbl_df/tbl/data.frame)
@@ -101,9 +101,9 @@ ep_build(season = 2021, version = "latest")
 
 ## Data
 
-ffexpectedpoints data is automated with GitHub Actions and can be
+ffopportunity data is automated with GitHub Actions and can be
 manually downloaded in RDS, parquet, and csv formats from the [releases
-page](https://github.com/ffverse/ffexpectedpoints/releases).
+page](https://github.com/ffverse/ffopportunity/releases).
 
 ## Getting help
 
@@ -112,7 +112,7 @@ The best places to get help on this package are:
 -   the [nflverse discord](https://discord.com/invite/5Er2FBnnQa) (for
     both this package as well as anything R/NFL related)
 -   opening [an
-    issue](https://github.com/ffverse/ffexpectedpoints/issues/new/choose)
+    issue](https://github.com/ffverse/ffopportunity/issues/new/choose)
 
 ## Contributing
 
@@ -120,23 +120,23 @@ Many hands make light work! Here are some ways you can contribute to
 this project:
 
 -   You can [open an
-    issue](https://github.com/ffverse/ffexpectedpoints/issues/new/choose)
+    issue](https://github.com/ffverse/ffopportunity/issues/new/choose)
     if you’d like to request specific data or report a bug/error.
 
 -   If you’d like to contribute code, please check out [the contribution
-    guidelines](https://ffexpectedpoints.ffverse.com/CONTRIBUTING.html).
+    guidelines](https://ffopportunity.ffverse.com/CONTRIBUTING.html).
 
 ## Terms of Use
 
 The R code for this package is released as open source under the [GPL v3
-License](https://ffexpectedpoints.ffverse.com/LICENSE.html). The models
+License](https://ffopportunity.ffverse.com/LICENSE.html). The models
 and expected points data included within this package’s are licensed
 under [Creative Commons Attribution-ShareAlike 4.0 International
 License](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ## Code of Conduct
 
-Please note that the ffexpectedpoints project is released with a
+Please note that the ffopportunity project is released with a
 [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.

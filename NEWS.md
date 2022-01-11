@@ -1,4 +1,4 @@
-# ffexpectedpoints (development version)
+# ffopportunity (development version)
 
 * Added a `NEWS.md` file to track changes to the package.
 * Added `ep_build()` and initial subfunctions to preprocess, predict, and summarise EP
@@ -7,4 +7,5 @@
 * Offloaded models to releases ("latest-models", "v1.0.0-models")
 * Added download of models to user cache
 * Combine variants of ep_load into one function `ep_load()` with arguments
+* Rename to ffopportunity
 

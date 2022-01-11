@@ -1,4 +1,4 @@
 library(testthat)
-library(ffexpectedpoints)
+library(ffopportunity)
 
-test_check("ffexpectedpoints")
+test_check("ffopportunity")

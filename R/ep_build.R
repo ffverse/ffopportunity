@@ -63,7 +63,7 @@ ep_build <- function(season = nflreadr:::most_recent_season(), version = "latest
 #' @export
 #' @noRd
 print.ffep_output <- function(x, ...) {
-  cli::cli_alert("<ffexpectedpoints predictions>")
+  cli::cli_alert("<ffopportunity predictions>")
   cli::cli_alert("Generated {x$timestamp} with model version {x$ep_version}")
   utils::str(x, max.level = 2, give.attr = FALSE)
   invisible(x)

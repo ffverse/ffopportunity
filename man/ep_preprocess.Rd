@@ -20,7 +20,7 @@ expected points predictions on \code{nflreadr} data
 \examples{
 \donttest{
 try({ # catch failures for CRAN purposes
-  preprocessed <- readRDS(system.file("pbp_download.rds",package = "ffexpectedpoints"))
+  preprocessed <- readRDS(system.file("pbp_download.rds",package = "ffopportunity"))
   # this file is equivalent to nflreadr::load_pbp(2021) \%>\% head(100)
   ep_preprocess(preprocessed)
   })

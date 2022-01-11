@@ -1,5 +1,5 @@
 destination: docs
-url: https://ffexpectedpoints.ffverse.com
+url: https://ffopportunity.ffverse.com
 
 authors:
   Joe Sydlowski:
@@ -67,7 +67,7 @@ template:
   opengraph:
     image:
       src: "https://ffsimulator.ffverse.com/reference/figures/logo.png"
-      alt: "ffexpectedpoints - Expected Points Models for Fantasy Football"
+      alt: "ffopportunity - Expected Points Models for Fantasy Football"
     twitter:
       creator: "@_TanHo"
       site: "@DynastyProcess"

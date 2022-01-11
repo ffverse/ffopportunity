@@ -1,12 +1,12 @@
 #' Load Expected Points data
 #'
-#' This function downloads precomputed expected points data from the ffexpectedpoints automated releases.
+#' This function downloads precomputed expected points data from the ffopportunity automated releases.
 #'
 #' @param season A numeric vector of four digit years associated with given NFL seasons - defaults to latest season.
 #' @param type Data type - one of `"weekly"`, `"pbp_pass"`, `"pbp_rush"`, or `"all"`
 #' @param version EP model version: one of "latest" (default) or "v1.0.0" - these are currently identical.
 #'
-#' @return a dataframe identical to what would be returned by `ffexpectedpoints::ep_build()` for a given season.
+#' @return a dataframe identical to what would be returned by `ffopportunity::ep_build()` for a given season.
 #'
 #' @examples
 #' \donttest{
@@ -35,13 +35,13 @@ ep_load <- function(season = nflreadr:::most_recent_season(),
   )
 
   urls <- paste0(
-    "https://github.com/ffverse/ffexpectedpoints/releases/download/",
+    "https://github.com/ffverse/ffopportunity/releases/download/",
     paste0(version,"-data/ep_"), type, "_", season, ".rds")
 
   p <- NULL
   if (is_installed("progressr")) p <- progressr::progressor(along = season)
   out <- purrr::map_dfr(urls, nflreadr::progressively(rds_from_url, p))
-  ts <- nflreadr::raw_from_url("https://github.com/ffverse/ffexpectedpoints/releases/download/latest-data/timestamp.txt") %>%
+  ts <- nflreadr::raw_from_url("https://github.com/ffverse/ffopportunity/releases/download/latest-data/timestamp.txt") %>%
     rawToChar() %>%
     as.POSIXct()
 
@@ -55,7 +55,7 @@ ep_load <- function(season = nflreadr:::most_recent_season(),
 #' @export
 #' @noRd
 print.ffep_download <- function(x, ...) {
-  cli::cli_alert("<ffexpectedpoints predictions>")
+  cli::cli_alert("<ffopportunity predictions>")
   cli::cli_alert("Generated {.val {attr(x,'ep_timestamp')}} with ep model version {.val {attr(x,'ep_version')}}")
   NextMethod(print,x)
   invisible(x)

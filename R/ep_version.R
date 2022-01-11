@@ -12,7 +12,7 @@
 ep_cache_models <- function(version = c("latest","v1.0.0"), force = FALSE, ask = interactive()){
   version <- rlang::arg_match0(version, c("latest","v1.0.0"))
 
-  cache_dir <- rappdirs::user_cache_dir(appname = "ffexpectedpoints", appauthor = "ffverse")
+  cache_dir <- rappdirs::user_cache_dir(appname = "ffopportunity", appauthor = "ffverse")
 
   if(!dir.exists(cache_dir)) dir.create(cache_dir)
 
@@ -38,7 +38,7 @@ ep_cache_models <- function(version = c("latest","v1.0.0"), force = FALSE, ask =
     }
   }
 
-  url <- glue::glue("https://github.com/ffverse/ffexpectedpoints/releases/download/{version}-model/{version}.zip")
+  url <- glue::glue("https://github.com/ffverse/ffopportunity/releases/download/{version}-model/{version}.zip")
 
   download_model <- try({
     utils::download.file(url = url, destfile = file.path(cache_dir, paste0(version,".zip")))

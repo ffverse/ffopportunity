@@ -46,7 +46,7 @@ NULL
 
 #' @keywords internal
 vcli_alert <- function(...){
-  v <- getOption("ffexpectedpoints.verbose", default = TRUE)
+  v <- getOption("ffopportunity.verbose", default = TRUE)
 
   if(!v) return(NULL)
 
@@ -55,7 +55,7 @@ vcli_alert <- function(...){
 
 #' @keywords internal
 vcli_rule <- function(...){
-  v <- getOption("ffexpectedpoints.verbose", default = TRUE)
+  v <- getOption("ffopportunity.verbose", default = TRUE)
 
   if(!v) return(NULL)
 

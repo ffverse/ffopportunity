@@ -23,7 +23,7 @@ This function summarizes the EP data up to the game level
 \examples{
 \donttest{
 try({
-  predicted <- readRDS(system.file("ep_predicted.rds",package = "ffexpectedpoints"))
+  predicted <- readRDS(system.file("ep_predicted.rds",package = "ffopportunity"))
   # equivalent to nflreadr::load_pbp(2021) \%>\% head(100) \%>\% ep_preprocess() \%>\% ep_predict()
   ep_summarize(predicted)
 })

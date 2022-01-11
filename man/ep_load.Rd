@@ -18,10 +18,10 @@ ep_load(
 \item{version}{EP model version: one of "latest" (default) or "v1.0.0" - these are currently identical.}
 }
 \value{
-a dataframe identical to what would be returned by \code{ffexpectedpoints::ep_build()} for a given season.
+a dataframe identical to what would be returned by \code{ffopportunity::ep_build()} for a given season.
 }
 \description{
-This function downloads precomputed expected points data from the ffexpectedpoints automated releases.
+This function downloads precomputed expected points data from the ffopportunity automated releases.
 }
 \examples{
 \donttest{
