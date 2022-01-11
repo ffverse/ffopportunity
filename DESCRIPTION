@@ -17,6 +17,7 @@ Depends:
     R (>= 3.6.0)
 Imports: 
     cli (>= 3.0.0),
+    data.table (>= 1.14.0),
     dplyr (>= 1.0.0),
     hardhat (>= 0.1.0),
     janitor (>= 1.0.0),
@@ -33,7 +34,7 @@ Imports:
     utils,
     xgboost (>= 1.1)
 Suggests: 
-    progressr,
+    progressr (>= 0.8.0),
     roxygen2 (>= 7.1.0),
     testthat (>= 3.0.0),
     piggyback (>= 0.1.1),
