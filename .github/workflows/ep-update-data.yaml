@@ -2,11 +2,12 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   # push:
-  #  branches: [main, master]
-  #  tags: ['*']
+  #   branches: [main, master]
+  # pull_request:
+  #   branches: [main, master]
   workflow_dispatch:
 
-name: pkgdown
+name: ep-update-data
 
 jobs:
   pkgdown:
@@ -24,11 +25,10 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: pkgdown
-          needs: website
+          extra-packages: piggyback, arrow
 
-      - name: Deploy package
+      - name: Run data update
+        with:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --local user.name "GitHub Actions"
-          git config --local user.email "actions@github.com"
-          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
+          Rscript -e 'source("update/ep_update.R")'
