@@ -4,10 +4,12 @@
 \alias{ep_predict}
 \title{Predict EP}
 \usage{
-ep_predict(preprocessed_pbp)
+ep_predict(preprocessed_pbp, version = c("latest", "v1.0.0"))
 }
 \arguments{
 \item{preprocessed_pbp}{list with dataframes created by \code{ep_preprocess}}
+
+\item{version}{ep model version - available is \code{"latest"} or \code{"v1.0.0"} (these are currently the same thing)}
 }
 \value{
 a dataframe with the expected fields added
