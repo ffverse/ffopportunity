@@ -14,6 +14,8 @@
 #'
 #' @return a list containing three dataframes: `ep_weekly` provides a game-level summary by player, `ep_pbp_pass` provides EP data on pass plays, and `ep_pbp_rush` provides EP data on rush plays.
 #'
+#' @family main
+#'
 #' @export
 ep_build <- function(season = nflreadr:::most_recent_season(), version = "latest"){
 

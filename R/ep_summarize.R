@@ -3,20 +3,18 @@
 #' This function summarizes the EP data up to the game level
 #'
 #' @param predicted_pbp list with dataframes created by `ep_predict`
-#' @param stat_type option to limit the columns returned by `ep_summarize`
+#' @param stat_type options to limit the columns returned by `ep_summarize` - available options are "all", "expected_points", and "team stats"
 #'
 #' @examples
 #' \donttest{
 #' try({
-#' nflreadr::load_pbp(2021) %>%
-#'   head(1000) %>%
-#'   ep_preprocess() %>%
-#'   ep_predict() %>%
-#'   ep_summarize()
+#'   predicted <- readRDS(system.file("ep_predicted.rds",package = "ffexpectedpoints"))
+#'   # equivalent to nflreadr::load_pbp(2021) %>% head(100) %>% ep_preprocess() %>% ep_predict()
+#'   ep_summarize(predicted)
 #' })
 #' }
 #'
-#' @return a dataframe with the expected fields added
+#' @return a dataframe with the expected points fields added
 #'
 #' @seealso `vignette("basic")` for example usage
 #'

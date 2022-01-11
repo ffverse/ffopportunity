@@ -12,10 +12,10 @@ ep_summarize(
 \arguments{
 \item{predicted_pbp}{list with dataframes created by \code{ep_predict}}
 
-\item{stat_type}{option to limit the columns returned by \code{ep_summarize}}
+\item{stat_type}{options to limit the columns returned by \code{ep_summarize} - available options are "all", "expected_points", and "team stats"}
 }
 \value{
-a dataframe with the expected fields added
+a dataframe with the expected points fields added
 }
 \description{
 This function summarizes the EP data up to the game level
@@ -23,11 +23,9 @@ This function summarizes the EP data up to the game level
 \examples{
 \donttest{
 try({
-nflreadr::load_pbp(2021) \%>\%
-  head(1000) \%>\%
-  ep_preprocess() \%>\%
-  ep_predict() \%>\%
-  ep_summarize()
+  predicted <- readRDS(system.file("ep_predicted.rds",package = "ffexpectedpoints"))
+  # equivalent to nflreadr::load_pbp(2021) \%>\% head(100) \%>\% ep_preprocess() \%>\% ep_predict()
+  ep_summarize(predicted)
 })
 }
 

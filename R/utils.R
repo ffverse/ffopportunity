@@ -90,3 +90,4 @@ rds_from_url <- function(url) {
 is_installed <- function(pkg) requireNamespace(pkg, quietly = TRUE)
 
 utils::globalVariables("where")
+

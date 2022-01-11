@@ -1,6 +1,6 @@
 #' Preprocess Data
 #'
-#' This function performs the necesssary pre-processing steps to make
+#' This function performs pre-processing steps to make
 #' expected points predictions on `nflreadr` data
 #'
 #' @param pbp pbp dataframe from `nflreadr::load_pbp()`
@@ -8,9 +8,9 @@
 #' @examples
 #' \donttest{
 #' try({ # catch failures for CRAN purposes
-#'   nflreadr::load_pbp(2021) %>%
-#'   head(100) %>%
-#'   ep_preprocess()
+#'   preprocessed <- readRDS(system.file("pbp_download.rds",package = "ffexpectedpoints"))
+#'   # this file is equivalent to nflreadr::load_pbp(2021) %>% head(100)
+#'   ep_preprocess(preprocessed)
 #'   })
 #' }
 #'

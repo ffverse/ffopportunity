@@ -1,31 +1,24 @@
 #' Predict EP
 #'
-#' This function calls the prediction objects on the pre-processed data
+#' This function runs the prediction functions over preprocessed data.
 #'
 #' @param preprocessed_pbp list with dataframes created by `ep_preprocess`
 #' @param version ep model version - available is `"latest"` or `"v1.0.0"` (these are currently the same thing)
 #'
 #' @examples
-#' \dontshow{
-#' old <- options(ffexpectedpoints.verbose = FALSE)
-#' }
 #' \donttest{
-#' try({
-#'   nflreadr::load_pbp(2021) %>%
-#'   head(100) %>%
-#'   ep_preprocess() %>%
-#'   ep_predict()
-#' })
-#' }
-#' \dontshow{
-#' options(ffexpectedpoints.verbose = old)
+#'   try({
+#'   preprocessed <- readRDS(system.file("ep_preprocessed.rds",package = "ffexpectedpoints"))
+#'   # this file is equivalent to nflreadr::load_pbp(2021) %>% head(100) %>% ep_preprocess()
+#'   ep_predict(preprocessed)
+#'   })
 #' }
 #'
 #' @return a dataframe with the expected fields added
 #'
-#' @seealso `vignette("basic")` for example usage
-#'
 #' @import xgboost
+#'
+#' @export
 ep_predict <- function(preprocessed_pbp, version = c("latest", "v1.0.0")) {
 
   version <- rlang::arg_match0(version, c("latest", "v1.0.0"))

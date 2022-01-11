@@ -15,25 +15,15 @@ ep_predict(preprocessed_pbp, version = c("latest", "v1.0.0"))
 a dataframe with the expected fields added
 }
 \description{
-This function calls the prediction objects on the pre-processed data
+This function runs the prediction functions over preprocessed data.
 }
 \examples{
-\dontshow{
-old <- options(ffexpectedpoints.verbose = FALSE)
-}
 \donttest{
-try({
-  nflreadr::load_pbp(2021) \%>\%
-  head(100) \%>\%
-  ep_preprocess() \%>\%
-  ep_predict()
-})
-}
-\dontshow{
-options(ffexpectedpoints.verbose = old)
+  try({
+  preprocessed <- readRDS(system.file("ep_preprocessed.rds",package = "ffexpectedpoints"))
+  # this file is equivalent to nflreadr::load_pbp(2021) \%>\% head(100) \%>\% ep_preprocess()
+  ep_predict(preprocessed)
+  })
 }
 
-}
-\seealso{
-\code{vignette("basic")} for example usage
 }
