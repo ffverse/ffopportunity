@@ -55,14 +55,14 @@ ep_build <- function(season = nflreadr:::most_recent_season(), version = "latest
       ep_version = version,
       timestamp = Sys.time()
     ),
-    class = "ffep_output"
+    class = "ffopps_build"
   )
   return(out)
 }
 
 #' @export
 #' @noRd
-print.ffep_output <- function(x, ...) {
+print.ffopps_build <- function(x, ...) {
   cli::cli_alert("<ffopportunity predictions>")
   cli::cli_alert("Generated {x$timestamp} with model version {x$ep_version}")
   utils::str(x, max.level = 2, give.attr = FALSE)

@@ -14,7 +14,7 @@ ep_cache_models <- function(version = c("latest","v1.0.0"), force = FALSE, ask =
 
   cache_dir <- rappdirs::user_cache_dir(appname = "ffopportunity", appauthor = "ffverse")
 
-  if(!dir.exists(cache_dir)) dir.create(cache_dir)
+  if(!dir.exists(cache_dir)) dir.create(cache_dir, recursive = TRUE)
 
   if(!force){
     if(file.exists(file.path(cache_dir,version))) return(invisible(NULL))

@@ -45,7 +45,7 @@ ep_load <- function(season = nflreadr:::most_recent_season(),
     rawToChar() %>%
     as.POSIXct()
 
-  class(out) <- c("ffep_download","tbl_df", "tbl", "data.frame")
+  class(out) <- c("ffopps_load","tbl_df", "tbl", "data.frame")
   attr(out, "ep_version") <- version
   attr(out, "ep_timestamp") <- ts
   attr(out, "ep_type") <- type
@@ -54,7 +54,7 @@ ep_load <- function(season = nflreadr:::most_recent_season(),
 
 #' @export
 #' @noRd
-print.ffep_download <- function(x, ...) {
+print.ffopps_load <- function(x, ...) {
   cli::cli_alert("<ffopportunity predictions>")
   cli::cli_alert("Generated {.val {attr(x,'ep_timestamp')}} with ep model version {.val {attr(x,'ep_version')}}")
   NextMethod(print,x)
