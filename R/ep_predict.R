@@ -3,6 +3,7 @@
 #' This function calls the prediction objects on the pre-processed data
 #'
 #' @param preprocessed_pbp list with dataframes created by `ep_preprocess`
+#' @param version ep model version - available is `"latest"` or `"v1.0.0"` (these are currently the same thing)
 #'
 #' @examples
 #' \dontshow{
@@ -25,13 +26,16 @@
 #' @seealso `vignette("basic")` for example usage
 #'
 #' @import xgboost
-ep_predict <- function(preprocessed_pbp) {
+ep_predict <- function(preprocessed_pbp, version = c("latest", "v1.0.0")) {
+
+  version <- rlang::arg_match0(version, c("latest", "v1.0.0"))
+  ep_cache_models(version = version)
 
   rush_df <-
     preprocessed_pbp$rush_df %>%
-    .forge_and_predict("rushing_yards") %>%
-    .forge_and_predict("rushing_td") %>%
-    .forge_and_predict("rushing_fd") %>%
+    .forge_and_predict("rushing_yards", version) %>%
+    .forge_and_predict("rushing_td", version) %>%
+    .forge_and_predict("rushing_fd", version) %>%
     dplyr::mutate(
       two_point_conv_exp = dplyr::if_else(
         .data$two_point_attempt == 1, .data$rushing_td_exp, 0),
@@ -45,19 +49,19 @@ ep_predict <- function(preprocessed_pbp) {
 
   pass_df <-
     preprocessed_pbp$pass_df %>%
-    .forge_and_predict("pass_completion") %>%
-    .forge_and_predict("yards_after_catch") %>%
+    .forge_and_predict("pass_completion", version) %>%
+    .forge_and_predict("yards_after_catch", version) %>%
     dplyr::mutate(yardline_exp =
                     .data$yardline_100 -
                     .data$air_yards -
                     .data$yards_after_catch_exp) %>%
-    .forge_and_predict("pass_touchdown") %>%
+    .forge_and_predict("pass_touchdown", version) %>%
     dplyr::mutate(pass_touchdown_exp = dplyr::if_else(
       .data$air_yards == .data$yardline_100,
       .data$pass_completion_exp,
       .data$pass_touchdown_exp)) %>%
-    .forge_and_predict("pass_first_down") %>%
-    .forge_and_predict("passing_int") %>%
+    .forge_and_predict("pass_first_down", version) %>%
+    .forge_and_predict("passing_int", version) %>%
     dplyr::rename(pass_interception_exp = .data$passing_int_exp) %>%
     dplyr::mutate(
       two_point_conv_exp = dplyr::if_else(
@@ -74,13 +78,11 @@ ep_predict <- function(preprocessed_pbp) {
   return(list_df)
 }
 #' @keywords internal
-.forge_and_predict <- function(df, variable) {
+.forge_and_predict <- function(df, variable, version) {
 
   silencer <- if(getOption("ffexpectedpoints.verbose", default = FALSE)) force else suppressWarnings
-
   # could probably call .load_model_obj here based on the variable name?
-
-  model_obj <- .load_model_objs(variable)
+  model_obj <- .load_model_objs(variable, version)
 
   silencer({
     df[[paste0(variable, "_exp")]] <-
@@ -99,9 +101,12 @@ ep_predict <- function(preprocessed_pbp) {
 # automatically/prompt-for download if file not found?
 # future: add some kind of version selector (as package option?)
 #' @keywords internal
-.load_model_objs <- function(variable, version = "v1.0.0") {
+.load_model_objs <- function(variable, version) {
 
-  folder_path <- system.file(version, package = "ffexpectedpoints")
+  cache_dir <- rappdirs::user_cache_dir("ffexpectedpoints", "ffverse")
+
+  folder_path <- file.path(cache_dir,version)
+
   model_path <- file.path(folder_path, paste0(variable,".xgb"))
   blueprint_path <- file.path(folder_path, paste0(variable,".rds"))
 
