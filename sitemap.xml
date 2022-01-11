@@ -13,9 +13,6 @@
     <loc>https://ffexpectedpoints.ffverse.com/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://ffexpectedpoints.ffverse.com/SUPPORT.html</loc>
-  </url>
-  <url>
     <loc>https://ffexpectedpoints.ffverse.com/authors.html</loc>
   </url>
   <url>
@@ -31,13 +28,10 @@
     <loc>https://ffexpectedpoints.ffverse.com/reference/ep_build.html</loc>
   </url>
   <url>
-    <loc>https://ffexpectedpoints.ffverse.com/reference/ep_load_pbp_pass.html</loc>
+    <loc>https://ffexpectedpoints.ffverse.com/reference/ep_cache_models.html</loc>
   </url>
   <url>
-    <loc>https://ffexpectedpoints.ffverse.com/reference/ep_load_pbp_rush.html</loc>
-  </url>
-  <url>
-    <loc>https://ffexpectedpoints.ffverse.com/reference/ep_load_player_stats.html</loc>
+    <loc>https://ffexpectedpoints.ffverse.com/reference/ep_load.html</loc>
   </url>
   <url>
     <loc>https://ffexpectedpoints.ffverse.com/reference/ep_predict.html</loc>

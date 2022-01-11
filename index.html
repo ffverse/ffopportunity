@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="index.html">ffexpectedpoints</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.02</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.04</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,27 +96,107 @@
 <p><em>Models and Data for Expected Fantasy Points</em></p>
 <!-- badges: start -->
 
-<p>Downloads Expected Points data from ffverse repositories if available, and otherwise builds up expected points data by applying models to nflfastR play-by-play data.</p>
+<p>ffexpectedpoints builds Expected Fantasy Points data by applying an xgboost model to nflverse play-by-play data, as well as providing utilities to download precomputed data.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
+<!--Install the stable version from CRAN with:
+
+```r
+install.packages("ffexpectedpoints")
+```
+-->
 <p>Install the development version from GitHub with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ffexpectedpoints"</span>, repos <span class="op">=</span> <span class="st">"https://ffverse.r-universe.dev"</span><span class="op">)</span>
+
+<span class="co"># or use remotes/devtools</span>
+<span class="co"># install.packages("remotes")</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ffverse/ffexpectedpoints"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="outlinegoals">Outline/Goals<a class="anchor" aria-label="anchor" href="#outlinegoals"></a>
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>Main Functions<span class="op">:</span><span class="st"> </span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">ep_load</span>(<span class="dt">season =</span> ?, <span class="dt">week =</span> <span class="ot">NULL</span>) <span class="co"># Tries to load specified data from GitHub repository.</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">ep_build</span>(<span class="dt">season =</span> <span class="ot">NULL</span>, <span class="dt">week =</span> <span class="ot">NULL</span>, <span class="dt">rebuild =</span> <span class="ot">FALSE</span>) <span class="co"># if rebuild is FALSE and season/week = NULL (i.e. the default), checks nflfastR's game repo for completed games, then checks DP GH to see what games are fully processed, then builds EP for the missing games. Otherwise, checks for the given season/week + if rebuild = TRUE then downloads that week's data and builds EP from that, or else just downloads EP from GH repo for that season/week.</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a>Subfunctions<span class="op">:</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="kw">.ep_check_missing_games</span>(season, week) <span class="co"># Figures out what completed games don't have EP data in the repo</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="kw">.ep_download_nflfastr_data</span>() <span class="co"># downloads required nflfastr data</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="kw">.ep_preprocess</span>() <span class="co"># figures out running averages required for players.</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="kw">.ep_predict</span>() <span class="co"># applies model to preprocessed data</span></span></code></pre></div>
+<p>The two main functions of {ffexpectedpoints} are <code><a href="reference/ep_load.html">ep_load()</a></code> and <code><a href="reference/ep_build.html">ep_build()</a></code>.</p>
+<p>You can download the latest version of the EP data with <code><a href="reference/ep_load.html">ep_load()</a></code> as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffexpectedpoints.ffverse.com">ffexpectedpoints</a></span><span class="op">)</span>
+<span class="fu"><a href="reference/ep_load.html">ep_load</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2020</span><span class="op">:</span><span class="fl">2021</span>, type <span class="op">=</span> <span class="st">"weekly"</span><span class="op">)</span>
+<span class="co">#&gt; &gt; &lt;ffexpectedpoints predictions&gt;</span>
+<span class="co">#&gt; &gt; Generated 2022-01-10 09:39:41 with ep model version "latest"</span>
+<span class="co">#&gt; # A tibble: 11,529 x 159</span>
+<span class="co">#&gt;    season posteam  week game_id     player_id full_name    position pass_attempt</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 2020   SF          1 2020_01_AR~ 00-00313~ Jimmy Garop~ QB                 33</span>
+<span class="co">#&gt;  2 2020   SF          1 2020_01_AR~ 00-00332~ George Kitt~ TE                  0</span>
+<span class="co">#&gt;  3 2020   ARI         1 2020_01_AR~ 00-00352~ Kyler Murray QB                 39</span>
+<span class="co">#&gt;  4 2020   ARI         1 2020_01_AR~ 00-00305~ DeAndre Hop~ WR                  0</span>
+<span class="co">#&gt;  5 2020   ARI         1 2020_01_AR~ 00-00229~ Larry Fitzg~ WR                  0</span>
+<span class="co">#&gt;  6 2020   ARI         1 2020_01_AR~ &lt;NA&gt;      &lt;NA&gt;         &lt;NA&gt;                0</span>
+<span class="co">#&gt;  7 2020   SF          1 2020_01_AR~ 00-00316~ Raheem Most~ RB                  0</span>
+<span class="co">#&gt;  8 2020   ARI         1 2020_01_AR~ 00-00331~ Kenyan Drake RB                  0</span>
+<span class="co">#&gt;  9 2020   ARI         1 2020_01_AR~ 00-00347~ Christian K~ WR                  0</span>
+<span class="co">#&gt; 10 2020   SF          1 2020_01_AR~ 00-00332~ Trent Taylor WR                  0</span>
+<span class="co">#&gt; # ... with 11,519 more rows, and 151 more variables: rec_attempt &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   rush_attempt &lt;dbl&gt;, pass_air_yards &lt;dbl&gt;, rec_air_yards &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   pass_completions &lt;dbl&gt;, receptions &lt;dbl&gt;, pass_completions_exp &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   receptions_exp &lt;dbl&gt;, pass_yards_gained &lt;dbl&gt;, rec_yards_gained &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   rush_yards_gained &lt;dbl&gt;, pass_yards_gained_exp &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   rec_yards_gained_exp &lt;dbl&gt;, rush_yards_gained_exp &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   pass_touchdown &lt;dbl&gt;, rec_touchdown &lt;dbl&gt;, rush_touchdown &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   pass_touchdown_exp &lt;dbl&gt;, rec_touchdown_exp &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   rush_touchdown_exp &lt;dbl&gt;, ...</span></code></pre></div>
+<p>You can also build EP from base nflverse data with <code><a href="reference/ep_build.html">ep_build()</a></code> as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/ep_build.html">ep_build</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2021</span>, version <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#&gt; -- Starting ep build for 2021 season(s)! 2022-01-11 07:58:44 -------------------</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; &gt; Loading pbp 2022-01-11 07:58:44</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; &gt; Preprocessing pbp 2022-01-11 07:58:46</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt; &gt; Generating predictions 2022-01-11 07:58:54</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; &gt; Summarizing data 2022-01-11 07:59:33</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; -- Finished building ep for 2021 season(s)! 2022-01-11 07:59:33 ----------------</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; &gt; &lt;ffexpectedpoints predictions&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; &gt; Generated 2022-01-11 07:59:33 with model version latest</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; List of 5</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  $ ep_weekly  : tibble [5,756 x 159] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  $ ep_pbp_pass: tibble [18,747 x 57] (S3: tbl_df/tbl/data.table/data.frame)</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  $ ep_pbp_rush: tibble [14,038 x 47] (S3: tbl_df/tbl/data.table/data.frame)</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  $ ep_version : chr "latest"</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  $ timestamp  : POSIXct[1:1], format: "2022-01-11 07:59:33"</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
+</h2>
+<p>ffexpectedpoints data is automated with GitHub Actions and can be manually downloaded in RDS, parquet, and csv formats from the <a href="https://github.com/ffverse/ffexpectedpoints/releases" class="external-link">releases page</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="getting-help">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
+</h2>
+<p>The best places to get help on this package are:</p>
+<ul>
+<li>the <a href="https://discord.com/invite/5Er2FBnnQa" class="external-link">nflverse discord</a> (for both this package as well as anything R/NFL related)</li>
+<li>opening <a href="https://github.com/ffverse/ffexpectedpoints/issues/new/choose" class="external-link">an issue</a>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+</h2>
+<p>Many hands make light work! Here are some ways you can contribute to this project:</p>
+<ul>
+<li><p>You can <a href="https://github.com/ffverse/ffexpectedpoints/issues/new/choose" class="external-link">open an issue</a> if you’d like to request specific data or report a bug/error.</p></li>
+<li><p>If you’d like to contribute code, please check out <a href="https://ffexpectedpoints.ffverse.com/CONTRIBUTING.html">the contribution guidelines</a>.</p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="terms-of-use">Terms of Use<a class="anchor" aria-label="anchor" href="#terms-of-use"></a>
+</h2>
+<p>The R code for this package is released as open source under the <a href="https://ffexpectedpoints.ffverse.com/LICENSE.html">GPL v3 License</a>. The models and expected points data included within this package’s are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>
+</div>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
+<p>Please note that the ffexpectedpoints project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -163,9 +243,10 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=ffexpectedpoints" class="external-link"><img src="https://img.shields.io/cran/v/ffexpectedpoints?style=flat-square&amp;logo=R&amp;label=CRAN" alt="CRAN status"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square" alt="Lifecycle: experimental"></a></li>
 <li><a href="https://ffexpectedpoints.ffverse.com/"><img src="https://img.shields.io/github/r-package/v/ffverse/ffexpectedpoints/main?label=dev&amp;style=flat-square&amp;logo=github" alt="Dev status"></a></li>
-<li><a href="https://CRAN.R-project.org/package=ffexpectedpoints" class="external-link"><img src="https://www.r-pkg.org/badges/version/ffexpectedpoints" alt="CRAN status"></a></li>
+<li><a href="https://discord.com/invite/5Er2FBnnQa" class="external-link"><img src="https://img.shields.io/discord/789805604076126219?color=7289da&amp;label=nflverse%20discord&amp;logo=discord&amp;logoColor=fff&amp;style=flat-square" alt="nflverse discord"></a></li>
 </ul>
 </div>
 
