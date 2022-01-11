@@ -35,6 +35,7 @@ Imports:
     utils,
     xgboost (>= 1.1)
 Suggests: 
+    curl,
     progressr (>= 0.8.0),
     roxygen2 (>= 7.1.0),
     testthat (>= 3.0.0),
