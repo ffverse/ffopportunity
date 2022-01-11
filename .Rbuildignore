@@ -3,6 +3,7 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^cran-comments\.md$
+^ffopportunity\.svg$
 ^\.github$
 ^pkgdown/_pkgdown\.yml$
 ^docs$
