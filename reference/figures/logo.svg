@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="401.8141"
-     inkscape:cy="98.67831"
+     inkscape:zoom="1.979899"
+     inkscape:cx="569.65857"
+     inkscape:cy="438.26555"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -93,9 +93,9 @@
        id="path66"
        style="fill:#d31027;fill-opacity:1;stroke-width:0.320379" />
     <path
-       d="m 91.172947,154.62079 c 0.3486,-1.39709 0.84757,-2.11426 1.43191,-2.14855 l 15.665003,-0.2083 c 1.13927,0.0493 2.14359,3.20651 2.23021,7.21845 0.0867,4.01189 -0.72708,7.2733 -1.86631,7.22402 l -15.700863,0.0953 c -1.13927,-0.0493 -2.1436,-3.20647 -2.23029,-7.21815 -0.0544,-1.83362 0.15103,-3.68205 0.47065,-4.96297 z"
+       d="m 91.46535,154.31569 c 0.366889,-1.23065 0.892037,-1.86238 1.507033,-1.89259 l 16.486847,-0.18348 c 1.19904,0.0434 2.25605,2.82451 2.34721,6.35849 0.0913,3.53394 -0.76522,6.40681 -1.96422,6.3634 l -16.524587,0.084 c -1.19904,-0.0434 -2.256061,-2.82447 -2.347299,-6.35823 -0.05725,-1.61518 0.158954,-3.2434 0.495342,-4.37172 z"
        id="path82-2"
-       style="fill:#d31027;fill-opacity:1;stroke-width:0.154143" />
+       style="fill:#d31027;fill-opacity:1;stroke-width:0.148416" />
     <g
        id="g2524"
        transform="matrix(-1,0,0,1,214.68496,1.6036172)">
@@ -117,7 +117,7 @@
        inkscape:export-xdpi="51.049999"
        style="fill:#d31027;fill-opacity:1;stroke:#000000;stroke-width:3.50768"
        id="g14-39-6-0-0"
-       transform="matrix(0.05252578,0.0203136,-0.02024373,0.05314646,123.54654,108.10734)"
+       transform="matrix(0.05252578,0.0203136,-0.02024373,0.05314646,124.34835,109.44369)"
        inkscape:export-filename="C:\Users\Tan\Documents\GitHub\_dynastyprocess\graphics\packages\ffpros\ffpros-header.png">
       <g
          style="fill:#d31027;fill-opacity:1;stroke:#000000;stroke-width:3.50768"
