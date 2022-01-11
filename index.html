@@ -7,7 +7,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="Downloads expected fantasy points data from 'ffverse' repositories if available, and otherwise builds up expected points data by applying models to 'nflverse' play-by-play data.
 ">
-<title>Expected Points Models for Fantasy Football • ffexpectedpoints</title>
+<title>Expected Points Models for Fantasy Football • ffopportunity</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -17,7 +23,7 @@
 <meta property="og:description" content="Downloads expected fantasy points data from 'ffverse' repositories if available, and otherwise builds up expected points data by applying models to 'nflverse' play-by-play data.
 ">
 <meta property="og:image" content="https://ffsimulator.ffverse.com/reference/figures/logo.png">
-<meta property="og:image:alt" content="ffexpectedpoints - Expected Points Models for Fantasy Football">
+<meta property="og:image:alt" content="ffopportunity - Expected Points Models for Fantasy Football">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@_TanHo">
 <meta name="twitter:site" content="@DynastyProcess">
@@ -32,7 +38,7 @@
 
     <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-dark"><div class="container">
     
-    <a class="navbar-brand me-2" href="index.html">ffexpectedpoints</a>
+    <a class="navbar-brand me-2" href="index.html">ffopportunity</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.04</small>
 
@@ -62,7 +68,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/ffverse/ffexpectedpoints/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/ffverse/ffopportunity/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -91,38 +97,47 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="ffexpectedpoints">ffexpectedpoints<a class="anchor" aria-label="anchor" href="#ffexpectedpoints"></a>
-</h1></div>
+<div class="page-header">
+<img src="logo.svg" class="logo" alt=""><h1 id="ffopportunity-">ffopportunity 
+<a class="anchor" aria-label="anchor" href="#ffopportunity-"></a>
+</h1>
+</div>
 <p><em>Models and Data for Expected Fantasy Points</em></p>
 <!-- badges: start -->
 
-<p>ffexpectedpoints builds Expected Fantasy Points data by applying an xgboost model to nflverse play-by-play data, as well as providing utilities to download precomputed data.</p>
+<p>ffopportunity builds a dataframe of Expected Fantasy Points by preprocessing and applying an xgboost model to nflverse play-by-play data. It also includes utilities to download precomputed data from automated GitHub releases.</p>
+<div class="section level2">
+<h2 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
+</h2>
+<p>Expected Fantasy Points are a measure of player opportunities in fantasy football - essentially aiming to quantify how many points the average player would score given a specific situation and opportunity. It uses xgboost and tidymodels trained on public nflverse data from {SEASONS 2006-2020} to do this.</p>
+<p>For more on the modeling details, see: {MODELLING VIGNETTES}</p>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <!--Install the stable version from CRAN with:
 
 ```r
-install.packages("ffexpectedpoints")
+install.packages("ffopportunity")
 ```
 -->
 <p>Install the development version from GitHub with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ffexpectedpoints"</span>, repos <span class="op">=</span> <span class="st">"https://ffverse.r-universe.dev"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ffopportunity"</span>, repos <span class="op">=</span> <span class="st">"https://ffverse.r-universe.dev"</span><span class="op">)</span>
 
 <span class="co"># or use remotes/devtools</span>
 <span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ffverse/ffexpectedpoints"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ffverse/ffopportunity"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>The two main functions of {ffexpectedpoints} are <code><a href="reference/ep_load.html">ep_load()</a></code> and <code><a href="reference/ep_build.html">ep_build()</a></code>.</p>
+<p>The two main functions of {ffopportunity} are <code><a href="reference/ep_load.html">ep_load()</a></code> and <code><a href="reference/ep_build.html">ep_build()</a></code>.</p>
 <p>You can download the latest version of the EP data with <code><a href="reference/ep_load.html">ep_load()</a></code> as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffexpectedpoints.ffverse.com">ffexpectedpoints</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffopportunity.ffverse.com">ffopportunity</a></span><span class="op">)</span>
 <span class="fu"><a href="reference/ep_load.html">ep_load</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2020</span><span class="op">:</span><span class="fl">2021</span>, type <span class="op">=</span> <span class="st">"weekly"</span><span class="op">)</span>
-<span class="co">#&gt; &gt; &lt;ffexpectedpoints predictions&gt;</span>
+<span class="co">#&gt; &gt; &lt;ffopportunity predictions&gt;</span>
 <span class="co">#&gt; &gt; Generated 2022-01-10 09:39:41 with ep model version "latest"</span>
 <span class="co">#&gt; # A tibble: 11,529 x 159</span>
 <span class="co">#&gt;    season posteam  week game_id     player_id full_name    position pass_attempt</span>
@@ -155,7 +170,7 @@ install.packages("ffexpectedpoints")
 <span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt; &gt; Generating predictions 2022-01-11 07:58:54</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; &gt; Summarizing data 2022-01-11 07:59:33</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; -- Finished building ep for 2021 season(s)! 2022-01-11 07:59:33 ----------------</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; &gt; &lt;ffexpectedpoints predictions&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; &gt; &lt;ffopportunity predictions&gt;</span></span>
 <span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; &gt; Generated 2022-01-11 07:59:33 with model version latest</span></span>
 <span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; List of 5</span></span>
 <span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  $ ep_weekly  : tibble [5,756 x 159] (S3: tbl_df/tbl/data.frame)</span></span>
@@ -167,7 +182,7 @@ install.packages("ffexpectedpoints")
 <div class="section level2">
 <h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h2>
-<p>ffexpectedpoints data is automated with GitHub Actions and can be manually downloaded in RDS, parquet, and csv formats from the <a href="https://github.com/ffverse/ffexpectedpoints/releases" class="external-link">releases page</a>.</p>
+<p>ffopportunity data is automated with GitHub Actions and can be manually downloaded in RDS, parquet, and csv formats from the <a href="https://github.com/ffverse/ffopportunity/releases" class="external-link">releases page</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="getting-help">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
@@ -175,7 +190,7 @@ install.packages("ffexpectedpoints")
 <p>The best places to get help on this package are:</p>
 <ul>
 <li>the <a href="https://discord.com/invite/5Er2FBnnQa" class="external-link">nflverse discord</a> (for both this package as well as anything R/NFL related)</li>
-<li>opening <a href="https://github.com/ffverse/ffexpectedpoints/issues/new/choose" class="external-link">an issue</a>
+<li>opening <a href="https://github.com/ffverse/ffopportunity/issues/new/choose" class="external-link">an issue</a>
 </li>
 </ul>
 </div>
@@ -184,26 +199,26 @@ install.packages("ffexpectedpoints")
 </h2>
 <p>Many hands make light work! Here are some ways you can contribute to this project:</p>
 <ul>
-<li><p>You can <a href="https://github.com/ffverse/ffexpectedpoints/issues/new/choose" class="external-link">open an issue</a> if you’d like to request specific data or report a bug/error.</p></li>
-<li><p>If you’d like to contribute code, please check out <a href="https://ffexpectedpoints.ffverse.com/CONTRIBUTING.html">the contribution guidelines</a>.</p></li>
+<li><p>You can <a href="https://github.com/ffverse/ffopportunity/issues/new/choose" class="external-link">open an issue</a> if you’d like to request specific data or report a bug/error.</p></li>
+<li><p>If you’d like to contribute code, please check out <a href="https://ffopportunity.ffverse.com/CONTRIBUTING.html">the contribution guidelines</a>.</p></li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="terms-of-use">Terms of Use<a class="anchor" aria-label="anchor" href="#terms-of-use"></a>
 </h2>
-<p>The R code for this package is released as open source under the <a href="https://ffexpectedpoints.ffverse.com/LICENSE.html">GPL v3 License</a>. The models and expected points data included within this package’s are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>
+<p>The R code for this package is released as open source under the <a href="https://ffopportunity.ffverse.com/LICENSE.html">GPL v3 License</a>. The models and expected points data included within this package’s are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>Please note that the ffexpectedpoints project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the ffopportunity project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ffverse/ffexpectedpoints/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/ffverse/ffexpectedpoints/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/ffverse/ffopportunity/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/ffverse/ffopportunity/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -226,7 +241,7 @@ install.packages("ffexpectedpoints")
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing ffexpectedpoints</a></li>
+<li><a href="authors.html#citation">Citing ffopportunity</a></li>
 </ul>
 </div>
 
@@ -243,9 +258,9 @@ install.packages("ffexpectedpoints")
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://CRAN.R-project.org/package=ffexpectedpoints" class="external-link"><img src="https://img.shields.io/cran/v/ffexpectedpoints?style=flat-square&amp;logo=R&amp;label=CRAN" alt="CRAN status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=ffopportunity" class="external-link"><img src="https://img.shields.io/cran/v/ffopportunity?style=flat-square&amp;logo=R&amp;label=CRAN" alt="CRAN status"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://ffexpectedpoints.ffverse.com/"><img src="https://img.shields.io/github/r-package/v/ffverse/ffexpectedpoints/main?label=dev&amp;style=flat-square&amp;logo=github" alt="Dev status"></a></li>
+<li><a href="https://ffopportunity.ffverse.com/"><img src="https://img.shields.io/github/r-package/v/ffverse/ffopportunity/main?label=dev&amp;style=flat-square&amp;logo=github" alt="Dev status"></a></li>
 <li><a href="https://discord.com/invite/5Er2FBnnQa" class="external-link"><img src="https://img.shields.io/discord/789805604076126219?color=7289da&amp;label=nflverse%20discord&amp;logo=discord&amp;logoColor=fff&amp;style=flat-square" alt="nflverse discord"></a></li>
 </ul>
 </div>
