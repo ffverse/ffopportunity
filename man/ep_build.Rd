@@ -2,19 +2,20 @@
 % Please edit documentation in R/ep_build.R
 \name{ep_build}
 \alias{ep_build}
-\title{Preprocess Data}
+\title{Build EP}
 \usage{
-ep_build(season = nflreadr:::most_recent_season())
+ep_build(season = nflreadr:::most_recent_season(), version = "latest")
 }
 \arguments{
 \item{season}{a numeric vector of seasons that defaults to most recent season. Must be later than 2006.}
+
+\item{version}{an EP model version - one of "latest" (default) or "v1.0.0" (these are currently identical)}
 }
 \value{
-a list containing two dataframes: pbp for play-level ep predictions and weekly for game-level summaries.
+a list containing three dataframes: \code{ep_weekly} provides a game-level summary by player, \code{ep_pbp_pass} provides EP data on pass plays, and \code{ep_pbp_rush} provides EP data on rush plays.
 }
 \description{
-This function performs the necesssary pre-processing steps to make
-expected points predictions on \code{nflreadr} data
+This function builds Expected Fantasy Points predictions by downloading the xgboost models and play-by-play data, applying the model, and summarizing to player level.
 }
 \examples{
 \donttest{
@@ -24,3 +25,8 @@ try({ # prevents cran-related errors
 }
 
 }
+\seealso{
+Other main: 
+\code{\link{ep_load}()}
+}
+\concept{main}

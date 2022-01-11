@@ -7,6 +7,17 @@ authors:
   Tan Ho:
     href: https://twitter.com/_TanHo
 
+reference:
+  - title: Main
+    desc: Download or build expected fantasy points
+  - contents:
+    - "ep_load"
+    - "ep_build"
+  - title: Misc
+    desc: Helper functions for used by the main functions
+  - contents:
+    - lacks_concepts("main")
+
 home:
   title: Expected Points Models for Fantasy Football
   description: >

@@ -4,34 +4,26 @@
 \alias{ep_predict}
 \title{Predict EP}
 \usage{
-ep_predict(preprocessed_pbp)
+ep_predict(preprocessed_pbp, version = c("latest", "v1.0.0"))
 }
 \arguments{
 \item{preprocessed_pbp}{list with dataframes created by \code{ep_preprocess}}
+
+\item{version}{ep model version - available is \code{"latest"} or \code{"v1.0.0"} (these are currently the same thing)}
 }
 \value{
 a dataframe with the expected fields added
 }
 \description{
-This function calls the prediction objects on the pre-processed data
+This function runs the prediction functions over preprocessed data.
 }
 \examples{
-\dontshow{
-old <- options(ffexpectedpoints.verbose = FALSE)
-}
 \donttest{
-try({
-  nflreadr::load_pbp(2021) \%>\%
-  head(100) \%>\%
-  ep_preprocess() \%>\%
-  ep_predict()
-})
-}
-\dontshow{
-options(ffexpectedpoints.verbose = old)
+  try({
+  preprocessed <- readRDS(system.file("ep_preprocessed.rds",package = "ffexpectedpoints"))
+  # this file is equivalent to nflreadr::load_pbp(2021) \%>\% head(100) \%>\% ep_preprocess()
+  ep_predict(preprocessed)
+  })
 }
 
-}
-\seealso{
-\code{vignette("basic")} for example usage
 }
