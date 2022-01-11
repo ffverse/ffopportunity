@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ffopportunity <a href='https://ffopportunity.ffverse.com'><img src='man/figures/logo.png' align="right" width="25%" min-width="120px"/></a>
+# ffopportunity <a href='https://ffopportunity.ffverse.com'><img src='man/figures/logo.svg' align="right" width="25%" min-width="120px"/></a>
 
 *Models and Data for Expected Fantasy Points*
 
