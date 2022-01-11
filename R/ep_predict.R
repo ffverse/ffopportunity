@@ -17,6 +17,7 @@
 #' @return a dataframe with the expected fields added
 #'
 #' @import xgboost
+#' @import recipes
 #'
 #' @export
 ep_predict <- function(preprocessed_pbp, version = c("latest", "v1.0.0")) {
