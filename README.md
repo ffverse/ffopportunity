@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ffopportunity
+# ffopportunity <a href='https://ffopportunity.ffverse.com'><img src='man/figures/logo.png' align="right" width="25%" min-width="120px"/></a>
 
 *Models and Data for Expected Fantasy Points*
 
@@ -17,9 +17,20 @@ status](https://img.shields.io/github/r-package/v/ffverse/ffopportunity/main?lab
 discord](https://img.shields.io/discord/789805604076126219?color=7289da&label=nflverse%20discord&logo=discord&logoColor=fff&style=flat-square)](https://discord.com/invite/5Er2FBnnQa)
 <!-- badges: end -->
 
-ffopportunity builds Expected Fantasy Points data by applying an
-xgboost model to nflverse play-by-play data, as well as providing
-utilities to download precomputed data.
+ffopportunity builds a dataframe of Expected Fantasy Points by
+preprocessing and applying an xgboost model to nflverse play-by-play
+data. It also includes utilities to download precomputed data from
+automated GitHub releases.
+
+## About
+
+Expected Fantasy Points are a measure of player opportunities in fantasy
+football - essentially aiming to quantify how many points the average
+player would score given a specific situation and opportunity. It uses
+xgboost and tidymodels trained on public nflverse data from {SEASONS
+2006-2020} to do this.
+
+For more on the modeling details, see: {MODELLING VIGNETTES}
 
 ## Installation
 
@@ -101,8 +112,8 @@ ep_build(season = 2021, version = "latest")
 
 ## Data
 
-ffopportunity data is automated with GitHub Actions and can be
-manually downloaded in RDS, parquet, and csv formats from the [releases
+ffopportunity data is automated with GitHub Actions and can be manually
+downloaded in RDS, parquet, and csv formats from the [releases
 page](https://github.com/ffverse/ffopportunity/releases).
 
 ## Getting help
@@ -129,9 +140,9 @@ this project:
 ## Terms of Use
 
 The R code for this package is released as open source under the [GPL v3
-License](https://ffopportunity.ffverse.com/LICENSE.html). The models
-and expected points data included within this package’s are licensed
-under [Creative Commons Attribution-ShareAlike 4.0 International
+License](https://ffopportunity.ffverse.com/LICENSE.html). The models and
+expected points data included within this package’s are licensed under
+[Creative Commons Attribution-ShareAlike 4.0 International
 License](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ## Code of Conduct
