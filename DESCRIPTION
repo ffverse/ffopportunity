@@ -1,6 +1,6 @@
 Package: ffexpectedpoints
 Title: Models for Fantasy Football Expected Points
-Version: 0.1.0.03
+Version: 0.1.0.04
 Authors@R: c(
     person("Joe", "Sydlowski", , "syd235@gmail.com", role = c("aut", "cre")),
     person("Tan", "Ho", , "tan@tanho.ca", role = "aut",

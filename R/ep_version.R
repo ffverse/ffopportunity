@@ -16,7 +16,6 @@ ep_cache_models <- function(version = c("latest","v1.0.0"), force = FALSE, ask =
 
   if(!dir.exists(cache_dir)) dir.create(cache_dir)
 
-
   if(!force){
     if(file.exists(file.path(cache_dir,version))) return(invisible(NULL))
 

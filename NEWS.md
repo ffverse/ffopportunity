@@ -6,3 +6,5 @@
 * Added `update/` script that uses piggyback to update release data
 * Offloaded models to releases ("latest-models", "v1.0.0-models")
 * Added download of models to user cache
+* Combine variants of ep_load into one function `ep_load()` with arguments
+
