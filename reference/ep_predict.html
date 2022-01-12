@@ -93,7 +93,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
 <span class="r-in">  <span class="va">preprocessed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"ep_preprocessed.rds"</span>,package <span class="op">=</span> <span class="st">"ffopportunity"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="co"># this file is equivalent to nflreadr::load_pbp(2021) %&gt;% head(100) %&gt;% ep_preprocess()</span></span>
+<span class="r-in">  <span class="co"># this file is equivalent to nflreadr::load_pbp(2021) %&gt;% head(1000) %&gt;% ep_preprocess()</span></span>
 <span class="r-in">  <span class="fu">ep_predict</span><span class="op">(</span><span class="va">preprocessed</span><span class="op">)</span></span>
 <span class="r-in">  <span class="op">}</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $rush_df</span>
