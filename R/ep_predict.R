@@ -9,7 +9,7 @@
 #' \donttest{
 #'   try({
 #'   preprocessed <- readRDS(system.file("ep_preprocessed.rds",package = "ffopportunity"))
-#'   # this file is equivalent to nflreadr::load_pbp(2021) %>% head(100) %>% ep_preprocess()
+#'   # this file is equivalent to nflreadr::load_pbp(2021) %>% head(1000) %>% ep_preprocess()
 #'   ep_predict(preprocessed)
 #'   })
 #' }

@@ -13,6 +13,8 @@ status](https://img.shields.io/cran/v/ffopportunity?style=flat-square&logo=R&lab
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Dev
 status](https://img.shields.io/github/r-package/v/ffverse/ffopportunity/main?label=dev&style=flat-square&logo=github)](https://ffopportunity.ffverse.com/)
+[![Codecov test
+coverage](https://img.shields.io/codecov/c/github/ffverse/ffopportunity?label=codecov&style=flat-square&logo=codecov)](https://app.codecov.io/gh/ffverse/ffopportunity?branch=main)
 [![nflverse
 discord](https://img.shields.io/discord/789805604076126219?color=7289da&label=nflverse%20discord&logo=discord&logoColor=fff&style=flat-square)](https://discord.com/invite/5Er2FBnnQa)
 <!-- badges: end -->
