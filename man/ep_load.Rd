@@ -13,7 +13,7 @@ ep_load(
 \arguments{
 \item{season}{A numeric vector of four digit years associated with given NFL seasons - defaults to latest season.}
 
-\item{type}{Data type - one of \code{"weekly"}, \code{"pbp_pass"}, \code{"pbp_rush"}, or \code{"all"}}
+\item{type}{Data type - one of \code{"weekly"}, \code{"pbp_pass"}, or \code{"pbp_rush"}}
 
 \item{version}{EP model version: one of "latest" (default) or "v1.0.0" - these are currently identical.}
 }
