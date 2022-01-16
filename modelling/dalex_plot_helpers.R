@@ -17,18 +17,18 @@ ggplot_imp <- function(...) {
   p <- full_vip %>%
     filter(variable != "_full_model_") %>%
     mutate(variable = fct_reorder(variable, dropout_loss)) %>%
-    ggplot(aes(dropout_loss, variable))
+    ggplot(aes(dropout_loss, variable, color = variable, fill = variable))
   if(length(obj) > 1) {
     p <- p +
       facet_wrap(vars(label)) +
+      geom_boxplot(aes(color = label, fill = label), alpha = 0.2) +
       geom_vline(data = perm_vals, aes(xintercept = dropout_loss, color = label),
-                 size = 1.4, lty = 2, alpha = 0.7) +
-      geom_boxplot(aes(color = label, fill = label), alpha = 0.2)
+                 size = 1.4, alpha = 0.5)
   } else {
     p <- p +
+      geom_boxplot(alpha = 0.4) +
       geom_vline(data = perm_vals, aes(xintercept = dropout_loss),
-                 size = 1.4, lty = 2, alpha = 0.7) +
-      geom_boxplot(fill = "#91CBD765", alpha = 0.4)
+                 color = "black", size = 1.4, alpha = 0.5)
 
   }
   p +
