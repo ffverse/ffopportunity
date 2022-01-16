@@ -12,3 +12,4 @@
 ^modelling$
 ^models$
 ^codecov\.yml$
+^\.Renviron$
