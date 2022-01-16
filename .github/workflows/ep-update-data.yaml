@@ -10,7 +10,7 @@ on:
 name: ep-update-data
 
 jobs:
-  pkgdown:
+  ep-update-data:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -25,10 +25,9 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: piggyback, arrow
+          extra-packages: piggyback, arrow, readr
 
       - name: Run data update
-        with:
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           Rscript -e 'source("update/ep_update.R")'
+        shell: bash

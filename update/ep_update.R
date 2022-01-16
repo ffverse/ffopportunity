@@ -2,7 +2,7 @@ pkgload::load_all()
 
 save_ep_data <- function(season, folder_path, version){
 
-  ep_object <- ffexpectedpoints::ep_build(season)
+  ep_object <- ffexpectedpoints::ep_build(season,version = version)
 
   # rds
   saveRDS(ep_object$ep_weekly, file.path(folder_path, glue::glue('ep_weekly_{season}.rds')))
@@ -40,4 +40,5 @@ update_ep <- function(season, version = "v1.0.0"){
   invisible(NULL)
 }
 
-update_ep(nflreadr:::most_recent_season())
+update_ep(nflreadr:::most_recent_season(), version = "latest")
+update_ep(nflreadr:::most_recent_season(), version = "v1.0.0")

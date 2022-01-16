@@ -10,6 +10,7 @@ name: testcoverage
 
 jobs:
   testcoverage:
+    if: "!contains(github.event.head_commit.message, 'skip covr')"
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
