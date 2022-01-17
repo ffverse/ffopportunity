@@ -33,9 +33,9 @@ upload_ep_data <- function(folder_path, version){
 update_ep <- function(season, version = "v1.0.0"){
   try(piggyback::pb_new_release(repo = "ffverse/ffexpectedpoints", tag = "latest-data"))
   try(piggyback::pb_new_release(repo = "ffverse/ffexpectedpoints", tag = glue::glue("{version}-data")))
-  folder_path <- tempdir()
-  on.exit(unlink(folder_path, recursive = TRUE, force = TRUE))
-  purrr::walk(season, save_ep_data, folder_path = folder_path, version = version)
+  dir.create("temp")
+  on.exit(unlink("temp",recursive = TRUE, force = TRUE))
+  purrr::walk(season, save_ep_data, folder_path = "temp", version = version)
   upload_ep_data(folder_path, version)
   invisible(NULL)
 }
