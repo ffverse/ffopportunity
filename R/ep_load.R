@@ -42,7 +42,7 @@ ep_load <- function(season = nflreadr:::most_recent_season(),
   p <- NULL
   if (is_installed("progressr")) p <- progressr::progressor(along = season)
   out <- purrr::map_dfr(urls, nflreadr::progressively(rds_from_url, p))
-  ts <- nflreadr::raw_from_url("https://github.com/ffverse/ffopportunity/releases/download/latest-data/timestamp.txt") %>%
+  ts <- nflreadr::raw_from_url(glue::glue("https://github.com/ffverse/ffopportunity/releases/download/{version}-data/timestamp.txt")) %>%
     rawToChar() %>%
     as.POSIXct()
 
