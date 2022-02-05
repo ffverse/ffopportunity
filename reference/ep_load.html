@@ -80,7 +80,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ep_load</span><span class="op">(</span>
-  season <span class="op">=</span> <span class="fu">nflreadr</span><span class="fu">:::</span><span class="fu">most_recent_season</span><span class="op">(</span><span class="op">)</span>,
+  season <span class="op">=</span> <span class="fu">nflreadr</span><span class="fu">:::</span><span class="fu"><a href="https://nflreadr.nflverse.com/reference/most_recent_season.html" class="external-link">most_recent_season</a></span><span class="op">(</span><span class="op">)</span>,
   type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"weekly"</span>, <span class="st">"pbp_pass"</span>, <span class="st">"pbp_rush"</span><span class="op">)</span>,
   version <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"latest"</span>, <span class="st">"v1.0.0"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
@@ -115,20 +115,20 @@
 <span class="r-in">  <span class="fu">ep_load</span><span class="op">(</span><span class="fl">2006</span>, type <span class="op">=</span> <span class="st">"pbp_rush"</span>, version <span class="op">=</span> <span class="st">"v1.0.0"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → &lt;ffopportunity predictions&gt;</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → Generated <span style="color: #0000BB;">2022-01-25 04:32:56</span> with ep model version <span style="color: #0000BB;">"v1.0.0"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Generated <span style="color: #0000BB;">2022-01-31 04:34:51</span> with ep model version <span style="color: #0000BB;">"v1.0.0"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 47</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    game_id  play_id desc     rusher_player_id full_name posteam two_point_attem…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2006_01…      58 (14:54)… 00-0004640       Warrick … ATL                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2006_01…      80 (14:18)… 00-0004640       Warrick … ATL                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2006_01…     183 (12:17)… 00-0004640       Warrick … ATL                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2006_01…     227 (11:48)… 00-0004640       Warrick … ATL                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2006_01…     336 (10:15)… 00-0021164       DeShaun … CAR                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2006_01…     406 (8:52) … 00-0021164       DeShaun … CAR                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2006_01…     625 (6:27) … 00-0004640       Warrick … ATL                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2006_01…     647 (5:44) … 00-0020245       Mike Vick ATL                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2006_01…     674 (5:11) … 00-0004640       Warrick … ATL                    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2006_01…     696 (4:31) … 00-0004640       Warrick … ATL                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    game_id     play_id desc  rusher_player_id full_name posteam two_point_attem…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2006_01_AT…      58 (14:… 00-0004640       Warrick … ATL                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2006_01_AT…      80 (14:… 00-0004640       Warrick … ATL                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2006_01_AT…     183 (12:… 00-0004640       Warrick … ATL                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2006_01_AT…     227 (11:… 00-0004640       Warrick … ATL                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2006_01_AT…     336 (10:… 00-0021164       DeShaun … CAR                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2006_01_AT…     406 (8:5… 00-0021164       DeShaun … CAR                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2006_01_AT…     625 (6:2… 00-0004640       Warrick … ATL                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2006_01_AT…     647 (5:4… 00-0020245       Mike Vick ATL                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2006_01_AT…     674 (5:1… 00-0004640       Warrick … ATL                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2006_01_AT…     696 (4:3… 00-0004640       Warrick … ATL                    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 40 more variables: two_point_converted &lt;dbl&gt;, rush_attempt &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   first_down_rush &lt;dbl&gt;, fumble_lost &lt;dbl&gt;, season &lt;dbl&gt;, week &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   rushing_yards &lt;dbl&gt;, rush_touchdown &lt;fct&gt;, first_down &lt;fct&gt;,</span></span>
