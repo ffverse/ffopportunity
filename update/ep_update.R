@@ -2,7 +2,7 @@ pkgload::load_all()
 
 save_ep_data <- function(season, folder_path, version){
 
-  ep_object <- ffexpectedpoints::ep_build(season,version = version)
+  ep_object <- ffopportunity::ep_build(season,version = version)
 
   # rds
   saveRDS(ep_object$ep_weekly, file.path(folder_path, glue::glue('ep_weekly_{season}.rds')))
@@ -25,18 +25,21 @@ save_ep_data <- function(season, folder_path, version){
 
 upload_ep_data <- function(folder_path, version){
   list.files(folder_path, pattern = "csv$|rds$|parquet$|txt$", full.names = TRUE) %>%
-    purrr::walk(piggyback::pb_upload, repo = "ffverse/ffexpectedpoints", tag = "latest-data", overwrite = TRUE) %>%
-    purrr::walk(piggyback::pb_upload, repo = "ffverse/ffexpectedpoints", tag = glue::glue("{version}-data"), overwrite = TRUE)
+    piggyback::pb_upload(repo = "ffverse/ffopportunity", tag = "latest-data", overwrite = TRUE)
+
+  list.files(folder_path, pattern = "csv$|rds$|parquet$|txt$", full.names = TRUE) %>%
+    piggyback::pb_upload(repo = "ffverse/ffopportunity", tag = glue::glue("{version}-data"), overwrite = TRUE)
+
   cli::cli_alert_success("Completed ep upload! {Sys.time()}")
 }
 
 update_ep <- function(season, version = "v1.0.0", folder_path){
-  try(piggyback::pb_new_release(repo = "ffverse/ffexpectedpoints", tag = "latest-data"))
-  try(piggyback::pb_new_release(repo = "ffverse/ffexpectedpoints", tag = glue::glue("{version}-data")))
   purrr::walk(season, save_ep_data, folder_path = folder_path, version = version)
   upload_ep_data(folder_path, version)
   invisible(NULL)
 }
+try(piggyback::pb_new_release(repo = "ffverse/ffopportunity", tag = "latest-data"))
+try(piggyback::pb_new_release(repo = "ffverse/ffopportunity", tag = glue::glue("{version}-data")))
 temp <- tempdir()
 update_ep(nflreadr:::most_recent_season(), version = "latest", folder_path = temp)
 update_ep(nflreadr:::most_recent_season(), version = "v1.0.0", folder_path = temp)
