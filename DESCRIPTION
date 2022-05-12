@@ -2,7 +2,7 @@ Package: ffopportunity
 Title: Models for Fantasy Football Expected Points
 Version: 0.1.0.04
 Authors@R: c(
-    person("Joe", "Sydlowski", , "syd235@gmail.com", role = c("aut", "cre")),
+    person("Joe", "Sydlowski", , "syd235@gmail.com", role = c("aut", "cre", "cph")),
     person("Tan", "Ho", , "tan@tanho.ca", role = "aut",
            comment = c(ORCID = "0000-0001-8388-5155"))
   )

@@ -3,7 +3,7 @@
 #' This function downloads precomputed expected points data from the ffopportunity automated releases.
 #'
 #' @param season A numeric vector of four digit years associated with given NFL seasons - defaults to latest season.
-#' @param type Data type - one of `"weekly"`, `"pbp_pass"`, `"pbp_rush"`, or `"all"`
+#' @param type Data type - one of `"weekly"`, `"pbp_pass"`, or `"pbp_rush"`
 #' @param version EP model version: one of "latest" (default) or "v1.0.0" - these are currently identical.
 #'
 #' @return a dataframe identical to what would be returned by `ffopportunity::ep_build()` for a given season.
@@ -27,6 +27,7 @@ ep_load <- function(season = nflreadr:::most_recent_season(),
 
   version <- rlang::arg_match0(version, c("latest","v1.0.0"))
   type <- rlang::arg_match0(type, c("weekly","pbp_pass","pbp_rush"))
+
   stopifnot(
     length(season) > 0,
     is.numeric(season),
