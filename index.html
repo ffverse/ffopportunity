@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Expected Points Models for Fantasy Football">
@@ -40,7 +40,7 @@
     
     <a class="navbar-brand me-2" href="index.html">ffopportunity</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.04</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.05</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,8 +114,8 @@
 <div class="section level2">
 <h2 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
 </h2>
-<p>Expected Fantasy Points are a measure of player opportunities in fantasy football - essentially aiming to quantify how many points the average player would score given a specific situation and opportunity. It uses xgboost and tidymodels trained on public nflverse data from {SEASONS 2006-2020} to do this.</p>
-<p>For more on the modeling details, see: {MODELLING VIGNETTES}</p>
+<p>Expected Fantasy Points are a measure of player opportunities in fantasy football - essentially aiming to quantify how many points the average player would score given a specific situation and opportunity. It uses xgboost and tidymodels trained on public nflverse data from 2006-2020 to do this.</p>
+<p>For more on the modeling details, see the articles posted to this website: <a href="https://ffopportunity.ffverse.com/articles/" class="uri">https://ffopportunity.ffverse.com/articles/</a></p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -127,11 +127,11 @@ install.packages("ffopportunity")
 ```
 --><p>Install the development version from GitHub with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ffopportunity"</span>, repos <span class="op">=</span> <span class="st">"https://ffverse.r-universe.dev"</span><span class="op">)</span>
-
-<span class="co"># or use remotes/devtools</span>
-<span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ffverse/ffopportunity"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ffopportunity"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://ffverse.r-universe.dev"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or use remotes/devtools</span></span>
+<span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ffverse/ffopportunity"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -139,35 +139,35 @@ install.packages("ffopportunity")
 <p>The two main functions of {ffopportunity} are <code><a href="reference/ep_load.html">ep_load()</a></code> and <code><a href="reference/ep_build.html">ep_build()</a></code>.</p>
 <p>You can download the latest version of the EP data with <code><a href="reference/ep_load.html">ep_load()</a></code> as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffopportunity.ffverse.com">ffopportunity</a></span><span class="op">)</span>
-<span class="fu"><a href="reference/ep_load.html">ep_load</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2020</span><span class="op">:</span><span class="fl">2021</span>, type <span class="op">=</span> <span class="st">"weekly"</span><span class="op">)</span>
-<span class="co">#&gt; &gt; &lt;ffopportunity predictions&gt;</span>
-<span class="co">#&gt; &gt; Generated 2022-01-10 09:39:41 with ep model version "latest"</span>
-<span class="co">#&gt; # A tibble: 11,529 x 159</span>
-<span class="co">#&gt;    season posteam  week game_id     player_id full_name    position pass_attempt</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 2020   SF          1 2020_01_AR~ 00-00313~ Jimmy Garop~ QB                 33</span>
-<span class="co">#&gt;  2 2020   SF          1 2020_01_AR~ 00-00332~ George Kitt~ TE                  0</span>
-<span class="co">#&gt;  3 2020   ARI         1 2020_01_AR~ 00-00352~ Kyler Murray QB                 39</span>
-<span class="co">#&gt;  4 2020   ARI         1 2020_01_AR~ 00-00305~ DeAndre Hop~ WR                  0</span>
-<span class="co">#&gt;  5 2020   ARI         1 2020_01_AR~ 00-00229~ Larry Fitzg~ WR                  0</span>
-<span class="co">#&gt;  6 2020   ARI         1 2020_01_AR~ &lt;NA&gt;      &lt;NA&gt;         &lt;NA&gt;                0</span>
-<span class="co">#&gt;  7 2020   SF          1 2020_01_AR~ 00-00316~ Raheem Most~ RB                  0</span>
-<span class="co">#&gt;  8 2020   ARI         1 2020_01_AR~ 00-00331~ Kenyan Drake RB                  0</span>
-<span class="co">#&gt;  9 2020   ARI         1 2020_01_AR~ 00-00347~ Christian K~ WR                  0</span>
-<span class="co">#&gt; 10 2020   SF          1 2020_01_AR~ 00-00332~ Trent Taylor WR                  0</span>
-<span class="co">#&gt; # ... with 11,519 more rows, and 151 more variables: rec_attempt &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   rush_attempt &lt;dbl&gt;, pass_air_yards &lt;dbl&gt;, rec_air_yards &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pass_completions &lt;dbl&gt;, receptions &lt;dbl&gt;, pass_completions_exp &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   receptions_exp &lt;dbl&gt;, pass_yards_gained &lt;dbl&gt;, rec_yards_gained &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   rush_yards_gained &lt;dbl&gt;, pass_yards_gained_exp &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   rec_yards_gained_exp &lt;dbl&gt;, rush_yards_gained_exp &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pass_touchdown &lt;dbl&gt;, rec_touchdown &lt;dbl&gt;, rush_touchdown &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pass_touchdown_exp &lt;dbl&gt;, rec_touchdown_exp &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   rush_touchdown_exp &lt;dbl&gt;, ...</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffopportunity.ffverse.com">ffopportunity</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'ffopportunity' was built under R version 4.2.1</span></span>
+<span><span class="fu"><a href="reference/ep_load.html">ep_load</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2020</span><span class="op">:</span><span class="fl">2021</span>, type <span class="op">=</span> <span class="st">"weekly"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; → &lt;ffopportunity predictions&gt;</span></span>
+<span><span class="co">#&gt; → Generated 2022-09-12 12:59:18 with ep model version "latest"</span></span>
+<span><span class="co">#&gt; # A tibble: 11,769 × 159</span></span>
+<span><span class="co">#&gt;    season posteam  week game_id  playe…¹ full_…² posit…³ pass_…⁴ rec_a…⁵ rush_…⁶</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 2020   SF          1 2020_01… 00-003… Jimmy … QB           33       0       1</span></span>
+<span><span class="co">#&gt;  2 2020   SF          1 2020_01… 00-003… George… TE            0       5       1</span></span>
+<span><span class="co">#&gt;  3 2020   ARI         1 2020_01… 00-003… Kyler … QB           39       0      11</span></span>
+<span><span class="co">#&gt;  4 2020   ARI         1 2020_01… 00-003… DeAndr… WR            0      16       0</span></span>
+<span><span class="co">#&gt;  5 2020   ARI         1 2020_01… 00-002… Larry … WR            0       5       0</span></span>
+<span><span class="co">#&gt;  6 2020   ARI         1 2020_01… &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;          0       2       0</span></span>
+<span><span class="co">#&gt;  7 2020   SF          1 2020_01… 00-003… Raheem… RB            0       5      15</span></span>
+<span><span class="co">#&gt;  8 2020   ARI         1 2020_01… 00-003… Kenyan… RB            0       2      16</span></span>
+<span><span class="co">#&gt;  9 2020   ARI         1 2020_01… 00-003… Christ… WR            0       5       0</span></span>
+<span><span class="co">#&gt; 10 2020   SF          1 2020_01… 00-003… Trent … WR            0       5       0</span></span>
+<span><span class="co">#&gt; # … with 11,759 more rows, 149 more variables: pass_air_yards &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   rec_air_yards &lt;dbl&gt;, pass_completions &lt;dbl&gt;, receptions &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   pass_completions_exp &lt;dbl&gt;, receptions_exp &lt;dbl&gt;, pass_yards_gained &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   rec_yards_gained &lt;dbl&gt;, rush_yards_gained &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   pass_yards_gained_exp &lt;dbl&gt;, rec_yards_gained_exp &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   rush_yards_gained_exp &lt;dbl&gt;, pass_touchdown &lt;dbl&gt;, rec_touchdown &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   rush_touchdown &lt;dbl&gt;, pass_touchdown_exp &lt;dbl&gt;, rec_touchdown_exp &lt;dbl&gt;, …</span></span>
+<span><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></code></pre></div>
 <p>You can also build EP from base nflverse data with <code><a href="reference/ep_build.html">ep_build()</a></code> as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/ep_build.html">ep_build</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2021</span>, version <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ep_build.html">ep_build</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2021</span>, version <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#&gt; -- Starting ep build for 2021 season(s)! 2022-01-11 07:58:44 -------------------</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; &gt; Loading pbp 2022-01-11 07:58:44</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; &gt; Preprocessing pbp 2022-01-11 07:58:46</span></span>
@@ -281,7 +281,7 @@ install.packages("ffopportunity")
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
