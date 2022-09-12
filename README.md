@@ -29,10 +29,11 @@ automated GitHub releases.
 Expected Fantasy Points are a measure of player opportunities in fantasy
 football - essentially aiming to quantify how many points the average
 player would score given a specific situation and opportunity. It uses
-xgboost and tidymodels trained on public nflverse data from {SEASONS
-2006-2020} to do this.
+xgboost and tidymodels trained on public nflverse data from 2006-2020 to
+do this.
 
-For more on the modeling details, see: {MODELLING VIGNETTES}
+For more on the modeling details, see the articles posted to this
+website: <https://ffopportunity.ffverse.com/articles/>
 
 ## Installation
 
@@ -46,7 +47,7 @@ install.packages("ffopportunity")
 Install the development version from GitHub with:
 
 ``` r
-install.packages("ffopportunity", repos = "https://ffverse.r-universe.dev")
+install.packages("ffopportunity", repos = c("https://ffverse.r-universe.dev", getOption("repos")))
 
 # or use remotes/devtools
 # install.packages("remotes")
@@ -63,31 +64,31 @@ follows:
 
 ``` r
 library(ffopportunity)
+#> Warning: package 'ffopportunity' was built under R version 4.2.1
 ep_load(season = 2020:2021, type = "weekly")
-#> > <ffopportunity predictions>
-#> > Generated 2022-01-10 09:39:41 with ep model version "latest"
-#> # A tibble: 11,529 x 159
-#>    season posteam  week game_id     player_id full_name    position pass_attempt
-#>    <chr>  <chr>   <dbl> <chr>       <chr>     <chr>        <chr>           <dbl>
-#>  1 2020   SF          1 2020_01_AR~ 00-00313~ Jimmy Garop~ QB                 33
-#>  2 2020   SF          1 2020_01_AR~ 00-00332~ George Kitt~ TE                  0
-#>  3 2020   ARI         1 2020_01_AR~ 00-00352~ Kyler Murray QB                 39
-#>  4 2020   ARI         1 2020_01_AR~ 00-00305~ DeAndre Hop~ WR                  0
-#>  5 2020   ARI         1 2020_01_AR~ 00-00229~ Larry Fitzg~ WR                  0
-#>  6 2020   ARI         1 2020_01_AR~ <NA>      <NA>         <NA>                0
-#>  7 2020   SF          1 2020_01_AR~ 00-00316~ Raheem Most~ RB                  0
-#>  8 2020   ARI         1 2020_01_AR~ 00-00331~ Kenyan Drake RB                  0
-#>  9 2020   ARI         1 2020_01_AR~ 00-00347~ Christian K~ WR                  0
-#> 10 2020   SF          1 2020_01_AR~ 00-00332~ Trent Taylor WR                  0
-#> # ... with 11,519 more rows, and 151 more variables: rec_attempt <dbl>,
-#> #   rush_attempt <dbl>, pass_air_yards <dbl>, rec_air_yards <dbl>,
-#> #   pass_completions <dbl>, receptions <dbl>, pass_completions_exp <dbl>,
-#> #   receptions_exp <dbl>, pass_yards_gained <dbl>, rec_yards_gained <dbl>,
-#> #   rush_yards_gained <dbl>, pass_yards_gained_exp <dbl>,
-#> #   rec_yards_gained_exp <dbl>, rush_yards_gained_exp <dbl>,
-#> #   pass_touchdown <dbl>, rec_touchdown <dbl>, rush_touchdown <dbl>,
-#> #   pass_touchdown_exp <dbl>, rec_touchdown_exp <dbl>,
-#> #   rush_touchdown_exp <dbl>, ...
+#> → <ffopportunity predictions>
+#> → Generated 2022-09-12 12:59:18 with ep model version "latest"
+#> # A tibble: 11,769 × 159
+#>    season posteam  week game_id  playe…¹ full_…² posit…³ pass_…⁴ rec_a…⁵ rush_…⁶
+#>    <chr>  <chr>   <dbl> <chr>    <chr>   <chr>   <chr>     <dbl>   <dbl>   <dbl>
+#>  1 2020   SF          1 2020_01… 00-003… Jimmy … QB           33       0       1
+#>  2 2020   SF          1 2020_01… 00-003… George… TE            0       5       1
+#>  3 2020   ARI         1 2020_01… 00-003… Kyler … QB           39       0      11
+#>  4 2020   ARI         1 2020_01… 00-003… DeAndr… WR            0      16       0
+#>  5 2020   ARI         1 2020_01… 00-002… Larry … WR            0       5       0
+#>  6 2020   ARI         1 2020_01… <NA>    <NA>    <NA>          0       2       0
+#>  7 2020   SF          1 2020_01… 00-003… Raheem… RB            0       5      15
+#>  8 2020   ARI         1 2020_01… 00-003… Kenyan… RB            0       2      16
+#>  9 2020   ARI         1 2020_01… 00-003… Christ… WR            0       5       0
+#> 10 2020   SF          1 2020_01… 00-003… Trent … WR            0       5       0
+#> # … with 11,759 more rows, 149 more variables: pass_air_yards <dbl>,
+#> #   rec_air_yards <dbl>, pass_completions <dbl>, receptions <dbl>,
+#> #   pass_completions_exp <dbl>, receptions_exp <dbl>, pass_yards_gained <dbl>,
+#> #   rec_yards_gained <dbl>, rush_yards_gained <dbl>,
+#> #   pass_yards_gained_exp <dbl>, rec_yards_gained_exp <dbl>,
+#> #   rush_yards_gained_exp <dbl>, pass_touchdown <dbl>, rec_touchdown <dbl>,
+#> #   rush_touchdown <dbl>, pass_touchdown_exp <dbl>, rec_touchdown_exp <dbl>, …
+#> # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 
 You can also build EP from base nflverse data with `ep_build()` as

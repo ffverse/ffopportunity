@@ -35,9 +35,9 @@ ffopportunity builds a dataframe of Expected Fantasy Points by preprocessing and
 
 ## About
 
-Expected Fantasy Points are a measure of player opportunities in fantasy football - essentially aiming to quantify how many points the average player would score given a specific situation and opportunity. It uses xgboost and tidymodels trained on public nflverse data from {SEASONS 2006-2020} to do this. 
+Expected Fantasy Points are a measure of player opportunities in fantasy football - essentially aiming to quantify how many points the average player would score given a specific situation and opportunity. It uses xgboost and tidymodels trained on public nflverse data from 2006-2020 to do this. 
 
-For more on the modeling details, see: {MODELLING VIGNETTES}
+For more on the modeling details, see the articles posted to this website: <https://ffopportunity.ffverse.com/articles/>
 
 ## Installation
 <!--Install the stable version from CRAN with:
@@ -48,7 +48,7 @@ install.packages("ffopportunity")
 Install the development version from GitHub with:
 
 ```{r eval = FALSE}
-install.packages("ffopportunity", repos = "https://ffverse.r-universe.dev")
+install.packages("ffopportunity", repos = c("https://ffverse.r-universe.dev", getOption("repos")))
 
 # or use remotes/devtools
 # install.packages("remotes")
