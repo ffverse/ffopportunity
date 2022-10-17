@@ -17,7 +17,7 @@
 #' @family main
 #'
 #' @export
-ep_build <- function(season = nflreadr:::most_recent_season(), version = "latest"){
+ep_build <- function(season = nflreadr::most_recent_season(), version = "latest"){
 
   version <- rlang::arg_match0(version, c("latest", "v1.0.0"))
 

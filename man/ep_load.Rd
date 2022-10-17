@@ -5,7 +5,7 @@
 \title{Load Expected Points data}
 \usage{
 ep_load(
-  season = nflreadr:::most_recent_season(),
+  season = nflreadr::most_recent_season(),
   type = c("weekly", "pbp_pass", "pbp_rush"),
   version = c("latest", "v1.0.0")
 )
