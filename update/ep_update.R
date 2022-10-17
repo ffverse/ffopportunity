@@ -38,11 +38,15 @@ update_ep <- function(season, version = "v1.0.0", folder_path){
   upload_ep_data(folder_path, version)
   invisible(NULL)
 }
+
+version <- "v1.0.0"
+temp <- tempdir(check = TRUE)
+
 try(piggyback::pb_new_release(repo = "ffverse/ffopportunity", tag = "latest-data"))
 try(piggyback::pb_new_release(repo = "ffverse/ffopportunity", tag = glue::glue("{version}-data")))
-temp <- tempdir()
-update_ep(nflreadr:::most_recent_season(), version = "latest", folder_path = temp)
-update_ep(nflreadr:::most_recent_season(), version = "v1.0.0", folder_path = temp)
+
+update_ep(nflreadr::most_recent_season(), version = "latest", folder_path = temp)
+update_ep(nflreadr::most_recent_season(), version = "v1.0.0", folder_path = temp)
 
 unlink(temp, recursive = TRUE, force = TRUE)
 

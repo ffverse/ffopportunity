@@ -4,7 +4,7 @@
 \alias{ep_build}
 \title{Build EP}
 \usage{
-ep_build(season = nflreadr:::most_recent_season(), version = "latest")
+ep_build(season = nflreadr::most_recent_season(), version = "latest")
 }
 \arguments{
 \item{season}{a numeric vector of seasons that defaults to most recent season. Must be later than 2006.}

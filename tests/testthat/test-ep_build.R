@@ -13,5 +13,4 @@ test_that("ep_build and ep_load work", {
   expect_equal(nrow(ep_2020$ep_weekly), nrow(ep_weekly))
   expect_equal(nrow(ep_2020$ep_pbp_pass), nrow(ep_pbp_pass))
   expect_equal(nrow(ep_2020$ep_pbp_rush), nrow(ep_pbp_rush))
-
 })

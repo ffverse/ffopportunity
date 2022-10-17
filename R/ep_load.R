@@ -21,7 +21,7 @@
 #' @family main
 #'
 #' @export
-ep_load <- function(season = nflreadr:::most_recent_season(),
+ep_load <- function(season = nflreadr::most_recent_season(),
                     type = c("weekly","pbp_pass","pbp_rush"),
                     version = c("latest","v1.0.0")){
 
