@@ -13,3 +13,4 @@
 ^models$
 ^codecov\.yml$
 ^\.Renviron$
+^vignettes$
