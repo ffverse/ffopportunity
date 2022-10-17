@@ -168,20 +168,20 @@ install.packages("ffopportunity")
 <p>You can also build EP from base nflverse data with <code><a href="reference/ep_build.html">ep_build()</a></code> as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/ep_build.html">ep_build</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2021</span>, version <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#&gt; -- Starting ep build for 2021 season(s)! 2022-01-11 07:58:44 -------------------</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; &gt; Loading pbp 2022-01-11 07:58:44</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; &gt; Preprocessing pbp 2022-01-11 07:58:46</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt; &gt; Generating predictions 2022-01-11 07:58:54</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; &gt; Summarizing data 2022-01-11 07:59:33</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; -- Finished building ep for 2021 season(s)! 2022-01-11 07:59:33 ----------------</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; &gt; &lt;ffopportunity predictions&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; &gt; Generated 2022-01-11 07:59:33 with model version latest</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; List of 5</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt;  $ ep_weekly  : tibble [5,756 x 159] (S3: tbl_df/tbl/data.frame)</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt;  $ ep_pbp_pass: tibble [18,747 x 57] (S3: tbl_df/tbl/data.table/data.frame)</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt;  $ ep_pbp_rush: tibble [14,038 x 47] (S3: tbl_df/tbl/data.table/data.frame)</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;  $ ep_version : chr "latest"</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;  $ timestamp  : POSIXct[1:1], format: "2022-01-11 07:59:33"</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -- Starting ep build for 2021 season(s)! 2022-01-11 07:58:44 -------------------</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt; Loading pbp 2022-01-11 07:58:44</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt; Preprocessing pbp 2022-01-11 07:58:46</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt; Generating predictions 2022-01-11 07:58:54</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt; Summarizing data 2022-01-11 07:59:33</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -- Finished building ep for 2021 season(s)! 2022-01-11 07:59:33 ----------------</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt; &lt;ffopportunity predictions&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &gt; Generated 2022-01-11 07:59:33 with model version latest</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 5</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ ep_weekly  : tibble [5,756 x 159] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ ep_pbp_pass: tibble [18,747 x 57] (S3: tbl_df/tbl/data.table/data.frame)</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ ep_pbp_rush: tibble [14,038 x 47] (S3: tbl_df/tbl/data.table/data.frame)</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ ep_version : chr "latest"</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ timestamp  : POSIXct[1:1], format: "2022-01-11 07:59:33"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>

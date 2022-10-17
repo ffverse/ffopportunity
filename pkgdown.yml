@@ -1,9 +1,9 @@
-pandoc: 2.7.3
+pandoc: 2.14.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   rushing_yards_vignette: rushing_yards_vignette.html
-last_built: 2022-10-16T21:36Z
+last_built: 2022-10-17T15:10Z
 urls:
   reference: https://ffopportunity.ffverse.com/reference
   article: https://ffopportunity.ffverse.com/articles
