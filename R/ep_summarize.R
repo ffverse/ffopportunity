@@ -142,14 +142,14 @@ ep_summarize <- function(predicted_pbp, stat_type = c("all", "expected_points", 
     janitor::remove_empty(which = "cols") %>%
     dplyr::mutate(dplyr::across(.cols = where(is.numeric), .fns =  ~tidyr::replace_na(.x, 0) %>% round(2))) %>%
     dplyr::mutate(
-      total_yards_gained = rec_yards_gained + rush_yards_gained,
-      total_yards_gained_exp = rec_yards_gained_exp + rush_yards_gained_exp,
-      total_touchdown = rec_touchdown + rush_touchdown,
-      total_touchdown_exp = rec_touchdown_exp + rush_touchdown_exp,
-      total_first_down = rec_first_down + rush_first_down,
-      total_first_down_exp = rec_first_down_exp + rush_first_down_exp,
-      total_fantasy_points = rec_fantasy_points + rush_fantasy_points,
-      total_fantasy_points_exp = rec_fantasy_points_exp + rush_fantasy_points_exp) %>%
+      total_yards_gained = .data$rec_yards_gained + .data$rush_yards_gained,
+      total_yards_gained_exp = .data$rec_yards_gained_exp + .data$rush_yards_gained_exp,
+      total_touchdown = .data$rec_touchdown + .data$rush_touchdown,
+      total_touchdown_exp = .data$rec_touchdown_exp + .data$rush_touchdown_exp,
+      total_first_down = .data$rec_first_down + .data$rush_first_down,
+      total_first_down_exp = .data$rec_first_down_exp + .data$rush_first_down_exp,
+      total_fantasy_points = .data$rec_fantasy_points + .data$rush_fantasy_points,
+      total_fantasy_points_exp = .data$rec_fantasy_points_exp + .data$rush_fantasy_points_exp) %>%
     dplyr::ungroup() %>%
     dplyr::rename(
       pass_completions = .data$pass_complete_pass,
