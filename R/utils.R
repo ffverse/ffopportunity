@@ -10,7 +10,8 @@
                      .data$gsis_id,
                      .data$full_name,
                      position = dplyr::if_else(.data$position %in% c("HB","FB"), "RB", .data$position),
-                     .data$birth_date)
+                     .data$birth_date) %>%
+    dplyr::distinct()
 }
 
 #' Tidy eval helpers
