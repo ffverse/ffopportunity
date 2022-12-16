@@ -33,13 +33,20 @@ ep_predict <- function(preprocessed_pbp, version = c("latest", "v1.0.0")) {
     dplyr::mutate(
       two_point_conv_exp = dplyr::if_else(
         .data$two_point_attempt == 1, .data$rushing_td_exp, 0),
-      rushing_td_exp = dplyr::if_else(
-        .data$two_point_attempt == 1, 0, .data$rushing_td_exp)) %>%
-    dplyr::rename(
-      rush_yards_exp = .data$rushing_yards_exp,
-      rush_touchdown_exp = .data$rushing_td_exp,
-      rush_first_down_exp = .data$rushing_fd_exp
-    )
+
+      rush_yards_exp = dplyr::case_when(grepl("kneel", .data$desc) ~ -1,
+                                        grepl("Aborted", .data$desc) ~ 0,
+                                        TRUE ~ .data$rushing_yards_exp),
+
+      rush_touchdown_exp = dplyr::case_when(
+        grepl("kneel|Aborted", .data$desc) ~ 0,
+        .data$two_point_attempt == 1 ~ 0,
+        TRUE ~ .data$rushing_td_exp),
+
+      rush_first_down_exp = dplyr::if_else(grepl("kneel|Aborted", .data$desc),
+                                      0,
+                                      .data$rushing_fd_exp)
+      )
 
   pass_df <-
     preprocessed_pbp$pass_df %>%
@@ -60,8 +67,20 @@ ep_predict <- function(preprocessed_pbp, version = c("latest", "v1.0.0")) {
     dplyr::mutate(
       two_point_conv_exp = dplyr::if_else(
         .data$two_point_attempt == 1, .data$pass_touchdown_exp, 0),
-      pass_touchdown_exp = dplyr::if_else(
-        .data$two_point_attempt == 1, 0, .data$pass_touchdown_exp)
+
+      pass_completion_exp = dplyr::if_else(grepl("spike", .data$desc), 0,
+                                           .data$pass_completion_exp),
+      yards_after_catch_exp = dplyr::if_else(grepl("spike", .data$desc), 0,
+                                             .data$yards_after_catch_exp),
+      pass_first_down_exp = dplyr::if_else(grepl("spike", .data$desc), 0,
+                                             .data$pass_first_down_exp),
+      pass_interception_exp = dplyr::if_else(grepl("spike", .data$desc), 0,
+                                           .data$pass_interception_exp),
+
+      pass_touchdown_exp = dplyr::case_when(
+        .data$two_point_attempt == 1 ~ 0,
+        grepl("spike", .data$desc) ~ 0,
+        TRUE ~ .data$pass_touchdown_exp)
     )
 
   list_df <- list(
