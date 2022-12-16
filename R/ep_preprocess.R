@@ -101,8 +101,7 @@ ep_preprocess <- function(pbp){
 .preprocess_rush_df <- function(prep_pbp, rosters){
 
   rush_df <- prep_pbp %>%
-    dplyr::filter(.data$play_type == "run",
-                  !grepl("kneel|Aborted", .data$desc)) %>%
+    dplyr::filter(.data$play_type == "run" | .data$play_type == "qb_kneel") %>%
     dplyr::left_join(rosters, by = c("rusher_player_id" = "gsis_id", "season"),
                      na_matches = "never") %>%
     dplyr::mutate(
@@ -183,7 +182,7 @@ ep_preprocess <- function(pbp){
 .preprocess_pass_df <- function(prep_pbp, rosters){
 
   pass_df <- prep_pbp %>%
-    dplyr::filter(.data$play_type == "pass", !grepl("Aborted", .data$desc)) %>%
+    dplyr::filter(.data$play_type == "pass" | .data$play_type == "qb_spike") %>%
     dplyr::left_join(rosters, by = c("passer_player_id" = "gsis_id", "season"),
                      na_matches = "never") %>%
     dplyr::rename(passer_position = .data$position,
@@ -212,8 +211,9 @@ ep_preprocess <- function(pbp){
         levels = c("1","0")),
       interception = factor(
         dplyr::if_else(.data$interception == 1, "1", "0"),
-        levels = c("1","0"))) %>%
-    dplyr::filter(!is.na(.data$air_yards)) %>%
+        levels = c("1","0")),
+      air_yards = tidyr::replace_na(.data$air_yards, 0)) %>%
+    dplyr::filter(.data$sack == 0) %>%
     dplyr::select(
       .data$game_id,
       .data$play_id,
