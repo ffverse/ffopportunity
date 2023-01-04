@@ -175,7 +175,21 @@ ep_summarize <- function(predicted_pbp, stat_type = c("all", "expected_points", 
     combined_df %>%
     dplyr::group_by(.data$season, .data$posteam, .data$week, .data$game_id) %>%
     dplyr::summarise(
-      dplyr::across(.cols = where(is.numeric), .fns = sum, .names = "{col}_team")
+      dplyr::across(.cols = where(is.numeric) & !contains("total"), .fns = sum, .names = "{col}_team"),
+      total_yards_gained_team = .data$rec_yards_gained_team + .data$rush_yards_gained_team,
+      total_yards_gained_exp_team = .data$rec_yards_gained_exp_team + .data$rush_yards_gained_exp_team,
+      total_yards_gained_diff_team = .data$rec_yards_gained_diff_team + .data$rush_yards_gained_diff_team,
+
+      total_touchdown_team = .data$rec_touchdown_team + .data$rush_touchdown_team,
+      total_touchdown_exp_team = .data$rec_touchdown_exp_team + .data$rush_touchdown_exp_team,
+      total_touchdown_diff_team = .data$rec_touchdown_diff_team + .data$rush_touchdown_diff_team,
+
+      total_first_down_team = .data$rec_first_down_team + .data$rush_first_down_team,
+      total_first_down_exp_team = .data$rec_first_down_exp_team + .data$rush_first_down_exp_team,
+      total_first_down_diff_team = .data$rec_first_down_diff_team + .data$rush_first_down_diff_team,
+      total_fantasy_points_team = .data$rec_fantasy_points_team + .data$rush_fantasy_points_team,
+      total_fantasy_points_exp_team = .data$rec_fantasy_points_exp_team + .data$rush_fantasy_points_exp_team,
+      total_fantasy_points_diff_team = .data$rec_fantasy_points_diff_team + .data$rush_fantasy_points_diff_team
     ) %>%
     dplyr::ungroup()
 
