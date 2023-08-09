@@ -1,0 +1,24 @@
+---
+title: "Expected Rushing Yards"
+author: "Joe Sydlowski"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+### Feature Importance
+
+![feature importance](plots/rush_yards_feat_imp.png)
+### Partial Dependence Plots
+
+![pdp yards](plots/rush_yards_pdp_yards.png)
+
+![pdp xpass](plots/rush_yards_pdp_xpass.png)
+
+### Breakdown
+
+![breakdown](plots/rush_yards_breakdown.png)
+
+

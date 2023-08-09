@@ -4,21 +4,14 @@ author: "Joe Sydlowski"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
+  %\VignetteIndexEntry{Expected Rushing Yards}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-### Feature Importance
+# Header
+Text goes here explain the model
 
-![feature importance](plots/rush_yards_feat_imp.png)
-### Partial Dependence Plots
-
-![pdp yards](plots/rush_yards_pdp_yards.png)
-
-![pdp xpass](plots/rush_yards_pdp_xpass.png)
-
-### Breakdown
-
-![breakdown](plots/rush_yards_breakdown.png)
-
-
+```{r, echo=FALSE}
+htmltools::includeHTML("rushing_yards_vignette2.html")
+```
