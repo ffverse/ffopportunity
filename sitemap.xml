@@ -1,63 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://ffopportunity.ffverse.com/404.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/articles/rushing_yards_vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/dot-get_rosters.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/ep_build.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/ep_cache_models.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/ep_load.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/ep_predict.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/ep_preprocess.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/ep_summarize.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/rds_from_url.html</loc>
-  </url>
-  <url>
-    <loc>https://ffopportunity.ffverse.com/reference/tidyeval.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://ffopportunity.ffverse.com/404.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/CONTRIBUTING.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/LICENSE.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/articles/index.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/articles/rushing_yards_vignette.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/authors.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/index.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/news/index.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/dot-get_rosters.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/ep_build.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/ep_cache_models.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/ep_load.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/ep_predict.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/ep_preprocess.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/ep_summarize.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/index.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/pipe.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/rds_from_url.html</loc></url>
+<url><loc>https://ffopportunity.ffverse.com/reference/tidyeval.html</loc></url>
 </urlset>
+
