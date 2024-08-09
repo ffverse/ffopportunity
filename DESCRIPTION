@@ -1,10 +1,9 @@
 Package: ffopportunity
 Title: Models for Fantasy Football Expected Points
-Version: 0.1.0.06
+Version: 0.1.0.07
 Authors@R: c(
     person("Joe", "Sydlowski", , "syd235@gmail.com", role = c("aut", "cre", "cph")),
-    person("Tan", "Ho", , "tan@tanho.ca", role = "aut",
-           comment = c(ORCID = "0000-0001-8388-5155"))
+    person("Tan", "Ho", , "tan@tanho.ca", role = "aut", comment = c(ORCID = "0000-0001-8388-5155"))
   )
 Description: Downloads expected fantasy points data from 'ffverse'
     repositories if available, and otherwise builds up expected points
