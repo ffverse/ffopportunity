@@ -72,8 +72,7 @@ ep_preprocess <- function(pbp){
         stringr::str_detect(.data$desc, " right") ~ "right",
         stringr::str_detect(.data$desc, " middle") ~ "middle",
         TRUE ~ "unk"),
-      yards_after_catch = dplyr::if_else(
-        .data$two_point_attempt == 1,0, .data$xpass),
+      yards_after_catch = dplyr::if_else(.data$two_point_attempt == 1, 0, .data$yards_after_catch),
       air_yards = dplyr::if_else(
         .data$two_point_attempt == 1, .data$yardline_100, .data$air_yards),
       two_point_converted = dplyr::case_when(
