@@ -1,5 +1,7 @@
 pkgload::load_all()
 
+
+
 save_ep_data <- function(season, folder_path, version){
 
   ep_object <- ffopportunity::ep_build(season,version = version)
@@ -23,12 +25,28 @@ save_ep_data <- function(season, folder_path, version){
   writeLines(as.character(version), file.path(folder_path,"version.txt"))
 }
 
-upload_ep_data <- function(folder_path, version){
-  list.files(folder_path, pattern = "csv$|rds$|parquet$|txt$", full.names = TRUE) %>%
-    piggyback::pb_upload(repo = "ffverse/ffopportunity", tag = "latest-data", overwrite = TRUE)
+upload_ep_data <- function(folder_path, version) {
+  list.files(
+    folder_path,
+    pattern = "csv$|rds$|parquet$|txt$",
+    full.names = TRUE
+  ) %>%
+    gh_cli_release_upload(
+      tag = "latest-data",
+      repo = "ffverse/ffopportunity",
+      overwrite = TRUE
+    )
 
-  list.files(folder_path, pattern = "csv$|rds$|parquet$|txt$", full.names = TRUE) %>%
-    piggyback::pb_upload(repo = "ffverse/ffopportunity", tag = glue::glue("{version}-data"), overwrite = TRUE)
+  list.files(
+    folder_path,
+    pattern = "csv$|rds$|parquet$|txt$",
+    full.names = TRUE
+  ) %>%
+    gh_cli_release_upload(
+      tag = glue::glue("{version}-data"),
+      repo = "ffverse/ffopportunity",
+      overwrite = TRUE
+    )
 
   cli::cli_alert_success("Completed ep upload! {Sys.time()}")
 }
