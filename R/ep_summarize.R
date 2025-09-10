@@ -171,6 +171,8 @@ ep_summarize <- function(predicted_pbp, stat_type = c("all", "expected_points", 
     combined_df[paste0(f,"_diff")] <- combined_df[f]-combined_df[paste0(f,"_exp")]
   }
 
+  contains <- NULL
+
   team_df <-
     combined_df %>%
     dplyr::group_by(.data$season, .data$posteam, .data$week, .data$game_id) %>%
