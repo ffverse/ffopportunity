@@ -38,6 +38,7 @@ Suggests:
     arrow (>= 5.0.0),
     covr,
     curl,
+    jsonlite,
     piggyback (>= 0.1.1),
     progressr (>= 0.8.0),
     roxygen2 (>= 7.1.0),
