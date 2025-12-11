@@ -114,13 +114,14 @@ ep_predict <- function(preprocessed_pbp, version = c("latest", "v1.0.0")) {
 # automatically/prompt-for download if file not found?
 # future: add some kind of version selector (as package option?)
 #' @keywords internal
-.load_model_objs <- function(variable, version) {
+.load_model_objs <- function(variable, version, model_file_type = c(".ubj", ".xgb")) {
+  model_file_type <- match.arg(model_file_type)
 
   cache_dir <- rappdirs::user_cache_dir("ffopportunity", "ffverse")
 
   folder_path <- file.path(cache_dir,version)
 
-  model_path <- file.path(folder_path, paste0(variable,".xgb"))
+  model_path <- file.path(folder_path, paste0(variable, model_file_type))
   blueprint_path <- file.path(folder_path, paste0(variable,".rds"))
 
   stopifnot(file.exists(model_path), file.exists(blueprint_path))
