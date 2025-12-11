@@ -108,6 +108,8 @@ gh_cli_release_assets <- function(tag, ..., repo = "ffverse/ffopportunity") {
 
   out <- .cli_parse_json(cli_output = cli_output)[["assets"]]
 
+  name <- size <- downloadCount <- updatedAt <- size_string <- NULL
+
   setDT(out)
   ret <- out[,
     list(name, size, downloads = downloadCount, last_update = updatedAt, url)

@@ -14,3 +14,4 @@
 ^codecov\.yml$
 ^\.Renviron$
 ^vignettes$
+^local$

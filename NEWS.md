@@ -10,3 +10,4 @@
 * Rename to ffopportunity
 * Include spikes and kneel downs to tie out to official stats with `ep_summarize()`
 * Fix YAC bug in pbp_pass data
+* Update to support ubj models which should enable xgboost 3.1+ support
